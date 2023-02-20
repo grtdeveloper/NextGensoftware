@@ -1,0 +1,957 @@
+    1  ls
+    2  https://github.com/Unmesh28/NextGenDriving.git
+    3  git clone https://github.com/Unmesh28/NextGenDriving.git
+    4  sudo apt-get update
+    5  sudo apt-get dist-upgrade
+    6  raspi-config
+    7  sudo raspi-config
+    8  ls
+    9  git clone https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi.git
+   10  mv TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi tflite1
+   11  cd tflite1
+   12  sudo pip3 install virtualenv
+   13  python3 -m venv tflite1-env
+   14  python --version
+   15  source tflite1-env/bin/activate
+   16  bash get_pi_requirements.sh
+   17  cd ..
+   18  s
+   19  sudo reboot
+   20  cd tflite1/
+   21  soure tflite1-env/bin/activate
+   22  source tflite1-env/bin/activate
+   23  cd ..
+   24  cd NextGenDriving/
+   25  ls
+   26  python mainAppWindow.py 
+   27  exit
+   28  cd NextGenDriving/
+   29  python mainAppWindow.py 
+   30  pip install pyautogui
+   31  python mainAppWindow.py 
+   32  pip install bluetooth
+   33  pip3 install bluetooth
+   34  python mainAppWindow.py 
+   35  git pull
+   36  python mainAppWindow.py 
+   37  pip install opencv-python 
+   38  python mainAppWindow.py 
+   39  pip install shapely
+   40  python mainAppWindow.py 
+   41  pip install tensorflow
+   42  python mainAppWindow.py 
+   43  git pull
+   44  python mainAppWindow.py 
+   45  pip uninstall opencv-python
+   46  pip install opencv-python-headless
+   47  python --version
+   48  pip uninstall opencv-python
+   49  python mainAppWindow.py 
+   50  cd NextGenDriving/
+   51  python mainAppWindow.py 
+   52  cd NextGenDriving/
+   53  git pull
+   54  python mainAppWindow.py 
+   55  git pull
+   56  python mainAppWindow.py 
+   57  sudo apt-get install libqt4-dev
+   58  sudo apt-get install libopencv-*
+   59  python mainAppWindow.py 
+   60  pip install opencv-python --upgrade
+   61  python mainAppWindow.py 
+   62  sudo reboot
+   63  cd NextGenDriving/
+   64  ls
+   65  cat requirements.txt 
+   66  cd tflite1/
+   67  source tflite1-env/bin/activate
+   68  ls
+   69  sudo pip uninstall pyqt5
+   70  sudo pip install pyqt5
+   71  cd ..
+   72  cd NextGenDriving/
+   73  python3 mainAppWindow.py 
+   74  python mainAppWindow.py 
+   75  python --version
+   76  cd //usr/lib/python3
+   77  ls
+   78  cd dist-packages/
+   79  ls
+   80  cd ,,
+   81  cd ..
+   82  ls
+   83  cd ..
+   84  ls
+   85  cd NextGenDriving/
+   86  ls
+   87  python mainAppWindow.py 
+   88  pip uninstall tensorflow
+   89  pip uninstall tensorflow-io
+   90  pip install tensorflow-gpu
+   91  pip install tensorflow-cpu
+   92  pip install tensorflow
+   93  pip install --no-deps tensorflow-io
+   94  sudo reboot
+   95  cd NextGenDriving/
+   96  python mainAppWindow.py 
+   97  sudo pip uninstall opencv-python
+   98  sudo apt-get install libopencv-dev python-opencv
+   99  pip install opencv-python
+  100  sudo apt-get install python3-opencv
+  101  python mainAppWindow.py 
+  102  sudo apt-get install libopencv-dev
+  103  python mainAppWindow.py 
+  104  python3 mainAppWindow.py 
+  105  sudo apt-get install qt5-default
+  106  pip3 install opencv-python==4.1.2.30  
+  107  pip install opencv-python==4.1.2.30  
+  108  pip install opencv-python==4.2 
+  109  pip install opencv-contrib-python
+  110  python3 mainAppWindow.py 
+  111  python mainAppWindow.py 
+  112  pip uninstall opencv-python
+  113  pip install opencv-python==4.1.2.30  
+  114  pip install opencv-python-headless
+  115  python mainAppWindow.py 
+  116  cd NextGenDriving/
+  117  python mainAppWindow.py 
+  118  cd NextGenDriving/
+  119  ls
+  120  python mainAppWindow.py 
+  121  sudo reboot
+  122  cd //
+  123  cd ..
+  124  ls
+  125  cd /home/pi/
+  126  ls
+  127  sudo raspi-config
+  128  sudo reboot
+  129  sudo apt update
+  130  sudo apt full-upgrade
+  131  wget https://download.anydesk.com/rpi/anydesk_6.1.1-1_armhf.deb
+  132  sudo dpkg -i anydesk_6.1.1-1_armhf.deb
+  133  sudo apt-get install -f
+  134  anydesk
+  135  sudo apt-get install libpolkit-gobject-1-dev
+  136  anydesk
+  137  sudo apt install libgles-dev libegl-dev
+  138  sudo ln -s /usr/lib/arm-linux-gnueabihf/libGLESv2.so /usr/lib/libbrcmGLESv2.so
+  139  sudo ln -s /usr/lib/arm-linux-gnueabihf/libEGL.so /usr/lib/libbrcmEGL.so
+  140  anydesk
+  141  sudo reboot
+  142  anydesk
+  143  sudo apt-get install libraspberrypi0
+  144  ls
+  145  cd NextGenDriving/
+  146  ls 
+  147  python3 mainAppWindow.py 
+  148  ls 
+  149  cd images/
+  150  cd ..
+  151  cd gui/
+  152  ls 
+  153  display wifi_connected.png 
+  154  display wifi_disconnected.png 
+  155  display bluetooth_connected.png 
+  156  display wifi_connected.png 
+  157  display wifi_disconnected.png
+  158  cd ..
+  159  ls 
+  160  vim mainAppWindow.py 
+  161  vim mainWindow.py 
+  162  exit
+  163  cd ..
+  164  ls 
+  165  cd ..
+  166  vim settings.py 
+  167  python3 launch.py 
+  168  vim settings.py +77
+  169  vim launch.py +77
+  170  python3 launch.py 
+  171  vim launch.py +87
+  172  ls -l /home/pi/NextGenDriving/gui/main_page_icons/dark_theme/dark.png/adas.png
+  173  ls -l /home/pi/NextGenDriving/gui/main_page_icons/dark_theme/dark.png
+  174  vim launch.py 
+  175  ls -l /home/pi/NextGenDriving/gui/main_page_icons/dark_theme/
+  176  python3 launch.py 
+  177  vim launch.py +92
+  178  python3 launch.py 
+  179  vim launch.py +100
+  180  python3 launch.py 
+  181  vim launch.py +100
+  182  python3 launch.py 
+  183  vim launch.py +100
+  184  python3 launch.py 
+  185  vim launch.py +100
+  186  python3 launch.py 
+  187  vim launch.py 
+  188  python3 launch.py 
+  189  vim launch.py 
+  190  python3 launch.py 
+  191  vim launch.py 
+  192  python3 launch.py 
+  193  vim launch.py 
+  194  python3 launch.py 
+  195  vim launch.py 
+  196  python3 launch.py 
+  197  vim launch.py 
+  198  python3 launch.py 
+  199  vim launch.py 
+  200  python3 launch.py 
+  201  vim launch.py 
+  202  python3 launch.py 
+  203  vim launch.py 
+  204  sudo pip3 install tkintermapview
+  205  vim support.py
+  206  python3 support.py 
+  207  vim support.py +13
+  208  vim launch.py 
+  209  python3 launch.py 
+  210  vim settings.py +16
+  211  python3 launch.py 
+  212  vim settings.py +16
+  213  vim launch.py 
+  214  python3 launch.py 
+  215  vim launch.py 
+  216  python3 launch.py 
+  217  vim launch.py 
+  218  python3 launch.py 
+  219  ls -l /home/pi/NextGenDriving/gui/infotainment/netflix.png
+  220  python3 launch.py 
+  221  vim launch.py +34
+  222  vim launch.py 
+  223  python3 launch.py 
+  224  vim launch.py 
+  225  python3 launch.py 
+  226  sudo nano gsm.py
+  227  python gsm.py 
+  228  sudo apt-get install gtkterm
+  229  gtkterm
+  230  sudo gtkterm
+  231  sudo nano gsm.py
+  232  python gsm.py 
+  233  sudo python gsm.py 
+  234  sudo nano gsm.py
+  235  sudo python gsm.py 
+  236  sudo nano gsm.py
+  237  sudo python gsm.py 
+  238  sudo nano gsm.py
+  239  sudo python gsm.py 
+  240  sudo nano gsm.py
+  241  sudo python gsm.py 
+  242  sudo nano gsm.py
+  243  sudo python gsm.py 
+  244  sudo nano gsm.py
+  245  sudo screen /dev/serial0 115200
+  246  sudo apt-get install screen
+  247  sudo screen /dev/serial0 115200
+  248  screen
+  249  sudo ls -l /dev/
+  250  sudo screen /dev/ttyS0 115200
+  251  sudo nano gsm.py
+  252  sudo python gsm.py 
+  253  pip3 install gsmHat
+  254  pip install gsmHat
+  255  sudo nano gsm_new.py
+  256  python gsm_new.py 
+  257  sudo raspi-config
+  258  AT
+  259  sudo screen /dev/serial0 115200
+  260  screen
+  261  screen
+  262  python gsm.py 
+  263  python gsm_new.py 
+  264  sudo rm gsm.py 
+  265  python gsm_new.py 
+  266  ls
+  267  cat gsm_new.py 
+  268  cat gmsHat.log 
+  269  sudo rm gsm_new.py 
+  270  sudo nano any.py
+  271  python any.py 
+  272  python3 any.py 
+  273  sudo rm any
+  274  sudo rm any.py 
+  275  sudo nano any.py
+  276  python any.py 
+  277  pip uninstall serial
+  278  pip uninstall pyserial
+  279  pip install pyserial
+  280  python any.py 
+  281  sudo nano any.py 
+  282  python any.py 
+  283  sudo nano any.py 
+  284  python any.py 
+  285  sudo nano any.py 
+  286  python any.py 
+  287  sudo nano any.py 
+  288  python any.py 
+  289  sudo nano any.py 
+  290  python any.py 
+  291  sudo nano any.py 
+  292  python any.py 
+  293  sudo nano any.py 
+  294  python any.py 
+  295  sudo socat - /dev/ttyS0
+  296  python any.py 
+  297  sudo nano any.py 
+  298  python any.py 
+  299  sudo nano any.py 
+  300  python any.py 
+  301  sudo nano any.py 
+  302  python any.py 
+  303  sudo nano any.py 
+  304  python any.py 
+  305  sudo nano any.py 
+  306  python any.py 
+  307  sudo nano any.py 
+  308  python any.py 
+  309  sudo nano any.py 
+  310  python any.py 
+  311  sudo nano any.py 
+  312  python any.py 
+  313  sudo nano any.py 
+  314  python any.py 
+  315  sudo nano any.py 
+  316  python any.py 
+  317  cd /boot/
+  318  cat config.txt 
+  319  python any.py 
+  320  cd /home/pi/
+  321  python any.py 
+  322  sudo nano any.py 
+  323  python any.py 
+  324  sudo nano any.py 
+  325  python any.py 
+  326  sudo nano any.py 
+  327  python any.py 
+  328  sudo nano any.py 
+  329  python any.py 
+  330  sudo nano any.py 
+  331  python any.py 
+  332  sudo nano any.py 
+  333  ls /dev/serial*
+  334  sudo nano any.py 
+  335  ls /dev/serial*
+  336  python any.py 
+  337  sudo apt-get install minicom
+  338  minicom --device /dev/serial0 --baudrate 115200
+  339  minicom --device /dev/serial0 --baudrate 9600
+  340  minicom --device /dev/serial0 --baudrate 115200
+  341  sudo nano any
+  342  sudo nano any.py 
+  343  python any.py 
+  344  sudo nano any.py 
+  345  python any.py 
+  346  sudo nano any.py 
+  347  python any.py 
+  348  sudo nano any.py 
+  349  python any.py 
+  350  sudo nano any.py 
+  351  minicom --device /dev/serial0 --baudrate 115200
+  352  sudo nano a.py
+  353  python a.py 
+  354  sudo nano a.py
+  355  python a.py 
+  356  sudo nano a.py
+  357  python a.py 
+  358  sudo nano a.py
+  359  python a.py 
+  360  pip install tkinterwebview
+  361  pip3 install tkinterwebview
+  362  pip install pywebview
+  363  ls
+  364  python3 rm.py
+  365  python rm.py
+  366  pip install pywebview[qt]
+  367  python rm.py
+  368  pip install pywebview[gtk]
+  369  sudo apt-get install python3-gi
+  370  sudo  pip3 install -U googlemaps
+  371  ls 
+  372  cd NextGenDriving/
+  373  ls 
+  374  cat GPS_speed.txt q
+  375  cat GPS_speed.txt 
+  376  ls 
+  377  vim functions.py
+  378  sudo pip3 install gmplot
+  379  vim functions.py 
+  380  python3 functions.py 
+  381  ls 
+  382  vim functions.py 
+  383  python3 functions.py 
+  384  python3 firstmap.py 
+  385  rm -f firstmap.py 
+  386  vim functions.py 
+  387  python3 functions.py 
+  388  vim functions.py +6
+  389  python3 functions.py 
+  390  vim functions.py 
+  391  python3 functions.py 
+  392  sudo pip3 install tkintermapview pyperclip
+  393  vim gmap.py
+  394  python3 gmap.py 
+  395  vim gmap.py
+  396  python3 gmap.py 
+  397  vim gmap.py
+  398  python3 gmap.py 
+  399  vim gmap.py
+  400  python3 gmap.py 
+  401  vim gmap.py
+  402  python3 gmap.py 
+  403  vim gmap.py
+  404  python3 gmap.py 
+  405  vim gmap.py
+  406  python3 gmap.py 
+  407  vim launch.py 
+  408  python3 launch.py 
+  409  vim launch.py 
+  410  ls 
+  411  rm -f functions.py 
+  412  mv gmap.py customFunctions.py
+  413  vim customFunctions.py 
+  414  python3 customFunctions.py 
+  415  vim launch.py 
+  416  python3 launch.py 
+  417  vim customFunctions.py 
+  418  python3 launch.py 
+  419  vim customFunctions.py 
+  420  python3 launch.py 
+  421  vim customFunctions.py 
+  422  python3 launch.py 
+  423  vim customFunctions.py 
+  424  python3 launch.py 
+  425  ls 
+  426  vim customFunctions.py 
+  427  python3 launch.py 
+  428  vim customFunctions.py 
+  429  python3 launch.py 
+  430  vim customFunctions.py 
+  431  python3 launch.py 
+  432  vim customFunctions.py 
+  433  python3 launch.py 
+  434  vim customFunctions.py 
+  435  python3 customFunctions.py 
+  436  vim customFunctions.py 
+  437  python3 customFunctions.py 
+  438  vim customFunctions.py 
+  439  python3 launch.py 
+  440  vim customFunctions.py 
+  441  python3 launch.py 
+  442  vim customFunctions.py 
+  443  python3 launch.py 
+  444  vim customFunctions.py 
+  445  python3 launch.py 
+  446  vim customFunctions.py 
+  447  python3 launch.py 
+  448  vim launch.py 
+  449  python3 launch.py 
+  450  vim launch.py 
+  451  python3 launch.py 
+  452  vim customFunctions.py 
+  453  python3 launch.py 
+  454  vim customFunctions.py 
+  455  python3 launch.py 
+  456  vim customFunctions.py 
+  457  python3 launch.py 
+  458  vim customFunctions.py 
+  459  python3 launch.py 
+  460  vim customFunctions.py 
+  461  python3 launch.py 
+  462  vim customFunctions.py 
+  463  python3 launch.py 
+  464  vim customFunctions.py 
+  465  python3 launch.py 
+  466  vim customFunctions.py 
+  467  python3 launch.py 
+  468  vim customFunctions.py 
+  469  python3 launch.py 
+  470  vim customFunctions.py 
+  471  python3 launch.py 
+  472  vim customFunctions.py 
+  473  python3 launch.py 
+  474  sudo pip3 install tkinterweb
+  475  vim customFunctions.py 
+  476  python3 launch.py 
+  477  vim launch.py 
+  478  python3 launch.py 
+  479  vim launch.py 
+  480  python3 launch.py 
+  481  vim launch.py 
+  482  python3 launch.py 
+  483  vim launch.py 
+  484  python3 launch.py 
+  485  ls 
+  486  vim launch.py 
+  487  python3 launch.py 
+  488  vim launch.py 
+  489  python3 launch.py 
+  490  ls -l /home/pi/NextGenDriving/gui/infotainment/netflix.png
+  491  vim launch.py 
+  492  python3 launch.py 
+  493  ls 
+  494  python3 mainWindow.py 
+  495  python3 mainAppWindow.py 
+  496  vim settings.py 
+  497  ps -ef
+  498  sudo kill -9 42942
+  499  ls 
+  500  cd gui/infotainment/
+  501  ls 
+  502  rmn -f any.py rm.py r.py 
+  503  rm -f any.py rm.py r.py 
+  504  ls 
+  505  pwd
+  506  display netflix.png 
+  507  cvd .
+  508  cd ../..
+  509  ls 
+  510  vim customFunctions.py 
+  511  python3 customFunctions.py 
+  512  vim customFunctions.py 
+  513  python3 customFunctions.py 
+  514  vim customFunctions.py 
+  515  python3 launch.py 
+  516  vim customFunctions.py 
+  517  python3 launch.py 
+  518  vim customFunctions.py +11
+  519  python3 launch.py 
+  520  vim customFunctions.py +14
+  521  python3 launch.py 
+  522  vim customFunctions.py +14
+  523  python3 launch.py 
+  524  vim customFunctions.py +14
+  525  python3 launch.py 
+  526  vim customFunctions.py +14
+  527  python3 launch.py 
+  528  vim customFunctions.py +14
+  529  python3 launch.py 
+  530  vim customFunctions.py +14
+  531  python3 launch.py 
+  532  vim customFunctions.py +14
+  533  python3 launch.py 
+  534  vim customFunctions.py +14
+  535  python3 launch.py 
+  536  vim customFunctions.py +14
+  537  python3 launch.py 
+  538  vim customFunctions.py +14
+  539  python3 launch.py 
+  540  vim customFunctions.py +14
+  541  python3 launch.py 
+  542  vim customFunctions.py +14
+  543  python3 launch.py 
+  544  vim customFunctions.py +14
+  545  python3 launch.py 
+  546  vim customFunctions.py +14
+  547  python3 launch.py 
+  548  vim customFunctions.py +14
+  549  python3 launch.py 
+  550  vim customFunctions.py +14
+  551  python3 launch.py 
+  552  vim customFunctions.py +14
+  553  python3 launch.py 
+  554  vim customFunctions.py +14
+  555  python3 launch.py 
+  556  vim customFunctions.py +14
+  557  python3 launch.py 
+  558  vim customFunctions.py 
+  559  python3 launch.py 
+  560  vim customFunctions.py 
+  561  python3 launch.py 
+  562  vim settings.py 
+  563  python3 launch.py 
+  564  vim launch.py 
+  565  python3 launch.py 
+  566  vim launch.py 
+  567  python3 launch.py 
+  568  vim launch.py 
+  569  python3 launch.py 
+  570  vim launch.py 
+  571  python3 launch.py 
+  572  vim launch.py 
+  573  python3 launch.py 
+  574  sudo pip3 install tkhtml
+  575  sudo apt-get install tk-html3
+  576  python3 launch.py 
+  577  ls -l /usr/local/lib/python3.9/dist-packages/tkinterweb/tkhtml/Linux/64-bit/Tkhtml30.so": /usr/local/lib/python3.9/dist-packages/tkinterweb/tkhtml/Linux/64-bit/Tkhtml30.so
+  578  ls -l /usr/local/lib/python3.9/dist-packages/tkinterweb/tkhtml/Linux/64-bit/Tkhtml30.so
+  579  apt-get update
+  580  sudo apt-get update
+  581  vim customFunctions.py 
+  582  sudo pip3 install pillow
+  583  sudo pip3 install tkinterweb
+  584  vim customFunctions.py 
+  585  python3 launch.py 
+  586  sudo python3 launch.py 
+  587  python3
+  588  which python
+  589  python launch.py 
+  590  ls -l /usr/local/lib/python3.9/dist-packages/tkinterweb/tkhtml/Linux/64-bit/Tkhtml30.so
+  591  sudo pip3 install tkinterhtml
+  592  python3 launch.py 
+  593  ldd /usr/local/lib/python3.9/dist-packages/tkinterweb/tkhtml/Linux/64-bit/Tkhtml30.so
+  594  sudo pip3 install pywebview
+  595  vim customFunctions.py 
+  596  python3 launch.py 
+  597  vim test.py 
+  598  python3 test.py 
+  599  vim test.py 
+  600  rm -f test.py 
+  601  vim test.py
+  602  python3 test.py 
+  603  vim test.py
+  604  python3 test.py 
+  605  python2.7 test.py 
+  606  python2 test.py 
+  607  python test.py 
+  608  sudo apt-get install python
+  609  python test.py 
+  610  python2.7 test.py 
+  611  sudo pip3 install python-tk
+  612  sudo pip2 install python-tk
+  613  sudo apt-get install python2-tk
+  614  python test.py 
+  615  vim test.py 
+  616  python3 test.py 
+  617  python test.py 
+  618  python3 test.py 
+  619  vim test.py 
+  620  python3 test.py 
+  621  vim test.py 
+  622  vim new.py
+  623  python3 new.py 
+  624  vim new.py 
+  625  python3 new.py 
+  626  vim new.py  +12
+  627  python3 new.py 
+  628  vim new.py  +12
+  629  vim new.py 
+  630  python3 new.py 
+  631  sudo apt-get install pyqt
+  632  sudo apt-get install pyqt-webkit
+  633  ls 
+  634  vim test.py 
+  635  python3 test.py 
+  636  python2 test.py 
+  637  sudo pip2 install tkinterweb
+  638  sudo apt-get install python-pip
+  639  sudo apt-get install python2-pip
+  640  sudo pip install python2-pip
+  641  sudo pip install pip2
+  642  sudo pip install tkinterweb
+  643  python test.py 
+  644  python2.7 test.py 
+  645  python3 test.py 
+  646  vim /usr/local/lib/python3.9/dist-packages/tkinterweb/utilities.py
+  647  vim /usr/local/lib/python3.9/dist-packages/tkinterweb/utilities.py +845
+  648  sudo vim /usr/local/lib/python3.9/dist-packages/tkinterweb/utilities.py +845
+  649  python3 test.py 
+  650  vim /usr/local/lib/python3.9/dist-packages/tkinterweb/utilities.py +845
+  651  sudo vim /usr/local/lib/python3.9/dist-packages/tkinterweb/utilities.py +845
+  652  vim /usr/local/lib/python3.9/dist-packages/tkinterweb/utilities.py [B
+  653  sudo vim /usr/local/lib/python3.9/dist-packages/tkinterweb/utilities.py +845
+  654  python3 test.py 
+  655  ls -l /usr/local/lib/python3.9/dist-packages/tkinterweb/tkhtml/Linux/64-bit/Tkhtml30.so 
+  656  sudo vim /usr/local/lib/python3.9/dist-packages/tkinterweb/utilities.py +845
+  657  python3 test.py 
+  658  sudo apt-get install libopenjp2-7
+  659  sudo apt autoremove
+  660  sudo apt-get install tkhtml3
+  661  sudo pip3 install tkhtml3
+  662  sudo pip3 install tkhtml
+  663  load /usr/local/lib/python3.9/dist-packages/tkinterweb/tkhtml/Linux/64-bit/Tkhtml30.so
+  664  sudo apt-get install load
+  665  tclsh
+  666  git clone https://github.com/olebole/tkhtml3
+  667  cd tkhtml3/
+  668  ls 
+  669  ./configure
+  670  sudo ./configure
+  671  chmod +x configure
+  672  ./configure 
+  673  cat COMPILE.txt 
+  674  mkdir bld
+  675  ls
+  676  make -f ./main.mk
+  677  ls
+  678  make
+  679  make -f ./main.mk
+  680  make install
+  681  cd src/
+  682  ls 
+  683  cd ..
+  684  ls 
+  685  cd tests/
+  686  ls 
+  687  cd ..
+  688  ls 
+  689  cd t
+  690  cd tools/
+  691  ls 
+  692  cd ..
+  693  ls 
+  694  ./configure 
+  695  ./configure --help
+  696  ls 
+  697  ./configure --with-tcl tclconfig/
+  698  ./configure --with-tcl tclconfig
+  699  ./configure --with-tcl tclconfig --target arm
+  700  ./configure --with-tcl tclconfig --build --target arm
+  701  uname -a
+  702  ./configure --with-tcl tclconfig --build --target aarch64
+  703  ./configure --with-tcl tclconfig  --target aarch64
+  704  ls
+  705  cd tclconfig/
+  706  ls 
+  707  sh install-sh
+  708  sh install-sh tcl.m4
+  709  cd ..
+  710  ls 
+  711  cd src/
+  712  ls 
+  713  cd ..
+  714  ls 
+  715  cat COMPILE.txt 
+  716  ./configure --host=aarch64
+  717  ./configure --host=aarch64 --with-tcl .tclconfig
+  718  ./configure --host=aarch64 --with-tcl ./tclconfig
+  719  ls
+  720  cd ..
+  721  ls 
+  722  rm -rf tkhtml3/
+  723  python3 launch.py 
+  724  raspi-config
+  725  sudo raspi-config
+  726  ls
+  727  sudo raspi-config
+  728  cd NextGenDriving/
+  729  ls
+  730  vim object_detection_video.py 
+  731  python3 object_detection_video.py 
+  732  python3 object_detection_video.py --video 00380017.AVI 
+  733  ls
+  734  cd India_model
+  735  ls 
+  736  cd ..
+  737  python3 object_detection_video.py --vide
+  738  python3 object_detection_video.py --video 00380017.AVI --modeldir India_model/detect.tflite --labels India_model/labelmap.txt 
+  739  python3 object_detection_video.py --video 00380017.AVI --modeldir India_model/ --labels India_model/labelmap.txt 
+  740  python3 object_detection_video.py --video 00380017.AVI --modeldir India_model/ --labels India_model/
+  741  python3 object_detection_video.py --video 00380017.AVI --modeldir India_model/
+  742  ls 
+  743  vim launch.py 
+  744  vim settings.py 
+  745  sudo pip3 install tkvideoplayer
+  746  vim customFunctions.py 
+  747  ls 
+  748  cd gui/
+  749  ls
+  750  mkdir videos
+  751  ls 
+  752  cp ../00380017.AVI videos/
+  753  cp ../20210129_143946A.mp4 videos/
+  754  cd ..
+  755  ls 
+  756  vim launch.py 
+  757  python3 launch.py 
+  758  vim launch.py +145
+  759  python3 launch.py 
+  760  vim launch.py +145
+  761  python3 launch.py 
+  762  vim customFunctions.py +74
+  763  python3 launch.py 
+  764  vim customFunctions.py +72
+  765  python3 launch.py 
+  766  vim customFunctions.py +72
+  767  python3 launch.py 
+  768  vim customFunctions.py +90
+  769  python3 launch.py 
+  770  vim customFunctions.py +90
+  771  python3 launch.py 
+  772  vim customFunctions.py +91
+  773  python3 launch.py 
+  774  vim customFunctions.py +91
+  775  python3 launch.py 
+  776  vim customFunctions.py +91
+  777  python3 launch.py 
+  778  vim customFunctions.py +91
+  779  python3 launch.py 
+  780  vim customFunctions.py +91
+  781  python3 launch.py 
+  782  vim customFunctions.py +91
+  783  python3 launch.py 
+  784  vim customFunctions.py +108
+  785  python3 launch.py 
+  786  vim customFunctions.py +108
+  787  python3 launch.py 
+  788  vim launch.py 
+  789  python3 launch.py 
+  790  vim launch.py 
+  791  python3 launch.py 
+  792  vim launch.py 
+  793  python3 launch.py 
+  794  vim launch.py 
+  795  python3 launch.py 
+  796  vim launch.py 
+  797  python3 launch.py 
+  798  cd NextGenDriving/
+  799  python3 launch.py 
+  800  vim launch.py 
+  801  python3 launch.py 
+  802  vim launch.py 
+  803  python3 launch.py 
+  804  vim launch.py 
+  805  python3 launch.py 
+  806  vim launch.py 
+  807  python3 launch.py 
+  808  vim launch.py 
+  809  python3 launch.py 
+  810  vim launch.py 
+  811  python3 launch.py 
+  812  ls
+  813  cd ..
+  814  ls 
+  815  cd tflite1/
+  816  ls 
+  817  source tflite1-env/bin/activate
+  818  cd ..
+  819  cd NextGenDriving/
+  820  ls 
+  821  python3  collison_warning.py 
+  822  cd NextGenDriving/
+  823  vim settings.py 
+  824  python3 launch.py 
+  825  vim customFunctions.py 
+  826  python3 launch.py 
+  827  vim customFunctions.py +100
+  828  python3 launch.py 
+  829  vim customFunctions.py +100
+  830  python3 launch.py 
+  831  vim customFunctions.py +100
+  832  python3 launch.py 
+  833  vim customFunctions.py +100
+  834  python3 launch.py 
+  835  ls -l /home/pi/NextGenDriving/gui/Player_icons/open.png
+  836  vim customFunctions.py +100
+  837  vim customFunctions.py 
+  838  python3 launch.py 
+  839  vim customFunctions.py 
+  840  python3 launch.py 
+  841  vim customFunctions.py 
+  842  python3 launch.py 
+  843  vim customFunctions.py +60
+  844  python3 launch.py 
+  845  vim customFunctions.py +60
+  846  python3 launch.py 
+  847  vim customFunctions.py +60
+  848  python3 launch.py 
+  849  vim customFunctions.py +60
+  850  sudo pip3 install psutil
+  851  vim customFunctions.py 
+  852  python3 launch.py 
+  853  vim customFunctions.py 
+  854  python3 launch.py 
+  855  vim customFunctions.py 
+  856  python3 launch.py 
+  857  vim customFunctions.py 
+  858  python3 launch.py 
+  859  vim launch.py 
+  860  python3 launch.py 
+  861  ls 
+  862  vim customFunctions.py 
+  863  vim launch.py 
+  864  ls -l /home/pi/NextGenDriving/gui/Player_icons/open.png
+  865  vim launch.py 
+  866  python3 launch.py 
+  867  vim launch.py 
+  868  python3 launch.py 
+  869  vim launch.py 
+  870  python3 launch.py 
+  871  vim launch.py 
+  872  python3 launch.py 
+  873  vim launch.py 
+  874  python3 launch.py 
+  875  vim launch.py 
+  876  python3 launch.py 
+  877  vim launch.py 
+  878  python3 launch.py 
+  879  vim launch.py 
+  880  python3 launch.py 
+  881  vim launch.py 
+  882  python3 launch.py 
+  883  vim customFunctions.py 
+  884  python3 launch.py 
+  885  vim customFunctions.py 
+  886  python3 launch.py 
+  887  vim customFunctions.py 
+  888  python3 launch.py 
+  889  vim customFunctions.py 
+  890  python3 launch.py 
+  891  vim customFunctions.py 
+  892  python3 launch.py 
+  893  vim customFunctions.py 
+  894  python3 launch.py 
+  895  vim customFunctions.py 
+  896  python3 launch.py 
+  897  vim customFunctions.py 
+  898  vim launch.py 
+  899  python3 launch.py 
+  900  vim launch.py 
+  901  python3 launch.py 
+  902  vim launch.py 
+  903  python3 launch.py 
+  904  vim launch.py 
+  905  python3 launch.py 
+  906  vim launch.py 
+  907  python3 launch.py 
+  908  vim launch.py 
+  909  python3 launch.py 
+  910  vim launch.py 
+  911  python3 launch.py 
+  912  vim launch.py 
+  913  python3 launch.py 
+  914  vim launch.py 
+  915  python3 launch.py 
+  916  vim launch.py 
+  917  python3 launch.py 
+  918  vim launch.py 
+  919  python3 launch.py 
+  920  vim launch.py 
+  921  python3 launch.py 
+  922  vim launch.py 
+  923  python3 launch.py 
+  924  vim launch.py 
+  925  python3 launch.py 
+  926  vim launch.py 
+  927  python3 launch.py 
+  928  vim launch.py 
+  929  python3 launch.py 
+  930  vim launch.py 
+  931  python3 launch.py 
+  932  vim launch.py 
+  933  python3 launch.py 
+  934  vim launch.py 
+  935  python3 launch.py 
+  936  vim launch.py 
+  937  python3 launch.py 
+  938  vim launch.py 
+  939  python3 launch.py 
+  940  vim launch.py 
+  941  git clone https://github.com/Unmesh28/NextGenDrivingNew/
+  942  ls 
+  943  cd NextGenDrivingNew/
+  944  cp -rf ../gui/ .
+  945  cp ../customFunctions.py .
+  946  cp ../settings.py .
+  947  cp ../launch.py .
+  948  cp ../requirements.txt .
+  949  cp ../gps_new.py .
+  950  cp ../collis* .
+  951  cp ../object_detection_video.py .
+  952  ls
+  953  git add *
+  954  git add .
+  955  ls
+  956  vim install.sh
+  957  history > cmd.txt
