@@ -51,6 +51,12 @@ VIDEO_NAME = './00380017.AVI'
 min_conf_threshold = float(0.5)
 use_TPU = False
 
+clicked = False
+def onMouse(event, x, y, flags, param):
+    global clicked
+    if event == cv2.EVENT_LBUTTONUP:
+        clicked = True
+
 # Import TensorFlow libraries
 # If tflite_runtime is installed, import interpreter from tflite_runtime, else import from regular tensorflow
 # If using Coral Edge TPU, import the load_delegate library
@@ -74,7 +80,9 @@ if use_TPU:
 CWD_PATH = os.getcwd()
 
 # Path to video file
-VIDEO_PATH = os.path.join(CWD_PATH,VIDEO_NAME)
+VIDEO_PATH = os.path.join(CWD_PATH,'../',VIDEO_NAME)
+print("VIDEO_PATH : ", VIDEO_PATH)
+
 # Output_video_path = os.path.join(CWD_PATH,VIDEO_NAME)
 
 # Path to .tflite file, which contains the model that is used for object detection
@@ -130,7 +138,6 @@ imW = video.get(cv2.CAP_PROP_FRAME_WIDTH)
 imH = video.get(cv2.CAP_PROP_FRAME_HEIGHT)
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 result = cv2.VideoWriter("Collision_warning_demo.avi", fourcc, 5, (1920, 1080))
-
 
 while(video.isOpened()):
     
@@ -225,7 +232,7 @@ while(video.isOpened()):
                 #     print('collision! Alert!')
                     
         # All the results have been drawn on the frame, so it's time to display it.
-        cv2.imshow('FCW + PCW + MBCW + ACW', cv2.pyrDown(frame))
+        cv2.imshow('Live_Detection', cv2.pyrDown(frame))
         # plt.show()
         
         result.write(frame)
@@ -235,6 +242,8 @@ while(video.isOpened()):
 
         # Press 'q' to quit
         if cv2.waitKey(1) == ord('q'):
+            break
+        if cv2.getWindowProperty('just_a_window', cv2.WND_PROP_VISIBLE) > -1 and clicked:
             break
 
 # Clean up

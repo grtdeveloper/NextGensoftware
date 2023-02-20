@@ -94,8 +94,8 @@ def checkIfProcessRunning(processName):
     return False;
 
 
-def checkStatus(mainWin):
-    if checkIfProcessRunning('chrome'):
+def checkStatus(mainWin,process):
+    if checkIfProcessRunning(process):
         threading.Timer(2, lambda: checkStatus(mainWin)).start()
         print( "Running ")
         return True
@@ -116,7 +116,7 @@ def launchPlayer(mainWin, link):
     driver.get(link)
     driver.quit()
     #webbrowser.open_new(link,fullscreen=True)
-    checkStatus(mainWin)
+    checkStatus(mainWin, 'chrome')
     #playWin.mainloop()
 
 
@@ -228,10 +228,8 @@ def adasGui(mainWin):
         if int(adas_Choice) == 1:
             settings.adas_Choice="Live"
             window.destroy()
-            newWindow = Toplevel()
-            
-            
-            return 
+            checkStatus(mainWin, 'python3 collison_warning.py')
+
        elif int(adas_Choice) == 2:
             settings.adas_Choice="Settings"
 
