@@ -203,3 +203,49 @@ def showVideo(dir_Video,mainWin):
     window.protocol("WM_DELETE_WINDOW", lambda: on_closing( window, mainWin))
     window.mainloop()
     return
+
+def adasOpr(adasWin,):
+
+
+    return
+
+
+def adasGui(mainWin):
+    mainWin.withdraw()
+
+    window = Toplevel()
+    window.resizable(0,0)
+
+    window.title(" ------ ADAS Options ------ ")
+    WIDTH, HEIGHT = window.winfo_screenwidth(),window.winfo_screenheight()
+    window.geometry("%dx%d+0+0" % (WIDTH, HEIGHT-100))
+    window.configure(bg="light blue")
+    
+    def selection(window, mainWin):
+        adas_Choice = int(radio.get())
+        print(" Selected Option for Adas : ", settings.adas_Choice)
+        
+        if int(adas_Choice) == 1:
+            settings.adas_Choice="Live"
+            window.destroy()
+            newWindow = Toplevel()
+            
+            
+            return 
+       elif int(adas_Choice) == 2:
+            settings.adas_Choice="Settings"
+
+        
+
+    radio = IntVar()
+
+    r1 = Radiobutton(window, text="Live Adas", bg="light blue", font=settings.adasFont, variable=radio, value=1, command=selection)
+    r1.pack(anchor=N,pady=50)
+
+    r2 = Radiobutton(window, text="Settings", bg="light blue", font=settings.adasFont, variable=radio, value=2, command=selection)
+    r2.pack(anchor=N, pady=50)
+
+
+    window.protocol("WM_DELETE_WINDOW", lambda: on_closing( window, mainWin))
+    window.mainloop()
+    return

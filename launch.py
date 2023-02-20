@@ -6,7 +6,7 @@ import os
 import os.path
 import PIL.Image as Image
 from ui import *
-from customFunctions import showLocation, on_closing, launchPlayer, showVideo
+from customFunctions import showLocation, on_closing, launchPlayer, showVideo, adasGui
 import threading
 
 def showInfotain(mainWin):
@@ -141,7 +141,7 @@ def create_gui():
     lblHolder.place(x=0,y=int(HEIGHT/2))  # Place label in center of parent.
     '''
 
-    settings.btn_Adas = Button(root,image=settings.imgAdas, border="0", bg="#0C3744", highlightthickness=0,borderwidth=0,bd=0,activeforeground='#0C3744', activebackground='#0C3744', text="ADAS",font= settings.myFont)
+    settings.btn_Adas = Button(root,image=settings.imgAdas, border="0", bg="#0C3744", highlightthickness=0,borderwidth=0,bd=0,activeforeground='#0C3744', activebackground='#0C3744', text="ADAS",font= settings.myFont, command = lambda: adasGui(root,))
     settings.btn_Video = Button(root,image=settings.imgVideo,border="0" ,bg="#0C3744" , highlightthickness=0,bd=0, activeforeground='#0C3744', activebackground='#0C3744', text= "VIDEO REC", font= settings.myFont, command= lambda :showVideo(os.path.join(settings.BASE_DIR,settings.DIR_VIDEO_FILES), root))
     settings.btn_Gps = Button(root,image=settings.imgGps, border="0", bg="#0C3744" ,highlightthickness=0 ,bd=0, activeforeground='#0C3744', activebackground= '#0C3744',text = "GPS", font=settings.myFont,command=lambda: gpsFunc(root,))
     settings.btn_Infotainment = Button(root,image=settings.imgEnt,border="0", bg="#0C3744" ,highlightthickness=0 ,bd=0,activeforeground='#0C3744',activebackground='#0C3744', text= "INFOTAINMENT", font=settings.myFont, command=lambda: showInfotain(root))

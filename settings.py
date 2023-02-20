@@ -84,6 +84,7 @@ col_warn_Pedestrian="OFF"
 col_warn_Speed="OFF"
 
 play_Options=""
+adas_Choice=""
 
 gpsLat=12.9746179
 gpsLong=77.691753
@@ -96,3 +97,4 @@ LINK_NETFLIX="https://www.netflix.com/in/Login"
 LINK_SPOTIFY="https://accounts.spotify.com/en/login"
 
 myFont= ('Helvetica 15 bold')
+adasFont= ('Helvetica 25 bold')
