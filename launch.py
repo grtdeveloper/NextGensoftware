@@ -6,8 +6,25 @@ import os
 import os.path
 import PIL.Image as Image
 from ui import *
-from customFunctions import showLocation, on_closing, launchPlayer, showVideo, adasGui
+from customFunctions import showLocation, on_closing, launchPlayer, showVideo, adasGui, getSpeed, RoundedButton
 import threading
+import signal
+import time
+import sys
+ 
+def handler(signum, frame):
+    res = input("Ctrl-c was pressed. Exiting!!! ")
+    settings.status_GPS=False
+    sys.exit()
+ 
+def closePgm():
+    settings.status_GPS=False
+    print( " Exiting Completely ")
+    sys.exit()
+
+def updateSpeed(btnSpeed):
+    btnSpeed.configure(text = str(settings.gpsSpeed) + " Km/hr")
+    return
 
 def showInfotain(mainWin):
     
@@ -151,10 +168,20 @@ def create_gui():
     settings.btn_Gps.grid(row=3, column=2, padx=100, pady=400)
     settings.btn_Infotainment.grid(row=3, column=3, padx=100, pady=400)
     
+    btnSpeed = RoundedButton(root,text=str(settings.gpsSpeed) + "km/hr", radius=20, btnbackground="white", btnforeground="black")
+    btnSpeed.place(x=WIDTH-310, y=HEIGHT-180)
+
+    threading.Timer(1, lambda: updateSpeed(btnSpeed)).start()
+
+    root.protocol("WM_DELETE_WINDOW", closePgm)
     root.mainloop()
 
 
 if __name__ == '__main__':
+    signal.signal(signal.SIGINT, handler)
+
+    speedThr = threading.Thread(target=getSpeed)
+    speedThr.start()
     create_gui()
 
 

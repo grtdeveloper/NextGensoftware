@@ -74,6 +74,7 @@ btn_Spotify=None
 destTxt=None
 mainFrame=None
 showMap=False
+status_GPS=True
 
 obj_detect_vid="OFF"
 speed_limit=0
@@ -88,6 +89,7 @@ adas_Choice=""
 
 gpsLat=12.9746179
 gpsLong=77.691753
+gpsSpeed=0
 dest_address="" 
 prev_gpsLat=12.9746179
 prev_gpsLong=77.691753
