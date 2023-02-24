@@ -77,7 +77,7 @@ showMap=False
 status_GPS=True
 
 obj_detect_vid="OFF"
-speed_limit=0
+speed_Limit=0
 col_warn_Animal="OFF"
 col_warn_Car="OFF"
 col_warn_Bike="OFF"
@@ -86,6 +86,7 @@ col_warn_Speed="OFF"
 
 play_Options=""
 adas_Choice=""
+enablebackVideo=False
 selected_Option=[]
 
 gpsLat=12.9746179
@@ -102,4 +103,5 @@ LINK_NETFLIX="https://www.netflix.com/in/Login"
 LINK_SPOTIFY="https://accounts.spotify.com/en/login"
 
 myFont= ('Helvetica 15 bold')
-adasFont= ('Helvetica 25 bold')
+optionFont= ('Helvetica 25 bold')
+adasFont= ('Helvetica 45 bold')
