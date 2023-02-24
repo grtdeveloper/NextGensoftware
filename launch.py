@@ -23,7 +23,7 @@ def closePgm():
     sys.exit()
 
 def updateSpeed(btnSpeed):
-    btnSpeed.configure(text = str(settings.gpsSpeed) + " Km/hr")
+    btnSpeed.config(text = str(settings.gpsSpeed) + " Km/hr")
     return
 
 def showInfotain(mainWin):

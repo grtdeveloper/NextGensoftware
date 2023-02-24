@@ -86,6 +86,7 @@ col_warn_Speed="OFF"
 
 play_Options=""
 adas_Choice=""
+selected_Option=[]
 
 gpsLat=12.9746179
 gpsLong=77.691753
@@ -93,6 +94,8 @@ gpsSpeed=0
 dest_address="" 
 prev_gpsLat=12.9746179
 prev_gpsLong=77.691753
+
+
 
 LINK_YOUTUBE="https://www.youtube.com/watch?v=Mwrhf7TuUPw"
 LINK_NETFLIX="https://www.netflix.com/in/Login"

@@ -323,24 +323,36 @@ def adasGui(mainWin):
     
     def selection(window, mainWin):
         adas_Choice = int(radio.get())
-        print(" Selected Option for Adas : ", settings.adas_Choice)
+        print(" Selected Option for Adas : ", adas_Choice)
         
         if int(adas_Choice) == 1:
             settings.adas_Choice="Live"
+            print(" Selected Option for Adas : ", settings.adas_Choice)
             window.destroy()
             checkStatus(mainWin, 'python3 collison_warning.py')
 
         elif int(adas_Choice) == 2:
             settings.adas_Choice="Settings"
-
-        
+            print(" Selected Option for Adas : ", settings.adas_Choice)
+            optionSel = ['Animal', 'Bike', 'Car', 'Pedestrian', 'Speed']
+            newWindow = Toplevel()
+            newWindow.configure(bg="light blue")
+            newWindow.geometry("700x400")
+            settings.selected_Option.clear()
+            for x in range(len(optionSel)):
+                l = Checkbutton(newWindow, bg="light blue", text=optionSel[x], variable=optionSel[x],command=lambda x=optionSel[x]:settings.selected_Option.append(x), font= settings.myFont)
+                l.pack(anchor = 'w', padx=50, pady=100)
+            Button(newWindow,text="Ok",bg="light blue",command=lambda: [print(settings.selected_Option),newWindow.destroy()]).pack()
+            newWindow.attributes('-topmost',True)
+            newWindow.mainloop()
+            on_closing(window,mainWin)
 
     radio = IntVar()
 
-    r1 = Radiobutton(window, text="Live Adas", bg="light blue", font=settings.adasFont, variable=radio, value=1, command=selection)
+    r1 = Radiobutton(window, text="Live Adas", bg="light blue", font=settings.adasFont, variable=radio, value=1, command= lambda: selection(window, mainWin))
     r1.pack(anchor=N,pady=50)
 
-    r2 = Radiobutton(window, text="Settings", bg="light blue", font=settings.adasFont, variable=radio, value=2, command=selection)
+    r2 = Radiobutton(window, text="Settings", bg="light blue", font=settings.adasFont, variable=radio, value=2, command= lambda: selection(window, mainWin))
     r2.pack(anchor=N, pady=50)
 
 
