@@ -4,6 +4,8 @@ from tkinter import *
 #### Folders ####
 
 
+OBJECT_DETECT_BIN_PATH="/home/pi/NextGenDriving/NextGensoftware/"
+
 BASE_DIR=os.getcwd() + "/gui"
 THEME_DIR="background/"
 BLUE_ICON_DIR="blue_images/"
@@ -96,7 +98,8 @@ dest_address=""
 prev_gpsLat=12.9746179
 prev_gpsLong=77.691753
 
-
+collision_object=""
+start_stop_back_detection=False
 
 LINK_YOUTUBE="https://www.youtube.com/watch?v=Mwrhf7TuUPw"
 LINK_NETFLIX="https://www.netflix.com/in/Login"

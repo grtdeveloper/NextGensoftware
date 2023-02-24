@@ -24,7 +24,7 @@ import time
 from shapely.geometry import Polygon
 # import matplotlib.pyplot as plt
 import pygame
-
+import settings
 
 
 # # Define and parse input arguments
@@ -222,6 +222,8 @@ while(video.isOpened()):
                 
                 # Draw label
                 object_name = labels[int(classes[i])] # Look up object name from "labels" array using class index
+                settings.collision_object= ""
+                settings.collision_object = object_name
                 label = '%s: %d%%' % (object_name, int(scores[i]*100)) # Example: 'person: 72%'
                 labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2) # Get font size
                 label_ymin = max(ymin, labelSize[1] + 10) # Make sure not to draw label too close to top of window

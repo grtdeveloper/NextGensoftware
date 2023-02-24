@@ -22,6 +22,33 @@ def closePgm():
     print( " Exiting Completely ")
     sys.exit()
 
+def updateIcons(btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed):
+    if settings.enablebackVideo is True:
+        if "animal" in settings.optionSel.lower() and "animal" in settings.collision_object.lower():
+            btn_Animal.configure(bg="red")
+        
+        if "bike" in settings.optionSel.lower() and "bike" in settings.collision_object.lower():
+            btn_Bike.configure(bg="red")
+        
+        if "car" in settings.optionSel.lower() and "car" in settings.collision_object.lower():
+            btn_Car.configure(bg="red")
+        
+        if "pedestrian" in settings.optionSel.lower() and "pedestrian" in settings.collision_object.lower():
+            btn_Pedestrian.configure(bg="red")
+        
+        if "speed" in settings.optionSel.lower():
+            if int(settings.speed_Limit) == int(settings.gpsSpeed) :
+                btn_Speed.configure(bg="yellow")
+                print( " Speed Limit Matched with the Set speed ")
+            elif int(settings.speed_Limit) < int(settings.gpsSpeed) :
+                btn_Speed.configure(bg="red")
+                print( " Speed Limit Exceeded the Set speed ")
+            else: 
+                print(" Vehicle speed is below threshold ")
+
+    return
+
+
 def updateSpeed(btnSpeed):
     btnSpeed.config(text = str(settings.gpsSpeed) + " Km/hr")
     return
@@ -170,6 +197,8 @@ def create_gui():
     
     btnSpeed = RoundedButton(root,text=str(settings.gpsSpeed) + "km/hr", radius=20, btnbackground="white", btnforeground="black")
     btnSpeed.place(x=WIDTH-310, y=HEIGHT-180)
+
+    threading.Timer(1, lambda: updateIcons(settings.btn_Animal, settings.btn_Bike, settings.btn_Car, settings.btn_Pedestrian, settings.btn_Speed)).start()
 
     threading.Timer(1, lambda: updateSpeed(btnSpeed)).start()
 

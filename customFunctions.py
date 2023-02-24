@@ -308,6 +308,20 @@ def optionVideo(value):
     settings.enablebackVideo=value
     return
 
+def playbackVid():
+    ### Put here path of the file / script to be launched
+    command_list = "/usr/bin/python3 " 
+    command_list += OBJECT_DETECT_BIN_PATH
+    command_list +="collison_warning.py &"
+    if settings.enablebackVideo:
+        p = subprocess.Popen(command_list)
+    
+
+def checkOptions(optionVideo ,newWindow, mainWin):
+    if optionVideo is True:
+        playbackVid()
+        on_closing(newWindow, mainWin)
+
 
 def adasGui(mainWin):
     mainWin.withdraw()
@@ -373,7 +387,7 @@ def adasGui(mainWin):
                 l.grid(row=3, column=0 + diffX, padx=50, pady=100)
                 diffX += 1
 
-            Button(newWindow,text="Submit",bg="light blue",font= settings.adasFont, command=lambda: [print(settings.selected_Option),newWindow.destroy(), on_closing(window,mainWin)]).grid(row=4,column=2, padx=50, pady=50)
+            Button(newWindow,text="Submit",bg="light blue",font= settings.adasFont, command=lambda: [print(settings.selected_Option),newWindow.destroy(), checkOptions( settings.enablebackVideo ,newWindow, mainWin)]).grid(row=4,column=2, padx=50, pady=50)
             newWindow.attributes('-topmost',True)
             newWindow.protocol("WM_DELETE_WINDOW", lambda: on_closing( newWindow, window))
             newWindow.mainloop()
