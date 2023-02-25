@@ -97,6 +97,7 @@ gpsSpeed=0
 dest_address="" 
 prev_gpsLat=12.9746179
 prev_gpsLong=77.691753
+max_vehicle_speed=80
 
 collision_object=""
 start_stop_back_detection=False

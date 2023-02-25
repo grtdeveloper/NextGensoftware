@@ -22,29 +22,53 @@ def closePgm():
     print( " Exiting Completely ")
     sys.exit()
 
-def updateIcons(btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed):
+def updateIcons(btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon):
+    imgFile = ""
     if settings.enablebackVideo is True:
-        if "animal" in settings.optionSel.lower() and "animal" in settings.collision_object.lower():
-            btn_Animal.configure(bg="red")
+        if "animal" in settings.optionSel.lower():
+            if "animal" in settings.collision_object.lower():
+                imgFile = os.path.join(red_dirIcon, settings.FILE_ANIMAL)
+            else:
+                imgFile = os.path.join(blue_dirIcon, settings.FILE_ANIMAL)
+            settings.imgAnimal = ImageTk.PhotoImage(Image.open(imgFile).resize((150,150), Image.ANTIALIAS))
+            btn_Animal.config(image=settings.imgAnimal)
+
+        if "bike" in settings.optionSel.lower():
+            if "bike" in settings.collision_object.lower():
+                imgFile = os.path.join(red_dirIcon, settings.FILE_BIKE)
+            else:
+                imgFile = os.path.join(blue_dirIcon, settings.FILE_BIKE)
+            settings.imgBike = ImageTk.PhotoImage(Image.open(imgFile).resize((150,150), Image.ANTIALIAS))
+            btn_Bike.config(image=settings.imgBike)
         
-        if "bike" in settings.optionSel.lower() and "bike" in settings.collision_object.lower():
-            btn_Bike.configure(bg="red")
+        if "car" in settings.optionSel.lower() :
+            if "car" in settings.collision_object.lower():
+                imgFile = os.path.join(red_dirIcon, settings.FILE_CAR)
+            else:
+                imgFile = os.path.join(blue_dirIcon, settings.FILE_CAR)
+            settings.imgCar = ImageTk.PhotoImage(Image.open(imgFile).resize((150,150), Image.ANTIALIAS))
+            btn_Car.config(image=settings.imgCar)
         
-        if "car" in settings.optionSel.lower() and "car" in settings.collision_object.lower():
-            btn_Car.configure(bg="red")
-        
-        if "pedestrian" in settings.optionSel.lower() and "pedestrian" in settings.collision_object.lower():
-            btn_Pedestrian.configure(bg="red")
-        
+        if "pedestrian" in settings.optionSel.lower():
+            if "pedestrian" in settings.collision_object.lower():
+                imgFile = os.path.join(red_dirIcon, settings.FILE_PEDESTRIAN)
+            else:
+                imgFile = os.path.join(blue_dirIcon, settings.FILE_PEDESTRIAN)
+            settings.imgPedestrian = ImageTk.PhotoImage(Image.open(imgFile).resize((150,150), Image.ANTIALIAS))
+            btn_Pedestrian.config(image=settings.imgPedestrian)
+
         if "speed" in settings.optionSel.lower():
-            if int(settings.speed_Limit) == int(settings.gpsSpeed) :
-                btn_Speed.configure(bg="yellow")
-                print( " Speed Limit Matched with the Set speed ")
-            elif int(settings.speed_Limit) < int(settings.gpsSpeed) :
-                btn_Speed.configure(bg="red")
-                print( " Speed Limit Exceeded the Set speed ")
-            else: 
-                print(" Vehicle speed is below threshold ")
+            if int(settings.max_vehicle_speed) > int(settings.gpsSpeed) :
+                imgFile = os.path.join(blue_dirIcon, settings.FILE_SPEED)
+                print( " Speed Limit Under with the Maximum speed ")
+            elif int(settings.speed_Limit) == int(settings.gpsSpeed) :
+                imgFile = os.path.join(yellow_dirIcon, settings.FILE_SPEED)
+                print( " Speed Limit Matched the Maximum speed ")
+            else:
+                imgFile = os.path.join(red_dirIcon, settings.FILE_SPEED)
+                print(" Vehicle speed is Above threshold ")
+            settings.imgSpeed = ImageTk.PhotoImage(Image.open(imgFile).resize((150,150), Image.ANTIALIAS))
+            btn_Speed.config(image=settings.imgSpeed)
 
     return
 
@@ -129,17 +153,15 @@ def create_gui():
     lblPlaceholder = tk.Label(root, background="#0C3744",activeforeground='#0C3744', activebackground='#0C3744', bd=0, highlightthickness=0, height = 100, width = WIDTH-250)
     lblPlaceholder.place(x=WIDTH/2 -650,y=150)  # Place label in center of parent.
     
-    if settings.Impact is False:
-        dirIcon = settings.BLUE_ICON_DIR
-    elif settings.Impact is True:
-        dirIcon = settings.RED_ICON_DIR
-
+    blue_dirIcon = os.path.join(settings.BASE_DIR, settings.BLUE_ICON_DIR)
+    red_dirIcon = os.path.join(settings.BASE_DIR, settings.RED_ICON_DIR)
+    yellow_dirIcon = os.path.join(settings.BASE_DIR, settings.YELLOW_ICON_DIR)
     
-    IMG_ANIMAL = os.path.join(settings.BASE_DIR,dirIcon,settings.FILE_ANIMAL)
-    IMG_BIKE = os.path.join(settings.BASE_DIR,dirIcon,settings.FILE_BIKE)
-    IMG_CAR = os.path.join(settings.BASE_DIR,dirIcon,settings.FILE_CAR)
-    IMG_PEDESTRIAN =os.path.join(settings.BASE_DIR,dirIcon,settings.FILE_PEDESTRIAN)
-    IMG_SPEED = os.path.join(settings.BASE_DIR,dirIcon,settings.FILE_SPEED)
+    IMG_ANIMAL = os.path.join(blue_dirIcon,settings.FILE_ANIMAL)
+    IMG_BIKE = os.path.join(blue_dirIcon,settings.FILE_BIKE)
+    IMG_CAR = os.path.join(blue_dirIcon,settings.FILE_CAR)
+    IMG_PEDESTRIAN =os.path.join(blue_dirIcon,settings.FILE_PEDESTRIAN)
+    IMG_SPEED = os.path.join(blue_dirIcon,settings.FILE_SPEED)
 
     settings.imgAnimal = ImageTk.PhotoImage(Image.open(IMG_ANIMAL).resize((150,150), Image.ANTIALIAS))
 
@@ -198,7 +220,7 @@ def create_gui():
     btnSpeed = RoundedButton(root,text=str(settings.gpsSpeed) + "km/hr", radius=20, btnbackground="white", btnforeground="black")
     btnSpeed.place(x=WIDTH-310, y=HEIGHT-180)
 
-    threading.Timer(1, lambda: updateIcons(settings.btn_Animal, settings.btn_Bike, settings.btn_Car, settings.btn_Pedestrian, settings.btn_Speed)).start()
+    threading.Timer(1, lambda: updateIcons(settings.btn_Animal, settings.btn_Bike, settings.btn_Car, settings.btn_Pedestrian, settings.btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon)).start()
 
     threading.Timer(1, lambda: updateSpeed(btnSpeed)).start()
 
