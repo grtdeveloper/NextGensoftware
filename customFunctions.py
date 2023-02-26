@@ -28,7 +28,7 @@ signal.signal(signal.SIGINT, handler)
 
 class RoundedButton(Canvas):
 
-    def __init__(self, master=None, text:str="", radius=10, btnforeground="#040404", btnbackground="black", clicked=None, *args, **kwargs):
+    def __init__(self, master=None, text:str="", radius=10, btnforeground="white", btnbackground="black", clicked=None, *args, **kwargs):
         super(RoundedButton, self).__init__(master, *args, **kwargs)
         self.config(bg=self.master["bg"])
         self.btnbackground = btnbackground
@@ -111,7 +111,7 @@ class RoundedButton(Canvas):
 
     def border(self, event):
         if event.type == "4":
-            self.itemconfig(self.rect, fill="black")
+            self.itemconfig(self.rect, fill="white")
             if self.clicked is not None:
                 self.clicked()
 
@@ -331,7 +331,7 @@ def checkOptions(optionVideo ,newWindow, mainWin):
 
 
 def adasGui(mainWin):
-    mainWin.withdraw()
+    #mainWin.withdraw()
 
     window = Toplevel()
     window.resizable(0,0)
@@ -339,22 +339,18 @@ def adasGui(mainWin):
     window.title(" ------ ADAS Options ------ ")
     WIDTH, HEIGHT = window.winfo_screenwidth(),window.winfo_screenheight()
     window.geometry("%dx%d+0+0" % (WIDTH, HEIGHT-100))
-    window.configure(bg="light blue")
+    window.configure(bg="black")
     
-    def selection(window, mainWin):
-        adas_Choice = int(radio.get())
+    def selection(choice, window, mainWin):
+        settings.adas_Choice = choice.lower()
         print(" Selected Option for Adas : ", adas_Choice)
         
-        if int(adas_Choice) == 1:
-            settings.adas_Choice="Live"
-            print(" Selected Option for Adas : ", settings.adas_Choice)
+        if "live" == settings.adas_Choice :
             window.destroy()
-            checkStatus(mainWin, 'python3 collison_warning.py')
+            checkStatus(mainWin, 'python3 /home/pi/NextGenDriving/NextGensoftware/collison_warning.py')
 
-        elif int(adas_Choice) == 2:
-            settings.adas_Choice="Settings"
-            print(" Selected Option for Adas : ", settings.adas_Choice)
-            optionSel = [ 'Car', 'Bike', 'Animal', 'Pedestrian', 'Speed' ]
+        elif "settings" == settings.adas_Choice :
+            optionSel = [ 'Car', 'Bike', 'Animal', 'Speed', 'Pedestrian' ]
             newWindow = Toplevel()
             window.withdraw()
             WIDTH, HEIGHT = newWindow.winfo_screenwidth(), newWindow.winfo_screenheight()
@@ -363,13 +359,13 @@ def adasGui(mainWin):
             settings.selected_Option.clear()
 
             backVideo = IntVar()
-            r1 = Radiobutton(newWindow, text="ON", bg="black", fg="white", font=settings.myFont, bd=0, highlightthickness=0, activebackground = "black", activeforeground="black", variable=radio, value=1, command= lambda: optionVideo(True))
+            r1 = Radiobutton(newWindow, text="ON", bg="black", fg="white", font=settings.adasFont, bd=0, highlightthickness=0, activebackground = "black", activeforeground="white", variable=radio, value=1, command= lambda: optionVideo(True))
             #r1.pack(side=LEFT, padx=20)
-            r1.grid(row=0, column=0, padx=50, pady=10)
+            r1.grid(row=0, column=0, padx=100, pady=75)
 
-            r2 = Radiobutton(newWindow, text="OFF", bg="black", fg="white", font=settings.myFont, bd=0, highlightthickness=0, activebackground="black", activeforeground="black" ,variable=radio, value=0, command= lambda: optionVideo(False))
+            r2 = Radiobutton(newWindow, text="OFF", bg="black", fg="white", font=settings.adasFont, bd=0, highlightthickness=0, activebackground="black", activeforeground="white" ,variable=radio, value=0, command= lambda: optionVideo(False))
             #r2.pack(side=LEFT, padx=20)
-            r2.grid(row=0, column=1, padx=50, pady=10)
+            r2.grid(row=0, column=1, padx=100, pady=75)
 
             def getVal(event):
                 settings.speed_Limit = sp_choice.get()
@@ -377,11 +373,11 @@ def adasGui(mainWin):
 
             lblSpeed = Label(newWindow,text="Speed(Km/hr) :", font=settings.optionFont, fg="white", bd=0, highlightthickness=0, activebackground="black", activeforeground = "black" , bg="black")
             #lblSpeed.pack(anchor=N, padx=20, pady=100)
-            lblSpeed.grid(row=2, column=0, padx=50, pady=50)
+            lblSpeed.grid(row=2, column=0, padx=100, pady=150)
             sp_choice = StringVar()
             cbox_video = ttk.Combobox(newWindow, textvariable=sp_choice, font= settings.optionFont)
             #cbox_video.pack(anchor=N, padx=100, pady=100)
-            cbox_video.grid(row=2, column=1, padx=50, pady=50)
+            cbox_video.grid(row=2, column=1, padx=100, pady=150)
 
             cbox_video['values'] = [ '20', '40', '60' ]
             cbox_video['state'] = 'readonly'
@@ -389,24 +385,43 @@ def adasGui(mainWin):
             
             diffX=0
             for x in range(len(optionSel)):
-                l = Checkbutton(newWindow, bg="black", fg="white",bd=0, highlightthickness=0, activebackground="black", activeforeground="black", text=optionSel[x], variable=optionSel[x],command=lambda x=optionSel[x]:settings.selected_Option.append(x), font= settings.optionFont)
+                l = Checkbutton(newWindow, bg="black", fg="white",bd=0, highlightthickness=0, activebackground="black", activeforeground="white", text=optionSel[x], variable=optionSel[x],command=lambda x=optionSel[x]:settings.selected_Option.append(x), font= settings.optionFont)
                 #l.pack(anchor=N, pady=150 + diffY)
-                l.grid(row=3, column=0 + diffX,padx=30, pady=100)
-                diffX += 1
+                #l.grid(row=3, column=0 + diffX, padx=30, pady=180)
+                l.place(x= 100 + diffX, y= HEIGHT-450)
+                diffX += 320
 
-            Button(newWindow,text="Submit",bg="black",fg="white", activebackground = "black", activeforeground="black",font= settings.adasFont, command=lambda: [print(settings.selected_Option),newWindow.destroy(), checkOptions( settings.enablebackVideo ,newWindow, mainWin)]).grid(row=4,column=2, padx=50, pady=50)
+            Button(newWindow,text="Submit",bg="black",fg="white", activebackground = "black", activeforeground="black",font= settings.adasFont, command=lambda: [print(settings.selected_Option),newWindow.destroy(), checkOptions( settings.enablebackVideo ,newWindow, mainWin)]).place(x=WIDTH/2 - 100, y= HEIGHT-250)
+            #.grid(row=3,column=1, padx=300, pady=10)
             newWindow.attributes('-topmost',True)
             newWindow.protocol("WM_DELETE_WINDOW", lambda: on_closing( newWindow, window))
             newWindow.mainloop()
 
+    
+    dirAdas = os.path.join(settings.BASE_DIR, settings.ADAS_DIR)
+    file_Live = os.path.join(dirAdas, settings.FILE_ADAS_LIVE)
+    file_Settings = os.path.join(dirAdas, settings.FILE_ADAS_SETTING)
+
+    
+    imgLive = ImageTk.PhotoImage(Image.open(file_Live).resize((300,300), Image.ANTIALIAS))
+    imgSettings = ImageTk.PhotoImage(Image.open(file_Settings).resize((300,300), Image.ANTIALIAS))
+    
+    btnLive = Button(window, image=imgLive, bg="black",highlightthickness=0,bd=0,activeforeground='white', activebackground='black', compound=CENTER, command= lambda: selection("live", window, mainWin))
+    
+    btnSettings = Button(window, image=imgSettings, bg="black",highlightthickness=0,bd=0,activeforeground='white', activebackground='black', compound=CENTER, command= lambda: selection("settings", window, mainWin))
+    
+    btnLive.pack(side=LEFT,padx=450, pady=30)
+    btnSettings.pack(side=LEFT, padx=5,pady=30)
+
+    '''
     radio = IntVar()
+     
+    r1 = Radiobutton(window, text="Live Adas", bg="white", font=settings.adasFont, bd=0, highlightthickness=0, activebackground = "black",activeforeground="white", variable=radio, value=1, command= lambda: selection(window, mainWin))
+    r1.pack(anchor=N,pady=250)
 
-    r1 = Radiobutton(window, text="Live Adas", bg="light blue", font=settings.adasFont, bd=0, highlightthickness=0, activebackground = "light blue", variable=radio, value=1, command= lambda: selection(window, mainWin))
-    r1.pack(anchor=N,pady=100)
-
-    r2 = Radiobutton(window, text="Settings", bg="light blue", font=settings.adasFont, bd=0, highlightthickness=0, activebackground="light blue" ,variable=radio, value=2, command= lambda: selection(window, mainWin))
-    r2.pack(anchor=N, pady=200)
-
+    r2 = Radiobutton(window, text="Settings", bg="white", font=settings.adasFont, bd=0, highlightthickness=0, activebackground="black" , activeforeground="white", variable=radio, value=2, command= lambda: selection(window, mainWin))
+    r2.pack(anchor=N, pady=450)
+    '''
 
     window.protocol("WM_DELETE_WINDOW", lambda: on_closing( window, mainWin))
     window.mainloop()

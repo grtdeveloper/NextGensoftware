@@ -151,8 +151,9 @@ def create_gui():
     btn_Bluetoth = tk.Button(root, image=bluetoothImg, bg="black",highlightthickness=0,bd=0,activeforeground='black', activebackground='black')
     btn_Bluetoth.place(x=120,y=10)
     
-    lblPlaceholder = tk.Label(root, background="#0C3744",activeforeground='#0C3744', activebackground='#0C3744', bd=0, highlightthickness=0, height = 100, width = WIDTH-250)
-    lblPlaceholder.place(x=WIDTH/2 -650,y=150)  # Place label in center of parent.
+    
+    lblPlaceholder = tk.Label(root, background="#0C3744",activeforeground='#0C3744', activebackground='#0C3744', bd=0, highlightthickness=0, height = 400, width = WIDTH-250)
+    lblPlaceholder.place(x=WIDTH/2 -500,y=125)  # Place label in center of parent.
     
     blue_dirIcon = os.path.join(settings.BASE_DIR, settings.BLUE_ICON_DIR)
     red_dirIcon = os.path.join(settings.BASE_DIR, settings.RED_ICON_DIR)
@@ -164,25 +165,25 @@ def create_gui():
     IMG_PEDESTRIAN =os.path.join(blue_dirIcon,settings.FILE_PEDESTRIAN)
     IMG_SPEED = os.path.join(blue_dirIcon,settings.FILE_SPEED)
 
-    settings.imgAnimal = ImageTk.PhotoImage(Image.open(IMG_ANIMAL).resize((150,150), Image.ANTIALIAS))
+    settings.imgAnimal = ImageTk.PhotoImage(Image.open(IMG_ANIMAL).resize((100,100), Image.ANTIALIAS))
 
-    settings.imgBike = ImageTk.PhotoImage(Image.open(IMG_BIKE).resize((150,150), Image.ANTIALIAS))
+    settings.imgBike = ImageTk.PhotoImage(Image.open(IMG_BIKE).resize((100,100), Image.ANTIALIAS))
 
-    settings.imgCar = ImageTk.PhotoImage(Image.open(IMG_CAR).resize((150,150), Image.ANTIALIAS))
-    settings.imgPedestrian = ImageTk.PhotoImage(Image.open(IMG_PEDESTRIAN).resize((150,150), Image.ANTIALIAS))
-    settings.imgSpeed = ImageTk.PhotoImage(Image.open(IMG_SPEED).resize((150,150), Image.ANTIALIAS))
+    settings.imgCar = ImageTk.PhotoImage(Image.open(IMG_CAR).resize((100,100), Image.ANTIALIAS))
+    settings.imgPedestrian = ImageTk.PhotoImage(Image.open(IMG_PEDESTRIAN).resize((100,100), Image.ANTIALIAS))
+    settings.imgSpeed = ImageTk.PhotoImage(Image.open(IMG_SPEED).resize((100,100), Image.ANTIALIAS))
 
-    settings.btn_Animal = Button(lblPlaceholder,image=settings.imgAnimal, bg="#0C3744",highlightthickness=0,bd=0,activeforeground='#0C3744', activebackground='#0C3744')
+    settings.btn_Animal = Button(lblPlaceholder,image=settings.imgAnimal, bg="#0C3744",highlightthickness=0,bd=0,activeforeground='#0C3744', activebackground='#0C3744', compound=CENTER)
     settings.btn_Bike = Button(lblPlaceholder, image=settings.imgBike, bg="#0C3744",highlightthickness=0,bd=0,activeforeground='#0C3744', activebackground='#0C3744')
     settings.btn_Car = Button(lblPlaceholder, image=settings.imgCar, bg="#0C3744",highlightthickness=0,bd=0,activeforeground='#0C3744', activebackground='#0C3744')
     settings.btn_Pedestrian = Button(lblPlaceholder, image=settings.imgPedestrian, bg="#0C3744", highlightthickness=0,bd=0,activeforeground='#0C3744', activebackground='#0C3744')
     settings.btn_Speed = Button(lblPlaceholder, image=settings.imgSpeed, bg= "#0C3744", highlightthickness=0,bd=0,activeforeground='#0C3744', activebackground='#0C3744')
    
-    settings.btn_Animal.grid(row=0, column=0, padx=50)
-    settings.btn_Bike.grid(row=0, column=1, padx=50)
-    settings.btn_Car.grid(row=0, column=2, padx=50)
-    settings.btn_Pedestrian.grid(row=0, column=3, padx=50)
-    settings.btn_Speed.grid(row=0, column=4, padx=50)
+    settings.btn_Animal.grid(row=0, column=0, padx=50, pady=20)
+    settings.btn_Bike.grid(row=0, column=1, padx=50, pady=20)
+    settings.btn_Car.grid(row=0, column=2, padx=50, pady=20)
+    settings.btn_Pedestrian.grid(row=0, column=3, padx=50, pady=20)
+    settings.btn_Speed.grid(row=0, column=4, padx=50, pady=20)
 
     dirMain = ""
     if settings.THEME.lower() == "dark":
@@ -197,10 +198,10 @@ def create_gui():
     IMG_GPS = os.path.join(dirMain,settings.FILE_GPS)
     IMG_INFOTAINMENT = os.path.join(dirMain,settings.FILE_INFOTAINMENT)
     
-    settings.imgAdas = ImageTk.PhotoImage(Image.open(IMG_ADAS).resize((250,300), Image.ANTIALIAS))
-    settings.imgVideo = ImageTk.PhotoImage(Image.open(IMG_VIDEO).resize((250,300), Image.ANTIALIAS))
-    settings.imgGps = ImageTk.PhotoImage(Image.open(IMG_GPS).resize((250,300), Image.ANTIALIAS))
-    settings.imgEnt = ImageTk.PhotoImage(Image.open(IMG_INFOTAINMENT).resize((250,300), Image.ANTIALIAS))
+    settings.imgAdas = ImageTk.PhotoImage(Image.open(IMG_ADAS).resize((100,100), Image.ANTIALIAS))
+    settings.imgVideo = ImageTk.PhotoImage(Image.open(IMG_VIDEO).resize((100,100), Image.ANTIALIAS))
+    settings.imgGps = ImageTk.PhotoImage(Image.open(IMG_GPS).resize((100,100), Image.ANTIALIAS))
+    settings.imgEnt = ImageTk.PhotoImage(Image.open(IMG_INFOTAINMENT).resize((100,100), Image.ANTIALIAS))
 
     '''
     lblHolder = tk.Label(root,height = 150, width = WIDTH, bg='#545F71', borderwidth=0)
@@ -208,15 +209,16 @@ def create_gui():
     lblHolder.place(x=0,y=int(HEIGHT/2))  # Place label in center of parent.
     '''
 
-    settings.btn_Adas = Button(root,image=settings.imgAdas, border="0", bg="#0C3744", highlightthickness=0,borderwidth=0,bd=0,activeforeground='#0C3744', activebackground='#0C3744', text="ADAS",font= settings.myFont, command = lambda: adasGui(root,))
-    settings.btn_Video = Button(root,image=settings.imgVideo,border="0" ,bg="#0C3744" , highlightthickness=0,bd=0, activeforeground='#0C3744', activebackground='#0C3744', text= "VIDEO REC", font= settings.myFont, command= lambda :showVideo(os.path.join(settings.BASE_DIR,settings.DIR_VIDEO_FILES), root))
-    settings.btn_Gps = Button(root,image=settings.imgGps, border="0", bg="#0C3744" ,highlightthickness=0 ,bd=0, activeforeground='#0C3744', activebackground= '#0C3744',text = "GPS", font=settings.myFont,command=lambda: gpsFunc(root,))
-    settings.btn_Infotainment = Button(root,image=settings.imgEnt,border="0", bg="#0C3744" ,highlightthickness=0 ,bd=0,activeforeground='#0C3744',activebackground='#0C3744', text= "INFOTAINMENT", font=settings.myFont, command=lambda: showInfotain(root))
+    settings.btn_Adas = Button(root,image=settings.imgAdas, border="0", bg="#0C3744",height=300, width=300, highlightthickness=0,borderwidth=0,bd=0,activeforeground='white', activebackground='#0C3744', text="ADAS" ,fg="white", compound=TOP,font= settings.myFont, command = lambda: adasGui(root,))
+    settings.btn_Video = Button(root,image=settings.imgVideo,border="0" ,bg="#0C3744",height=300, width=300, highlightthickness=0,bd=0, activeforeground='white', activebackground='#0C3744', text= "VIDEO REC",fg="white",compound=TOP, font= settings.myFont, command= lambda :showVideo(os.path.join(settings.BASE_DIR,settings.DIR_VIDEO_FILES), root))
+    settings.btn_Gps = Button(root,image=settings.imgGps,border="0", bg="#0C3744", height=300, width=300,highlightthickness=0 ,bd=0, activeforeground='white', activebackground= '#0C3744',text = "GPS", fg="white", compound=TOP, font=settings.myFont, command=lambda: gpsFunc(root,))
 
-    settings.btn_Adas.grid(row=3, column=0, padx=100, pady=400)
-    settings.btn_Video.grid(row=3, column=1, padx=100, pady=400)
-    settings.btn_Gps.grid(row=3, column=2, padx=100, pady=400)
-    settings.btn_Infotainment.grid(row=3, column=3, padx=100, pady=400)
+    settings.btn_Infotainment = Button(root,image=settings.imgEnt,border="0", bg="#0C3744", height=300, width=300, highlightthickness=0 ,bd=0,activeforeground='white',activebackground='#0C3744', text= "INFOTAINMENT", fg="white", compound=TOP, font=settings.myFont, command=lambda: showInfotain(root))
+
+    settings.btn_Adas.grid(row=3, column=0, padx=80, pady=400)
+    settings.btn_Video.grid(row=3, column=1, padx=80, pady=400)
+    settings.btn_Gps.grid(row=3, column=2, padx=80, pady=400)
+    settings.btn_Infotainment.grid(row=3, column=3, padx=80, pady=400)
     
     btnSpeed = RoundedButton(root,text=str(settings.gpsSpeed) + "km/hr", radius=20, btnbackground="white", btnforeground="black")
     btnSpeed.place(x=WIDTH-310, y=HEIGHT-180)

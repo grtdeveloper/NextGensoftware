@@ -18,6 +18,8 @@ THEME_DARK="dark_theme/"
 INFOTAINMENT_DIR="infotainment/"
 DIR_VIDEO_FILES="videos/"
 DIR_MEDIA_ICONS="Player_icons/"
+ADAS_DIR="adas/"
+
 
 ### Files ###
 FILE_THEME_DARK="dark.png"
@@ -47,6 +49,9 @@ FILE_OPEN="open.png"
 FILE_PLAY="play.png"
 FILE_PAUSE="pause.png"
 FILE_STOP="stop.png"
+FILE_ADAS_LIVE="live.png"
+FILE_ADAS_SETTING="setting.png"
+
 
 ####### Variables / Parameters ######## 
 
