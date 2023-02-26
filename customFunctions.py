@@ -17,6 +17,8 @@ import threading
 import psutil
 from gps3.agps3threaded import AGPS3mechanism
 import signal
+import sys
+
 
 def handler(signum, frame):
     res = input("Ctrl-c was pressed. Exiting!!! ")
@@ -123,20 +125,25 @@ def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
         print( " Here ")
         dest_address = settings.destTxt.get("1.0",END)
         if len(dest_address) > 15:
-            marker_1 = map_wdg.set_marker(settings.gpsLat, settings.gpsLong, marker=True)
-            marker_2 = map_wdg.set_marker(settings.destTxt.get("1.0",END), marker= True)
-            #map_wdg.set_position(settings.gpsLat,settings.gpsLong, marker=True)
+            settings.marker_1 = map_wdg.set_marker(settings.gpsLat, settings.gpsLong)
+            marker_2 = map_wdg.set_address(dest_address, marker=True)
+            settings.marker_2 = map_wdg.set_marker(marker_2.position[0], marker_2.position[1])
             if settings.prev_gpsLat != settings.gpsLat and settings.prev_gpsLong != settings.gpsLong :
                 settings.prev_gpsLat = settings.gpsLat
                 settings.prev_gpsLong = settings.gpsLong
-                path_1.remove_position(position)
-                path_1.delete()
+                if settings.path_1 is not None:
+                    settings.path_1.remove_position(position)
+                    settings.path_1.delete()
             else:
-                path_1 = map_wdg.set_path([marker_2.position, marker_1.position])
-                path_1.set_position_list(new_position_list)
-                path_1.add_position(position)
+                settings.path_1 = map_wdg.set_path([settings.marker_2.position, settings.marker_1.position,( marker_2.position[0],marker_2.position[1] ) ,(settings.gpsLat, settings.gpsLong)])
+                #settings.path_1.set_position_list(new_position_list)
+                #settings.path_1.add_position(position)
         else:
-            marker_1= map_wdg.set_position(settings.gpsLat, settings.gpsLong, marker=True)
+            settings.marker_1 = map_wdg.set_position(settings.gpsLat, settings.gpsLong)
+            if settings.marker_2 is not None:
+                settings.marker_2.delete()
+                #settings.path_1.remove_position(position)
+                settings.path_1.delete()
 
         gpsWin.after(3000,lambda: updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT))
     else:
@@ -164,7 +171,7 @@ def showLocation(mainWin, val_Map):
     settings.destTxt.place(x=175, y=50)
     
     map_wdg = tkintermapview.TkinterMapView(mylbl,width=WIDTH-200, height=HEIGHT-100, corner_radius=0)
-    map_wdg.set_zoom(35)
+    map_wdg.set_zoom(40)
     map_wdg.pack()
     try:
         updateMap(gpsWin, mainWin, settings.destTxt, mylbl, map_wdg, WIDTH, HEIGHT)
@@ -415,9 +422,9 @@ def getSpeed():
             settings.gpsLat = round(float(agps_thread.data_stream.lat),4)
             settings.gpsLong = round(float(agps_thread.data_stream.lon),4)
             settings.gpsSpeed = int(agps_thread.data_stream.speed)
-            print(" Lattitude : " + str(settings.gpsLat))
-            print(" Longitude : " + str(settings.gpsLong))
-            print(" Speed : " + str(settings.gpsSpeed) + " km/h")
+            #print(" Lattitude : " + str(settings.gpsLat))
+            #print(" Longitude : " + str(settings.gpsLong))
+            #print(" Speed : " + str(settings.gpsSpeed) + " km/h")
             sleep(0.15)
         except Exception as err:
             pass
