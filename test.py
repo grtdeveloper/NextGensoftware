@@ -1,19 +1,16 @@
-# Import Module
-from tkinter import *
-  
-# Create Object
-root = Tk()
-  
-# Set geometry
-root.geometry("400x400")
-  
-# Add Image
-login_btn = PhotoImage(file = "/home/pi/NextGenDriving/NextGensoftware/gui/main_page_icons/dark_theme/adas.png")
-  
-# Create button and image
-img = Button(root, image = login_btn, borderwidth = 0, bg="white")
-  
-img.pack()
-  
-# Execute Tkinter
-root.mainloop()
+# import the necessary packages
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+import time
+import cv2
+# initialize the camera and grab a reference to the raw camera capture
+camera = PiCamera()
+rawCapture = PiRGBArray(camera)
+# allow the camera to warmup
+time.sleep(0.1)
+# grab an image from the camera
+camera.capture(rawCapture, format="bgr")
+image = rawCapture.array
+# display the image on screen and wait for a keypress
+cv2.imshow("Image", image)
+cv2.waitKey(0)

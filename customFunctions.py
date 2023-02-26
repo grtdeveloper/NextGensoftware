@@ -354,20 +354,20 @@ def adasGui(mainWin):
         elif int(adas_Choice) == 2:
             settings.adas_Choice="Settings"
             print(" Selected Option for Adas : ", settings.adas_Choice)
-            optionSel = [ 'Car', 'Bike', 'Animal', 'Speed', 'Pedestrian']
+            optionSel = [ 'Car', 'Bike', 'Animal', 'Pedestrian', 'Speed' ]
             newWindow = Toplevel()
             window.withdraw()
             WIDTH, HEIGHT = newWindow.winfo_screenwidth(), newWindow.winfo_screenheight()
             newWindow.geometry("%dx%d+0+0" % (WIDTH, HEIGHT-100))
-            newWindow.configure(bg="light blue")
+            newWindow.configure(bg="black")
             settings.selected_Option.clear()
 
             backVideo = IntVar()
-            r1 = Radiobutton(newWindow, text="ON", bg="light blue", font=settings.myFont, bd=0, highlightthickness=0, activebackground = "light blue", variable=radio, value=1, command= lambda: optionVideo(True))
+            r1 = Radiobutton(newWindow, text="ON", bg="black", fg="white", font=settings.myFont, bd=0, highlightthickness=0, activebackground = "black", activeforeground="black", variable=radio, value=1, command= lambda: optionVideo(True))
             #r1.pack(side=LEFT, padx=20)
             r1.grid(row=0, column=0, padx=50, pady=10)
 
-            r2 = Radiobutton(newWindow, text="OFF", bg="light blue", font=settings.myFont, bd=0, highlightthickness=0, activebackground="light blue" ,variable=radio, value=0, command= lambda: optionVideo(False))
+            r2 = Radiobutton(newWindow, text="OFF", bg="black", fg="white", font=settings.myFont, bd=0, highlightthickness=0, activebackground="black", activeforeground="black" ,variable=radio, value=0, command= lambda: optionVideo(False))
             #r2.pack(side=LEFT, padx=20)
             r2.grid(row=0, column=1, padx=50, pady=10)
 
@@ -375,7 +375,7 @@ def adasGui(mainWin):
                 settings.speed_Limit = sp_choice.get()
                 print( " Speed Limit set to : " + settings.speed_Limit + " Km/hr")
 
-            lblSpeed = Label(newWindow,text="Speed(Km/hr) :", font=settings.optionFont, bd=0, highlightthickness=0, activebackground="light blue", bg="light blue")
+            lblSpeed = Label(newWindow,text="Speed(Km/hr) :", font=settings.optionFont, fg="white", bd=0, highlightthickness=0, activebackground="black", activeforeground = "black" , bg="black")
             #lblSpeed.pack(anchor=N, padx=20, pady=100)
             lblSpeed.grid(row=2, column=0, padx=50, pady=50)
             sp_choice = StringVar()
@@ -389,12 +389,12 @@ def adasGui(mainWin):
             
             diffX=0
             for x in range(len(optionSel)):
-                l = Checkbutton(newWindow, bg="light blue", text=optionSel[x], variable=optionSel[x],command=lambda x=optionSel[x]:settings.selected_Option.append(x), font= settings.optionFont)
+                l = Checkbutton(newWindow, bg="black", fg="white",bd=0, highlightthickness=0, activebackground="black", activeforeground="black", text=optionSel[x], variable=optionSel[x],command=lambda x=optionSel[x]:settings.selected_Option.append(x), font= settings.optionFont)
                 #l.pack(anchor=N, pady=150 + diffY)
-                l.grid(row=3, column=0 + diffX, padx=50, pady=100)
+                l.grid(row=3, column=0 + diffX,padx=30, pady=100)
                 diffX += 1
 
-            Button(newWindow,text="Submit",bg="light blue",font= settings.adasFont, command=lambda: [print(settings.selected_Option),newWindow.destroy(), checkOptions( settings.enablebackVideo ,newWindow, mainWin)]).grid(row=4,column=2, padx=50, pady=50)
+            Button(newWindow,text="Submit",bg="black",fg="white", activebackground = "black", activeforeground="black",font= settings.adasFont, command=lambda: [print(settings.selected_Option),newWindow.destroy(), checkOptions( settings.enablebackVideo ,newWindow, mainWin)]).grid(row=4,column=2, padx=50, pady=50)
             newWindow.attributes('-topmost',True)
             newWindow.protocol("WM_DELETE_WINDOW", lambda: on_closing( newWindow, window))
             newWindow.mainloop()

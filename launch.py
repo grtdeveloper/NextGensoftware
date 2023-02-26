@@ -132,9 +132,10 @@ def create_gui():
     print("Width and height :", (WIDTH, HEIGHT))
     root.geometry("%dx%d+0+0" % (WIDTH, HEIGHT))
     
+
     # Display image on a Label widget.
     img = ImageTk.PhotoImage(Image.open(IMAGE_PATH).resize((WIDTH, HEIGHT), Image.ANTIALIAS))
-    lbl = tk.Label(root, image=img)
+    lbl = tk.Label(root, image=img )
     lbl.img = img  # Keep a reference in case this code put is in a function.
     lbl.place(relx=0.5, rely=0.5, anchor='center')  # Place label in center of parent.
     
