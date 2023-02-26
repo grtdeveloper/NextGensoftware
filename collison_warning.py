@@ -235,6 +235,8 @@ while(video.isOpened()):
                     
         # All the results have been drawn on the frame, so it's time to display it.
         cv2.imshow('Live_Detection', cv2.pyrDown(frame))
+        cv2.namedWindow('Live_Detection', cv2.WND_PROP_FULLSCREEN)
+        cv2.setWindowProperty('Live_Detection', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         # plt.show()
         
         result.write(frame)
