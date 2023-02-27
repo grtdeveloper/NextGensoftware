@@ -1,5 +1,5 @@
 ???
-person
+pedestrian
 bicycle
 car
 motorcycle

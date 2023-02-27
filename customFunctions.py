@@ -19,12 +19,40 @@ from gps3.agps3threaded import AGPS3mechanism
 import signal
 import sys
 import subprocess
+import socket
 
 def handler(signum, frame):
     res = input("Ctrl-c was pressed. Exiting!!! ")
     settings.status_GPS=False
  
 signal.signal(signal.SIGINT, handler)
+
+
+def server_program():
+    # get the hostname
+    host = socket.gethostname()
+    port = 5000  # initiate port no above 1024
+
+    server_socket = socket.socket()  # get instance
+    # look closely. The bind() function takes tuple as argument
+    server_socket.bind((host, port))  # bind host address and port together
+
+    # configure how many client the server can listen simultaneously
+    server_socket.listen(2)
+    conn, address = server_socket.accept()  # accept new connection
+    print("Connection from: " + str(address))
+    while True:
+        # receive data stream. it won't accept data packet greater than 1024 bytes
+        settings.collision_object = conn.recv(100).decode()
+        if not settings.collision_object:
+            # if data is not received break
+            break
+        print("from connected user: " + str(settings.collision_object))
+        rsp = "ack"
+        conn.send(rsp.encode())  # send data to the client
+
+    conn.close()  # close the connection
+
 
 class RoundedButton(Canvas):
 
@@ -322,28 +350,25 @@ def playbackVid():
     command_list = "/usr/bin/python3 " 
     command_list += settings.OBJECT_DETECT_BIN_PATH
     if settings.enablebackVideo is False:
-        command_list +="collison_warning.py"
-    else:
         command_list +="collison_warning.py &"
+    else:
+        command_list +="collison_warning.py "
 
     print( " Command ", command_list)
     try:
-        p = subprocess.run(command_list ,shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        p = subprocess.Popen(command_list ,shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except Exception as e:
         print(e)
         pass
 
 def checkOptions(newWindow, mainWin):
-    if settings.enablebackVideo is True:
-        print("---------- Playing the Object detection video ---------")
-        on_closing(newWindow, mainWin)
-        try:
-            playbackVid()
-            checkStatus(mainWin, 'python3 /home/pi/NextGenDriving/NextGensoftware/collison_warning.py')
-        except Exception as err:
-            print( " Got Exception while playing ")
-            pass
-        on_closing(newWindow, mainWin)
+    on_closing(newWindow, mainWin)
+    try:
+        playbackVid()
+        checkStatus(mainWin, 'python3 /home/pi/NextGenDriving/NextGensoftware/collison_warning.py')
+    except Exception as err:
+        print( " Got Exception while playing ")
+        pass
 
 
 def adasGui(mainWin):
@@ -362,7 +387,6 @@ def adasGui(mainWin):
         print(" Selected Option for Adas : ", settings.adas_Choice)
         
         if "live" == settings.adas_Choice :
-            window.destroy()
             checkOptions(window,mainWin)
 
         elif "settings" == settings.adas_Choice :
@@ -401,13 +425,13 @@ def adasGui(mainWin):
             
             diffX=0
             for x in range(len(optionSel)):
-                l = Checkbutton(newWindow, bg="black", fg="white",bd=0, highlightthickness=0, activebackground="black", activeforeground="white", text=optionSel[x], variable=optionSel[x],command=lambda x=optionSel[x]:settings.selected_Option.append(x), font= settings.optionFont)
+                l = Checkbutton(newWindow, bg="black", fg="white",bd=0, highlightthickness=0, activebackground="black", activeforeground="white", text=optionSel[x], variable=optionSel[x].lower(),command=lambda x=optionSel[x]:settings.selected_Option.append(x), font= settings.optionFont)
                 #l.pack(anchor=N, pady=150 + diffY)
                 #l.grid(row=3, column=0 + diffX, padx=30, pady=180)
                 l.place(x= 100 + diffX, y= HEIGHT-450)
                 diffX += 320
 
-            Button(newWindow,text="Submit",bg="black",fg="white", activebackground = "black", activeforeground="black",font= settings.adasFont, command=lambda: [print(settings.selected_Option),newWindow.destroy()]).place(x=WIDTH/2 - 100, y= HEIGHT-250)
+            Button(newWindow,text="Submit",bg="black",fg="white", activebackground = "black", activeforeground="black",font= settings.adasFont, command=lambda: [print(settings.selected_Option),newWindow.destroy(),window.destroy()]).place(x=WIDTH/2 - 100, y= HEIGHT-250)
             #.grid(row=3,column=1, padx=300, pady=10)
             newWindow.attributes('-topmost',True)
             newWindow.protocol("WM_DELETE_WINDOW", lambda: on_closing( newWindow, window))
@@ -428,16 +452,6 @@ def adasGui(mainWin):
     
     btnLive.pack(side=LEFT,padx=450, pady=30)
     btnSettings.pack(side=LEFT, padx=5,pady=30)
-
-    '''
-    radio = IntVar()
-     
-    r1 = Radiobutton(window, text="Live Adas", bg="white", font=settings.adasFont, bd=0, highlightthickness=0, activebackground = "black",activeforeground="white", variable=radio, value=1, command= lambda: selection(window, mainWin))
-    r1.pack(anchor=N,pady=250)
-
-    r2 = Radiobutton(window, text="Settings", bg="white", font=settings.adasFont, bd=0, highlightthickness=0, activebackground="black" , activeforeground="white", variable=radio, value=2, command= lambda: selection(window, mainWin))
-    r2.pack(anchor=N, pady=450)
-    '''
 
     window.protocol("WM_DELETE_WINDOW", lambda: on_closing( window, mainWin))
     window.mainloop()

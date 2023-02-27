@@ -6,7 +6,7 @@ import os
 import os.path
 import PIL.Image as Image
 from ui import *
-from customFunctions import showLocation, on_closing, launchPlayer, showVideo, adasGui, getSpeed, RoundedButton
+from customFunctions import showLocation, on_closing, launchPlayer, showVideo, adasGui, getSpeed, RoundedButton, server_program
 import threading
 import signal
 import time
@@ -22,10 +22,13 @@ def closePgm():
     print( " Exiting Completely ")
     sys.exit()
 
-def updateIcons(btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon):
+def updateIcons(mainScreen, btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon):
     imgFile = ""
-    if settings.enablebackVideo is True:
-        if "animal" in settings.optionSel.lower():
+    print( " checked.. :" , (settings.collision_object.lower()) )
+    print( " Back enabled :", settings.enablebackVideo )
+    if settings.enablebackVideo is True and len(settings.selected_Option) > 0:
+        print( " Update Icons ")
+        if "animal" in settings.selected_Option:
             if "animal" in settings.collision_object.lower():
                 imgFile = os.path.join(red_dirIcon, settings.FILE_ANIMAL)
             else:
@@ -33,7 +36,7 @@ def updateIcons(btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIco
             settings.imgAnimal = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
             btn_Animal.config(image=settings.imgAnimal)
 
-        if "bike" in settings.optionSel.lower():
+        if "bike" in settings.selected_Option:
             if "bike" in settings.collision_object.lower():
                 imgFile = os.path.join(red_dirIcon, settings.FILE_BIKE)
             else:
@@ -41,7 +44,7 @@ def updateIcons(btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIco
             settings.imgBike = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
             btn_Bike.config(image=settings.imgBike)
         
-        if "car" in settings.optionSel.lower() :
+        if "car" in settings.selected_Option:
             if "car" in settings.collision_object.lower():
                 imgFile = os.path.join(red_dirIcon, settings.FILE_CAR)
             else:
@@ -49,7 +52,7 @@ def updateIcons(btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIco
             settings.imgCar = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
             btn_Car.config(image=settings.imgCar)
         
-        if "pedestrian" in settings.optionSel.lower():
+        if "pedestrian" in settings.selected_Option:
             if "pedestrian" in settings.collision_object.lower():
                 imgFile = os.path.join(red_dirIcon, settings.FILE_PEDESTRIAN)
             else:
@@ -57,7 +60,7 @@ def updateIcons(btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIco
             settings.imgPedestrian = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
             btn_Pedestrian.config(image=settings.imgPedestrian)
 
-        if "speed" in settings.optionSel.lower():
+        if "speed" in settings.selected_Option:
             if int(settings.max_vehicle_speed) > int(settings.gpsSpeed) :
                 imgFile = os.path.join(blue_dirIcon, settings.FILE_SPEED)
                 print( " Speed Limit Under with the Maximum speed ")
@@ -66,15 +69,20 @@ def updateIcons(btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIco
                 print( " Speed Limit Matched the Maximum speed ")
             else:
                 imgFile = os.path.join(red_dirIcon, settings.FILE_SPEED)
-                print(" Vehicle speed is Above threshold ")
+            print(" Vehicle speed is Above threshold ")
             settings.imgSpeed = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
             btn_Speed.config(image=settings.imgSpeed)
-
+        mainScreen.update_idletasks()
+    else:
+        print( " ------ Rescheduled --------- ")
+    mainScreen.after(250, lambda: updateIcons(mainScreen, btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon))
     return
 
 
-def updateSpeed(btnSpeed):
-    btnSpeed.config(text = str(settings.gpsSpeed) + " Km/hr")
+def updateSpeed(mainScreen, btnSpeed):
+    btnSpeed.configure(text=str(settings.gpsSpeed) + " Km/hr")
+    mainScreen.update_idletasks()
+    mainScreen.after(1000, lambda: updateSpeed(mainScreen, btnSpeed))
     return
 
 def showInfotain(mainWin):
@@ -220,12 +228,14 @@ def create_gui():
     settings.btn_Gps.grid(row=3, column=2, padx=80, pady=400)
     settings.btn_Infotainment.grid(row=3, column=3, padx=80, pady=400)
     
-    btnSpeed = RoundedButton(root,text=str(settings.gpsSpeed) + "km/hr", radius=20, btnbackground="white", btnforeground="black")
+    btn_text =str(settings.gpsSpeed) + "Km/hr"
+    btnSpeed = RoundedButton(root, text= btn_text, radius=20, btnbackground="white", btnforeground="black")
+
     btnSpeed.place(x=WIDTH-310, y=HEIGHT-180)
 
-    threading.Timer(1, lambda: updateIcons(settings.btn_Animal, settings.btn_Bike, settings.btn_Car, settings.btn_Pedestrian, settings.btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon)).start()
-
-    threading.Timer(1, lambda: updateSpeed(btnSpeed)).start()
+    root.after(250, lambda: updateIcons(root, settings.btn_Animal, settings.btn_Bike, settings.btn_Car, settings.btn_Pedestrian, settings.btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon))
+    
+    root.after(1, lambda: updateSpeed(mainScreen, btnSpeed))
 
     root.protocol("WM_DELETE_WINDOW", closePgm)
     root.mainloop()
@@ -234,7 +244,11 @@ def create_gui():
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, handler)
 
+    sockThr = threading.Thread(target=server_program)
     speedThr = threading.Thread(target=getSpeed)
+    sockThr.daemon = True 
+    speedThr.daemon = True
+    sockThr.start()
     speedThr.start()
     create_gui()
 

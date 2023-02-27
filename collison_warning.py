@@ -25,7 +25,8 @@ from shapely.geometry import Polygon
 # import matplotlib.pyplot as plt
 import pygame
 import settings
-
+from time import sleep
+import socket
 
 # # Define and parse input arguments
 # parser = argparse.ArgumentParser()
@@ -52,6 +53,22 @@ min_conf_threshold = float(0.5)
 use_TPU = False
 
 clicked = False
+
+host = socket.gethostname()  # as both code is running on same pc
+port = 5000  # socket server port number
+
+client_socket = socket.socket()  # instantiate
+client_socket.connect((host, port))  # connect to the server
+
+def client_program(message):
+    global client_socket
+
+    client_socket.send(message.encode())  # send message
+    data = client_socket.recv(100).decode()  # receive response
+
+    print('Received from server: ' + data)  # show in terminal
+
+
 def onMouse(event, x, y, flags, param):
     global clicked
     if event == cv2.EVENT_LBUTTONUP:
@@ -219,11 +236,9 @@ while(video.isOpened()):
   
                 # print(isIntersection)
                 
-                
                 # Draw label
                 object_name = labels[int(classes[i])] # Look up object name from "labels" array using class index
-                settings.collision_object= ""
-                settings.collision_object = object_name
+                client_program(object_name)
                 label = '%s: %d%%' % (object_name, int(scores[i]*100)) # Example: 'person: 72%'
                 labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2) # Get font size
                 label_ymin = max(ymin, labelSize[1] + 10) # Make sure not to draw label too close to top of window
@@ -234,9 +249,10 @@ while(video.isOpened()):
                 #     print('collision! Alert!')
                     
         # All the results have been drawn on the frame, so it's time to display it.
-        cv2.imshow('Live_Detection', cv2.pyrDown(frame))
-        cv2.namedWindow('Live_Detection', cv2.WND_PROP_FULLSCREEN)
-        cv2.setWindowProperty('Live_Detection', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        if settings.enablebackVideo is False:
+            cv2.imshow('Live_Detection', cv2.pyrDown(frame))
+            cv2.namedWindow('Live_Detection', cv2.WND_PROP_FULLSCREEN)
+            cv2.setWindowProperty('Live_Detection', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         # plt.show()
         
         result.write(frame)
@@ -252,6 +268,8 @@ while(video.isOpened()):
 
 # Clean up
 video.release()
+client_socket.close()  # close the connection
+
 result.release()
 
 cv2.destroyAllWindows()
