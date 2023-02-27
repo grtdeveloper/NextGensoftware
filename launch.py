@@ -30,7 +30,7 @@ def updateIcons(btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIco
                 imgFile = os.path.join(red_dirIcon, settings.FILE_ANIMAL)
             else:
                 imgFile = os.path.join(blue_dirIcon, settings.FILE_ANIMAL)
-            settings.imgAnimal = ImageTk.PhotoImage(Image.open(imgFile).resize((150,150), Image.ANTIALIAS))
+            settings.imgAnimal = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
             btn_Animal.config(image=settings.imgAnimal)
 
         if "bike" in settings.optionSel.lower():
@@ -38,7 +38,7 @@ def updateIcons(btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIco
                 imgFile = os.path.join(red_dirIcon, settings.FILE_BIKE)
             else:
                 imgFile = os.path.join(blue_dirIcon, settings.FILE_BIKE)
-            settings.imgBike = ImageTk.PhotoImage(Image.open(imgFile).resize((150,150), Image.ANTIALIAS))
+            settings.imgBike = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
             btn_Bike.config(image=settings.imgBike)
         
         if "car" in settings.optionSel.lower() :
@@ -46,7 +46,7 @@ def updateIcons(btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIco
                 imgFile = os.path.join(red_dirIcon, settings.FILE_CAR)
             else:
                 imgFile = os.path.join(blue_dirIcon, settings.FILE_CAR)
-            settings.imgCar = ImageTk.PhotoImage(Image.open(imgFile).resize((150,150), Image.ANTIALIAS))
+            settings.imgCar = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
             btn_Car.config(image=settings.imgCar)
         
         if "pedestrian" in settings.optionSel.lower():
@@ -54,7 +54,7 @@ def updateIcons(btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIco
                 imgFile = os.path.join(red_dirIcon, settings.FILE_PEDESTRIAN)
             else:
                 imgFile = os.path.join(blue_dirIcon, settings.FILE_PEDESTRIAN)
-            settings.imgPedestrian = ImageTk.PhotoImage(Image.open(imgFile).resize((150,150), Image.ANTIALIAS))
+            settings.imgPedestrian = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
             btn_Pedestrian.config(image=settings.imgPedestrian)
 
         if "speed" in settings.optionSel.lower():
@@ -67,7 +67,7 @@ def updateIcons(btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIco
             else:
                 imgFile = os.path.join(red_dirIcon, settings.FILE_SPEED)
                 print(" Vehicle speed is Above threshold ")
-            settings.imgSpeed = ImageTk.PhotoImage(Image.open(imgFile).resize((150,150), Image.ANTIALIAS))
+            settings.imgSpeed = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
             btn_Speed.config(image=settings.imgSpeed)
 
     return

@@ -336,6 +336,7 @@ def playbackVid():
 def checkOptions(newWindow, mainWin):
     if settings.enablebackVideo is True:
         print("---------- Playing the Object detection video ---------")
+        on_closing(newWindow, mainWin)
         try:
             playbackVid()
             checkStatus(mainWin, 'python3 /home/pi/NextGenDriving/NextGensoftware/collison_warning.py')
@@ -362,7 +363,7 @@ def adasGui(mainWin):
         
         if "live" == settings.adas_Choice :
             window.destroy()
-            checkStatus(mainWin, 'python3 /home/pi/NextGenDriving/NextGensoftware/collison_warning.py')
+            checkOptions(window,mainWin)
 
         elif "settings" == settings.adas_Choice :
             optionSel = [ 'Car', 'Bike', 'Animal', 'Speed', 'Pedestrian' ]
@@ -374,11 +375,11 @@ def adasGui(mainWin):
             settings.selected_Option.clear()
 
             backVideo = IntVar()
-            r1 = Radiobutton(newWindow, text="ON", bg="black", fg="white", font=settings.adasFont, bd=0, highlightthickness=0, activebackground = "black", activeforeground="white", variable=backVideo, value=1, command= lambda: optionVideo(True))
+            r1 = Radiobutton(newWindow, text="ON", width=10, bg="black", fg="white", font=settings.adasFont, bd=0, highlightthickness=0, activebackground = "black", activeforeground="white", variable=backVideo, value=1, command= lambda: optionVideo(True))
             #r1.pack(side=LEFT, padx=20)
             r1.grid(row=0, column=0, padx=100, pady=75)
 
-            r2 = Radiobutton(newWindow, text="OFF", bg="black", fg="white", font=settings.adasFont, bd=0, highlightthickness=0, activebackground="black", activeforeground="white" ,variable=backVideo, value=0, command= lambda: optionVideo(False))
+            r2 = Radiobutton(newWindow, text="OFF", width=10, bg="black", fg="white", font=settings.adasFont, bd=0, highlightthickness=0, activebackground="black", activeforeground="white" ,variable=backVideo, value=0, command= lambda: optionVideo(False))
             #r2.pack(side=LEFT, padx=20)
             r2.grid(row=0, column=1, padx=100, pady=75)
 
@@ -406,7 +407,7 @@ def adasGui(mainWin):
                 l.place(x= 100 + diffX, y= HEIGHT-450)
                 diffX += 320
 
-            Button(newWindow,text="Submit",bg="black",fg="white", activebackground = "black", activeforeground="black",font= settings.adasFont, command=lambda: [print(settings.selected_Option),newWindow.destroy(), checkOptions( newWindow, mainWin)]).place(x=WIDTH/2 - 100, y= HEIGHT-250)
+            Button(newWindow,text="Submit",bg="black",fg="white", activebackground = "black", activeforeground="black",font= settings.adasFont, command=lambda: [print(settings.selected_Option),newWindow.destroy()]).place(x=WIDTH/2 - 100, y= HEIGHT-250)
             #.grid(row=3,column=1, padx=300, pady=10)
             newWindow.attributes('-topmost',True)
             newWindow.protocol("WM_DELETE_WINDOW", lambda: on_closing( newWindow, window))
