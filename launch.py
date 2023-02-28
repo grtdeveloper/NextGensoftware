@@ -93,18 +93,22 @@ def chkInterfaces(mainScreen,intBlt,intWifi,btn_Bluetoth, btn_Wifi):
     try:
         if wifiStatus(intWifi) is False:
             btn_Wifi.config(state="disabled")
+            print("Wifi : Disabled")
         else:
-            btn_Wifi.config(state="enabled")
+            btn_Wifi.config(state="active")
+            print("Wifi : Active")
         if bluetoothStatus() is False :
             btn_Bluetoth.config(state="disabled")
+            print("Bluetooth : Disabled ")
         else:
-            btn_Bluetoth.config(state="enabled")
+            btn_Bluetoth.config(state="active")
+            print("Bluetooth : Active ")
     except Exception as err:
         print(err)
         pass
 
     mainScreen.update()
-    mainScreen.after(5000, lambda: updateSpeed(mainScreen, btnSpeed))
+    mainScreen.after(5000, lambda: chkInterfaces(mainScreen,intBlt,intWifi,btn_Bluetoth, btn_Wifi))
     return
 
 def updateSpeed(mainScreen, btnSpeed):
@@ -265,7 +269,7 @@ def create_gui():
     
     root.after(1000, lambda: updateSpeed(root, btnSpeed))
 
-    root.after(1000, lambda: chkInterfaces(settings.int_Bluetooth, settings.int_Wifi, btn_Bluetoth, btn_Wifi))
+    root.after(1000, lambda: chkInterfaces(root,settings.int_Bluetooth, settings.int_Wifi, btn_Bluetoth, btn_Wifi))
 
     root.protocol("WM_DELETE_WINDOW", closePgm)
     root.mainloop()
