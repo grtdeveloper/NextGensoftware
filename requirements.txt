@@ -1,5 +1,5 @@
 gps3==0.33.3
-shared-memory-dict==0.7.2
+netifaces==0.11.0
 idna==3.3
 Pillow==9.2.0
 psutil==5.9.1

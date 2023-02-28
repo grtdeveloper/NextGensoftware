@@ -6,7 +6,7 @@ import os
 import os.path
 import PIL.Image as Image
 from ui import *
-from customFunctions import showLocation, on_closing, launchPlayer, showVideo, adasGui, getSpeed, RoundedButton, server_program
+from customFunctions import showLocation, on_closing, launchPlayer, showVideo, adasGui, getSpeed, RoundedButton, server_program, wifiStatus, bluetoothStatus
 import threading
 import signal
 import time
@@ -89,6 +89,23 @@ def updateIcons(mainScreen, btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed
     mainScreen.after(250, lambda: updateIcons(mainScreen, btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon))
     return
 
+def chkInterfaces(mainScreen,intBlt,intWifi,btn_Bluetoth, btn_Wifi):
+    try:
+        if wifiStatus(intWifi) is False:
+            btn_Wifi.config(state="disabled")
+        else:
+            btn_Wifi.config(state="enabled")
+        if bluetoothStatus() is False :
+            btn_Bluetoth.config(state="disabled")
+        else:
+            btn_Bluetoth.config(state="enabled")
+    except Exception as err:
+        print(err)
+        pass
+
+    mainScreen.update()
+    mainScreen.after(5000, lambda: updateSpeed(mainScreen, btnSpeed))
+    return
 
 def updateSpeed(mainScreen, btnSpeed):
     btnSpeed['text']= str(settings.gpsSpeed) + " Km/hr"
@@ -246,7 +263,9 @@ def create_gui():
 
     root.after(250, lambda: updateIcons(root, settings.btn_Animal, settings.btn_Bike, settings.btn_Car, settings.btn_Pedestrian, settings.btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon))
     
-    root.after(1, lambda: updateSpeed(root, btnSpeed))
+    root.after(1000, lambda: updateSpeed(root, btnSpeed))
+
+    root.after(1000, lambda: chkInterfaces(settings.int_Bluetooth, settings.int_Wifi, btn_Bluetoth, btn_Wifi))
 
     root.protocol("WM_DELETE_WINDOW", closePgm)
     root.mainloop()

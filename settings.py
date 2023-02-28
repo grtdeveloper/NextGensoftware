@@ -108,6 +108,8 @@ marker_2=None
 path_1=None
 sock_Server=None
 sock_Client=None
+int_Bluetooth="bluetooth"
+int_Wifi="wlan0"
 
 collision_object=""
 collision_object_color="blue"

@@ -20,10 +20,39 @@ import signal
 import sys
 import subprocess
 import socket
+import fcntl
+import struct
+
+def bluetoothStatus():
+    process = subprocess.Popen(['hcitool', 'dev'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = process.communicate()
+    if "hci0" in str(out):
+        return True
+    else:
+        return False
+
+def wifiStatus(intfName):
+    try:
+        from netifaces import AF_INET, ifaddresses
+    except ModuleNotFoundError as e:
+        raise SystemExit(f"Requires {e.name} module. Run 'pip install {e.name}' "
+                         f"and try again.")
+
+
+    def get_ip_linux(interface: str) -> str:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        packed_iface = struct.pack('256s', interface.encode('utf_8'))
+        packed_addr = fcntl.ioctl(sock.fileno(), 0x8915, packed_iface)[20:24]
+        return socket.inet_ntoa(packed_addr)
+
+    if len(get_ip_linux(intfName)) > 1:
+        return True
+    else:
+        return False
 
 def handler(signum, frame):
     res = input("Ctrl-c was pressed. Exiting!!! ")
-    settings.status_GPS=False
+settings.status_GPS=False
  
 signal.signal(signal.SIGINT, handler)
 
