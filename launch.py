@@ -15,6 +15,12 @@ import sys
 def handler(signum, frame):
     res = input("Ctrl-c was pressed. Exiting!!! ")
     settings.status_GPS=False
+    ### Close Sockets if not
+    print( " ----  Closing All Sockets ---- ")
+    if settings.sock_Server is not None:
+        settings.sock_Server.close()  # close the connection
+    if settings.sock_Client is not None:
+        settings.sock_Client.close()  # close the connection
     sys.exit()
  
 def closePgm():
@@ -25,42 +31,49 @@ def closePgm():
 def updateIcons(mainScreen, btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon):
     imgFile = ""
     print( " checked.. :" , (settings.collision_object.lower()) )
-    print( " Back enabled :", settings.enablebackVideo )
     if settings.enablebackVideo is True and len(settings.selected_Option) > 0:
         print( " Update Icons ")
-        if "animal" in settings.selected_Option:
-            if "animal" in settings.collision_object.lower():
+        if "Animal" in settings.selected_Option:
+            if "animal" in settings.collision_object.lower() and settings.collision_object_color.lower() == "red":
                 imgFile = os.path.join(red_dirIcon, settings.FILE_ANIMAL)
+            elif "animal" in settings.collision_object.lower() and settings.collision_object_color.lower() == "yellow":
+                imgFile = os.path.join(yellow_dirIcon, settings.FILE_ANIMAL)
             else:
                 imgFile = os.path.join(blue_dirIcon, settings.FILE_ANIMAL)
             settings.imgAnimal = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
-            btn_Animal.config(image=settings.imgAnimal)
+            btn_Animal.configure(image=settings.imgAnimal)
 
-        if "bike" in settings.selected_Option:
-            if "bike" in settings.collision_object.lower():
+        if "Bike" in settings.selected_Option:
+            if "motorcycle" in settings.collision_object.lower() and settings.collision_object_color.lower() == "red":
                 imgFile = os.path.join(red_dirIcon, settings.FILE_BIKE)
+            if "motorcycle" in settings.collision_object.lower() and settings.collision_object_color.lower() == "yellow":
+                imgFile = os.path.join(yellow_dirIcon, settings.FILE_BIKE)
             else:
                 imgFile = os.path.join(blue_dirIcon, settings.FILE_BIKE)
             settings.imgBike = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
-            btn_Bike.config(image=settings.imgBike)
+            btn_Bike.configure(image=settings.imgBike)
         
-        if "car" in settings.selected_Option:
-            if "car" in settings.collision_object.lower():
+        if "Car" in settings.selected_Option:
+            if "car" in settings.collision_object.lower() and settings.collision_object_color.lower() == "red":
                 imgFile = os.path.join(red_dirIcon, settings.FILE_CAR)
+            elif "car" in settings.collision_object.lower() and settings.collision_object_color.lower() == "yellow":
+                imgFile = os.path.join(yellow_dirIcon, settings.FILE_CAR)
             else:
                 imgFile = os.path.join(blue_dirIcon, settings.FILE_CAR)
             settings.imgCar = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
-            btn_Car.config(image=settings.imgCar)
+            btn_Car.configure(image=settings.imgCar)
         
-        if "pedestrian" in settings.selected_Option:
-            if "pedestrian" in settings.collision_object.lower():
+        if "Pedestrian" in settings.selected_Option:
+            if "pedestrian" in settings.collision_object.lower() and settings.collision_object_color.lower() == "red":
                 imgFile = os.path.join(red_dirIcon, settings.FILE_PEDESTRIAN)
+            elif "pedestrian" in settings.collision_object.lower() and settings.collision_object_color.lower() == "yellow":
+                imgFile = os.path.join(yellow_dirIcon, settings.FILE_PEDESTRIAN)
             else:
                 imgFile = os.path.join(blue_dirIcon, settings.FILE_PEDESTRIAN)
             settings.imgPedestrian = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
-            btn_Pedestrian.config(image=settings.imgPedestrian)
+            btn_Pedestrian.configure(image=settings.imgPedestrian)
 
-        if "speed" in settings.selected_Option:
+        if "Speed" in settings.selected_Option:
             if int(settings.max_vehicle_speed) > int(settings.gpsSpeed) :
                 imgFile = os.path.join(blue_dirIcon, settings.FILE_SPEED)
                 print( " Speed Limit Under with the Maximum speed ")
@@ -71,17 +84,15 @@ def updateIcons(mainScreen, btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed
                 imgFile = os.path.join(red_dirIcon, settings.FILE_SPEED)
             print(" Vehicle speed is Above threshold ")
             settings.imgSpeed = ImageTk.PhotoImage(Image.open(imgFile).resize((100,100), Image.ANTIALIAS))
-            btn_Speed.config(image=settings.imgSpeed)
-        mainScreen.update_idletasks()
-    else:
-        print( " ------ Rescheduled --------- ")
+            btn_Speed.configure(image=settings.imgSpeed)
+        mainScreen.update()
     mainScreen.after(250, lambda: updateIcons(mainScreen, btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon))
     return
 
 
 def updateSpeed(mainScreen, btnSpeed):
-    btnSpeed.configure(text=str(settings.gpsSpeed) + " Km/hr")
-    mainScreen.update_idletasks()
+    btnSpeed['text']= str(settings.gpsSpeed) + " Km/hr"
+    mainScreen.update()
     mainScreen.after(1000, lambda: updateSpeed(mainScreen, btnSpeed))
     return
 
@@ -235,7 +246,7 @@ def create_gui():
 
     root.after(250, lambda: updateIcons(root, settings.btn_Animal, settings.btn_Bike, settings.btn_Car, settings.btn_Pedestrian, settings.btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon))
     
-    root.after(1, lambda: updateSpeed(mainScreen, btnSpeed))
+    root.after(1, lambda: updateSpeed(root, btnSpeed))
 
     root.protocol("WM_DELETE_WINDOW", closePgm)
     root.mainloop()

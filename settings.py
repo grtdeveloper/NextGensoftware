@@ -106,8 +106,11 @@ max_vehicle_speed=80
 marker_1=None
 marker_2=None
 path_1=None
+sock_Server=None
+sock_Client=None
 
 collision_object=""
+collision_object_color="blue"
 start_stop_back_detection=False
 
 LINK_YOUTUBE="https://www.youtube.com/watch?v=Mwrhf7TuUPw"

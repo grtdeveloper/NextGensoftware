@@ -33,25 +33,39 @@ def server_program():
     host = socket.gethostname()
     port = 5000  # initiate port no above 1024
 
-    server_socket = socket.socket()  # get instance
+    settings.sock_Server = socket.socket()  # get instance
     # look closely. The bind() function takes tuple as argument
-    server_socket.bind((host, port))  # bind host address and port together
+    settings.sock_Server.bind((host, port))  # bind host address and port together
 
     # configure how many client the server can listen simultaneously
-    server_socket.listen(2)
-    conn, address = server_socket.accept()  # accept new connection
+    settings.sock_Server.listen(2)
+    conn, address = settings.sock_Server.accept()  # accept new connection
     print("Connection from: " + str(address))
+    recvByte = []
+    data = ""
     while True:
         # receive data stream. it won't accept data packet greater than 1024 bytes
-        settings.collision_object = conn.recv(100).decode()
-        if not settings.collision_object:
-            # if data is not received break
+        data = conn.recv(100).decode()
+        if not data:
             break
-        print("from connected user: " + str(settings.collision_object))
+        print(" Got data :", data)
+        recvByte = data.split(',')
+        print(" received :", recvByte)
+        if len(recvByte) > 1:
+            try:
+                settings.collision_object = str(recvByte[0]) 
+                settings.collision_object_color = str(recvByte[1])
+            except Exception as e:
+                print( "Got Exception s : ", e)
+                pass
+        else:
+            settings.collision_object = str(recvByte[0]) 
         rsp = "ack"
         conn.send(rsp.encode())  # send data to the client
+        recvByte.clear()
+        data=""
 
-    conn.close()  # close the connection
+    settings.sock_Server.close()  # close the connection
 
 
 class RoundedButton(Canvas):
@@ -350,9 +364,9 @@ def playbackVid():
     command_list = "/usr/bin/python3 " 
     command_list += settings.OBJECT_DETECT_BIN_PATH
     if settings.enablebackVideo is False:
-        command_list +="collison_warning.py &"
-    else:
         command_list +="collison_warning.py "
+    else:
+        command_list +="collison_warning.py &"
 
     print( " Command ", command_list)
     try:
@@ -397,13 +411,14 @@ def adasGui(mainWin):
             newWindow.geometry("%dx%d+0+0" % (WIDTH, HEIGHT-100))
             newWindow.configure(bg="black")
             settings.selected_Option.clear()
+            common_bg = '#' + ''.join([hex(x)[2:].zfill(2) for x in (181, 26, 18)])  # RGB in dec
 
             backVideo = IntVar()
-            r1 = Radiobutton(newWindow, text="ON", width=10, bg="black", fg="white", font=settings.adasFont, bd=0, highlightthickness=0, activebackground = "black", activeforeground="white", variable=backVideo, value=1, command= lambda: optionVideo(True))
+            r1 = Radiobutton(newWindow, text="ON", width= 10, bg="black", selectcolor = common_bg ,fg="white", font=settings.adasFont, highlightthickness=0, activebackground = "black", activeforeground="white", variable=backVideo, value=1, command= lambda: optionVideo(True))
             #r1.pack(side=LEFT, padx=20)
             r1.grid(row=0, column=0, padx=100, pady=75)
 
-            r2 = Radiobutton(newWindow, text="OFF", width=10, bg="black", fg="white", font=settings.adasFont, bd=0, highlightthickness=0, activebackground="black", activeforeground="white" ,variable=backVideo, value=0, command= lambda: optionVideo(False))
+            r2 = Radiobutton(newWindow, text="OFF", width=10, bg="black", selectcolor = common_bg, fg="white", font=settings.adasFont, highlightthickness=0, activebackground="black", activeforeground="white" ,variable=backVideo, value=0, command= lambda: optionVideo(False))
             #r2.pack(side=LEFT, padx=20)
             r2.grid(row=0, column=1, padx=100, pady=75)
 
@@ -425,7 +440,7 @@ def adasGui(mainWin):
             
             diffX=0
             for x in range(len(optionSel)):
-                l = Checkbutton(newWindow, bg="black", fg="white",bd=0, highlightthickness=0, activebackground="black", activeforeground="white", text=optionSel[x], variable=optionSel[x].lower(),command=lambda x=optionSel[x]:settings.selected_Option.append(x), font= settings.optionFont)
+                l = Checkbutton(newWindow, bg="black", fg="white", bd=0, highlightthickness=0, activebackground="black", activeforeground="white", text=optionSel[x], variable=optionSel[x].lower(),command=lambda x=optionSel[x]:settings.selected_Option.append(x), font= settings.optionFont)
                 #l.pack(anchor=N, pady=150 + diffY)
                 #l.grid(row=3, column=0 + diffX, padx=30, pady=180)
                 l.place(x= 100 + diffX, y= HEIGHT-450)

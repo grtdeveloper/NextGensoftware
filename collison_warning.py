@@ -54,19 +54,21 @@ use_TPU = False
 
 clicked = False
 
+col_Video=""
 host = socket.gethostname()  # as both code is running on same pc
 port = 5000  # socket server port number
 
-client_socket = socket.socket()  # instantiate
-client_socket.connect((host, port))  # connect to the server
+settings.sock_Client = socket.socket()  # instantiate
+settings.sock_Client.connect((host, port))  # connect to the server
 
-def client_program(message):
-    global client_socket
 
-    client_socket.send(message.encode())  # send message
-    data = client_socket.recv(100).decode()  # receive response
-
-    print('Received from server: ' + data)  # show in terminal
+def client_program(cliSock, message):
+    try:
+        cliSock.send(message.encode())  # send message
+        data = cliSock.recv(100).decode()  # receive response
+        print('Received from server: ' + data)  # show in terminal
+    except Exception as err:
+        pass
 
 
 def onMouse(event, x, y, flags, param):
@@ -157,7 +159,6 @@ fourcc = cv2.VideoWriter_fourcc(*'XVID')
 result = cv2.VideoWriter("Collision_warning_demo.avi", fourcc, 5, (1920, 1080))
 
 while(video.isOpened()):
-    
     # tic = time.time() 
     # Acquire frame and resize to expected shape [1xHxWx3]
     ret, frame = video.read()
@@ -221,15 +222,17 @@ while(video.isOpened()):
                 # poly2 = Polygon(p5, p6, p7, p8)
                 poly2 = Polygon([(xmin,ymin), (xmin, ymax), (xmax,ymax), (xmax,ymin)])
                 
-                # Find intersection(whether overlapping)
+                # Find intersection(whether overlapping) ###Yellow
                 if poly1.intersects(poly2):
                     cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), (0, 255, 255), 4)
+                    col_Video=",yellow"
                     pygame.mixer.init()
                     pygame.mixer.music.load("beep-08b.wav")
                     pygame.mixer.music.play()
                     
-                if poly_critical.intersects(poly2):
+                if poly_critical.intersects(poly2): ### Red
                     cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), (0, 0, 255), 4)
+                    col_Video=",red"
                     pygame.mixer.init()
                     pygame.mixer.music.load("beep-09.wav")
                     pygame.mixer.music.play()
@@ -238,7 +241,7 @@ while(video.isOpened()):
                 
                 # Draw label
                 object_name = labels[int(classes[i])] # Look up object name from "labels" array using class index
-                client_program(object_name)
+                client_program( settings.sock_Client , object_name + str(col_Video))
                 label = '%s: %d%%' % (object_name, int(scores[i]*100)) # Example: 'person: 72%'
                 labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2) # Get font size
                 label_ymin = max(ymin, labelSize[1] + 10) # Make sure not to draw label too close to top of window
@@ -268,8 +271,7 @@ while(video.isOpened()):
 
 # Clean up
 video.release()
-client_socket.close()  # close the connection
-
+settings.sock_Client.close()  # close the connection
 result.release()
 
 cv2.destroyAllWindows()
