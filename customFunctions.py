@@ -22,6 +22,12 @@ import subprocess
 import socket
 import fcntl
 import struct
+from ISStreamer.Streamer import Streamer
+  
+gpsd = None #Setup global variable 
+  
+#Setup the Initial State stream, enter your access key below
+streamer = Streamer(bucket_name=settings.BUCKET__NAME, bucket_key=settings.BUCKET_KEY, access_key=setting.ACCESS_KEY)
 
 def bluetoothStatus():
     process = subprocess.Popen(['hcitool', 'dev'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
