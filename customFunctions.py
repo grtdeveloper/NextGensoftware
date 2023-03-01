@@ -440,7 +440,7 @@ def adasGui(mainWin):
             newWindow.geometry("%dx%d+0+0" % (WIDTH, HEIGHT-100))
             newWindow.configure(bg="black")
             settings.selected_Option.clear()
-            common_bg = '#' + ''.join([hex(x)[2:].zfill(2) for x in (181, 26, 18)])  # RGB in dec
+            common_bg = "blue" 
 
             backVideo = IntVar()
             r1 = Radiobutton(newWindow, text="ON", width= 10, bg="black", selectcolor = common_bg ,fg="white", font=settings.adasFont, highlightthickness=0, activebackground = "black", activeforeground="white", variable=backVideo, value=1, command= lambda: optionVideo(True))
@@ -469,7 +469,7 @@ def adasGui(mainWin):
             
             diffX=0
             for x in range(len(optionSel)):
-                l = Checkbutton(newWindow, bg="black", fg="white", bd=0, highlightthickness=0, activebackground="black", activeforeground="white", text=optionSel[x], variable=optionSel[x].lower(),command=lambda x=optionSel[x]:settings.selected_Option.append(x), font= settings.optionFont)
+                l = Checkbutton(newWindow, bg="black", fg="white", selectcolor="blue", bd=0, highlightthickness=0, activebackground="black", activeforeground="white", text=optionSel[x], variable=optionSel[x].lower(),command=lambda x=optionSel[x]:settings.selected_Option.append(x), font= settings.optionFont)
                 #l.pack(anchor=N, pady=150 + diffY)
                 #l.grid(row=3, column=0 + diffX, padx=30, pady=180)
                 l.place(x= 100 + diffX, y= HEIGHT-450)
