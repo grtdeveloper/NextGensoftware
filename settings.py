@@ -111,13 +111,16 @@ sock_Client=None
 int_Bluetooth="bluetooth"
 int_Wifi="wlan0"
 
+gpsStreamer=None
 collision_object=""
 collision_object_color="blue"
 start_stop_back_detection=False
-BUCKET_KEY="GPS__Tracker"
+DATA_BUCKET="GPS__Tracker"
 ACCESS_KEY="ist_PGa6D8AxWLddqnnWwAsZUgwHr5hmVcr_"
-BUCKET_KEY="XJ3GAQKB8656"
-ENDPOINT_URL="https://groker.init.st/api/events?accessKey=ist_PGa6D8AxWLddqnnWwAsZUgwHr5hmVcr_&bucketKey=XJ3GAQKB8656"
+BUCKET_KEY="W9J5SRMFE9EQ"
+ENDPOINT_URL="https://groker.init.st/api/events?accessKey="
+
+
 
 LINK_YOUTUBE="https://www.youtube.com/watch?v=Mwrhf7TuUPw"
 LINK_NETFLIX="https://www.netflix.com/in/Login"

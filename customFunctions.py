@@ -27,7 +27,7 @@ from ISStreamer.Streamer import Streamer
 gpsd = None #Setup global variable 
   
 #Setup the Initial State stream, enter your access key below
-streamer = Streamer(bucket_name=settings.BUCKET__NAME, bucket_key=settings.BUCKET_KEY, access_key=setting.ACCESS_KEY)
+#settings.gpsStreamer = Streamer(bucket_name=settings.DATA_BUCKET, bucket_key=settings.BUCKET_KEY, access_key=setting.ACCESS_KEY)
 
 def bluetoothStatus():
     process = subprocess.Popen(['hcitool', 'dev'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -212,7 +212,8 @@ def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
                     settings.path_1.remove_position(position)
                     settings.path_1.delete()
             else:
-                settings.path_1 = map_wdg.set_path([settings.marker_2.position, settings.marker_1.position,( marker_2.position[0],marker_2.position[1] ) ,(settings.gpsLat, settings.gpsLong)])
+                map_wdg.set_polygon([(marker_2.position[0],marker_2.position[1] ) ,(settings.gpsLat, settings.gpsLong)])
+                #settings.path_1 = map_wdg.set_path([settings.marker_2.position, settings.marker_1.position,( marker_2.position[0],marker_2.position[1] ) ,(settings.gpsLat, settings.gpsLong)])
                 #settings.path_1.set_position_list(new_position_list)
                 #settings.path_1.add_position(position)
         else:
@@ -237,6 +238,8 @@ def showLocation(mainWin, val_Map):
     gpsWin.resizable(0,0)
     gpsWin.title(" ----  Location Finder  ---- ")
     WIDTH, HEIGHT = gpsWin.winfo_screenwidth(),gpsWin.winfo_screenheight()
+    
+   
 
     mylbl = LabelFrame(gpsWin,)
     mylbl.pack(pady=20)
@@ -517,6 +520,7 @@ def getSpeed():
             settings.gpsLat = round(float(agps_thread.data_stream.lat),4)
             settings.gpsLong = round(float(agps_thread.data_stream.lon),4)
             settings.gpsSpeed = int(agps_thread.data_stream.speed)
+            streamer.log("Location", "{lat},{lon}".format(lat=settings.gpsLat,lon=settings.gpsLong))
             #print(" Lattitude : " + str(settings.gpsLat))
             #print(" Longitude : " + str(settings.gpsLong))
             #print(" Speed : " + str(settings.gpsSpeed) + " km/h")

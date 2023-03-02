@@ -112,7 +112,7 @@ def chkInterfaces(mainScreen,intBlt,intWifi,btn_Bluetoth, btn_Wifi):
     return
 
 def updateSpeed(mainScreen, btnSpeed):
-    btnSpeed['text']= str(settings.gpsSpeed) + " Km/hr"
+    btnSpeed.itemconfig(tagOrId='text', text=str(settings.gpsSpeed) + " Km/hr")
     mainScreen.update()
     mainScreen.after(1000, lambda: updateSpeed(mainScreen, btnSpeed))
     return
