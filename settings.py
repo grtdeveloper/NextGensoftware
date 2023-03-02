@@ -115,11 +115,8 @@ gpsStreamer=None
 collision_object=""
 collision_object_color="blue"
 start_stop_back_detection=False
-DATA_BUCKET="GPS__Tracker"
-ACCESS_KEY="ist_PGa6D8AxWLddqnnWwAsZUgwHr5hmVcr_"
-BUCKET_KEY="W9J5SRMFE9EQ"
-ENDPOINT_URL="https://groker.init.st/api/events?accessKey="
-
+RAPID_API="15b148a9efmsh9434c399fd51e9ep1ad383jsn88c8ba54cf06",
+MAP_URL="https://route-and-directions.p.rapidapi.com/v1/routing"
 
 
 LINK_YOUTUBE="https://www.youtube.com/watch?v=Mwrhf7TuUPw"

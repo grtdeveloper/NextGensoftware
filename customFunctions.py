@@ -22,12 +22,49 @@ import subprocess
 import socket
 import fcntl
 import struct
-from ISStreamer.Streamer import Streamer
+import requests
+import folium
+import pandas as pd
+from geopy.geocoders import Nominatim
   
 gpsd = None #Setup global variable 
   
-#Setup the Initial State stream, enter your access key below
-#settings.gpsStreamer = Streamer(bucket_name=settings.DATA_BUCKET, bucket_key=settings.BUCKET_KEY, access_key=setting.ACCESS_KEY)
+def get_lat_long_from_address(address):
+    locator = Nominatim(user_agent='myApp')
+    location = locator.geocode(address, timeout=None)
+    return location.latitude, location.longitude
+
+
+def get_directions_response(lat1,lng1, lat2,lng2):
+    
+    url =  settings.MAP_URL 
+
+    querystring = {"waypoints": str(lat1) + "," + str(lng1) + "|" + str(lat2) + "," + str(lng2) ,"mode":"drive"}
+
+    headers = {
+            "X-RapidAPI-Key": settings.RAPID_API,
+            "X-RapidAPI-Host": "route-and-directions.p.rapidapi.com"
+}
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    return response
+
+def create_map(response):
+   # use the response
+   mls = response.json()['features'][0]['geometry']['coordinates']
+   points = [(i[1], i[0]) for i in mls[0]]
+   m = folium.Map()   # add marker for the start and ending points
+   for point in [points[0], points[-1]]:
+      folium.Marker(point).add_to(m)   # add the lines
+   folium.PolyLine(points, weight=5, opacity=1).add_to(m)   # create optimal zoom
+   df = pd.DataFrame(mls[0]).rename(columns={0:'Lon', 1:'Lat'})[['Lat', 'Lon']]
+   sw = df[['Lat', 'Lon']].min().values.tolist()
+   ne = df[['Lat', 'Lon']].max().values.tolist()
+   m.fit_bounds([sw, ne])
+   m.save("map/current_route.html")
+   webObject=launchPlayer(gpsWin, "map/current_route.html")
+   return webObject
+
 
 def bluetoothStatus():
     process = subprocess.Popen(['hcitool', 'dev'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -195,16 +232,19 @@ class RoundedButton(Canvas):
         else:
             self.itemconfig(self.rect, fill=self.btnbackground)
 
-
-
 def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
     if settings.showMap:
         print( " Here ")
         dest_address = settings.destTxt.get("1.0",END)
         if len(dest_address) > 15:
             settings.marker_1 = map_wdg.set_marker(settings.gpsLat, settings.gpsLong)
-            marker_2 = map_wdg.set_address(dest_address, marker=True)
-            settings.marker_2 = map_wdg.set_marker(marker_2.position[0], marker_2.position[1])
+            #marker_2 = map_wdg.set_address(dest_address, marker=True)
+            lat_lons = [get_lat_long_from_address(addr) for addr in dest_address]
+            print(lat_lons[0], lat_lons[1])
+            rsp = get_directions_response(settings.gpsLat,settings.gpsLong, lat_lons[0], lat_lons[1]) 
+            
+            mls = response.json()['features'][0]['geometry']['coordinates']
+            #settings.marker_2 = map_wdg.set_marker(marker_2.position[0], marker_2.position[1])
             if settings.prev_gpsLat != settings.gpsLat and settings.prev_gpsLong != settings.gpsLong :
                 settings.prev_gpsLat = settings.gpsLat
                 settings.prev_gpsLong = settings.gpsLong
@@ -212,7 +252,9 @@ def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
                     settings.path_1.remove_position(position)
                     settings.path_1.delete()
             else:
-                map_wdg.set_polygon([(marker_2.position[0],marker_2.position[1] ) ,(settings.gpsLat, settings.gpsLong)])
+                if settings.path_1 is not None:
+                    settings.path_1.delete()
+                settings.path_1 = map_wdg.set_polygon(mls[0],outline_color="blue",border_width=10,command=polygon_click, name="pathFinder")
                 #settings.path_1 = map_wdg.set_path([settings.marker_2.position, settings.marker_1.position,( marker_2.position[0],marker_2.position[1] ) ,(settings.gpsLat, settings.gpsLong)])
                 #settings.path_1.set_position_list(new_position_list)
                 #settings.path_1.add_position(position)
@@ -228,7 +270,6 @@ def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
         print( "Performing window operations ")
         gpsWin.destroy()
         mainWin.deiconify()
-
 
 def showLocation(mainWin, val_Map):
     mainWin.withdraw()
@@ -305,7 +346,7 @@ def launchPlayer(mainWin, link):
     #webbrowser.open_new(link,fullscreen=True)
     checkStatus(mainWin, 'chrome')
     #playWin.mainloop()
-
+    return driver
 
 def open_file(videoplayer, window ,dirName):
     if settings.play_Options.lower() == "recorded" :
