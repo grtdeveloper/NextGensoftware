@@ -235,8 +235,8 @@ class RoundedButton(Canvas):
 def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
     if settings.showMap:
         print( " Here ")
-        dest_address = settings.destTxt.get("1.0",END)
-        if len(dest_address) > 15:
+        dest_address = str(settings.destTxt.get("1.0",END)).rstrip()
+        if len(dest_address) > 20:
             settings.marker_1 = map_wdg.set_marker(settings.gpsLat, settings.gpsLong)
             #marker_2 = map_wdg.set_address(dest_address, marker=True)
             lat_lons = [get_lat_long_from_address(addr) for addr in dest_address]
@@ -265,7 +265,7 @@ def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
                 #settings.path_1.remove_position(position)
                 settings.path_1.delete()
 
-        gpsWin.after(3000,lambda: updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT))
+        gpsWin.after(5000,lambda: updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT))
     else:
         print( "Performing window operations ")
         gpsWin.destroy()

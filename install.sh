@@ -14,6 +14,8 @@ sudo pip3 install -U opencv-python
 
 echo " Installing Supporing Camera libraries "
 
-sudo apt install libgl1-mesa-glx
+sudo apt install -y libgl1-mesa-glx
 
 sudo pip3 install picamera
+
+sudo apt-get install -y matchbox-keyboard
