@@ -86,10 +86,10 @@ O.grid(row = 1 , column = 8, ipadx = keyWidth , ipady = 10)
 P = ttk.Button(key,text = 'P' , width = keyWidth, command = lambda : press('P'))
 P.grid(row = 1 , column = 9, ipadx = keyWidth , ipady = 10)
 
-cur = ttk.Button(key,text = '-' , width = keyWidth+2, command = lambda : press('--'))
+cur = ttk.Button(key,text = '-' , width = keyWidth, command = lambda : press('-'))
 cur.grid(row = 1 , column = 10 , ipadx = keyWidth , ipady = 10)
 
-cur_c = ttk.Button(key,text = '=' , width = keyWidth +2, command = lambda : press('='))
+cur_c = ttk.Button(key,text = '=' , width = keyWidth, command = lambda : press('='))
 cur_c.grid(row = 1 , column = 11, ipadx = keyWidth , ipady = 10)
 
 num_7 = ttk.Button(key,text = '7' , width = keyWidth, command = lambda : press('7'))
@@ -125,8 +125,8 @@ num_0.grid(row = 4 , column = 13, ipadx = keyWidth , ipady = 10)
 key_underscore = ttk.Button(key,text = '_' , width = keyWidth, command = lambda : press('_'))
 key_underscore.grid(row = 4 , column = 12, ipadx = keyWidth , ipady = 10)
 
-clear = ttk.Button(key,text = 'Clear' , width = 5, command = clear)
-clear.grid(row =4 , columnspan = 11 , ipadx = 37, ipady = 10)
+clear = ttk.Button(key,text = 'Clear' , width = keyWidth-2, command = clear)
+clear.grid(row =4 , columnspan = 11 , ipadx = 15 , ipady = 10)
 
 #close_b = ttk.Button(key,text = ')' , width = keyWidth, command = lambda : press(')'))
 #close_b.grid(row = 4 , column = 12 , ipadx = keyWidth , ipady = 10)
@@ -174,7 +174,7 @@ semi_co = ttk.Button(key,text = ';' , width = keyWidth, command = lambda : press
 semi_co.grid(row = 2 , column = 9, ipadx = keyWidth , ipady = 10)
 
 
-d_colon = ttk.Button(key,text = '"' , width = keyWidth +2, command = lambda : press('"'))
+d_colon = ttk.Button(key,text = '"' , width = keyWidth, command = lambda : press('"'))
 d_colon.grid(row = 2 , column = 10, ipadx = keyWidth , ipady = 10)
 
 
@@ -222,11 +222,11 @@ slas = ttk.Button(key,text = '/' , width = keyWidth, command = lambda : press('/
 slas.grid(row = 3 , column = 9, ipadx = keyWidth , ipady = 10)
 
 
-q_mark = ttk.Button(key,text = '?' , width = keyWidth+2, command = lambda : press('?'))
+q_mark = ttk.Button(key,text = '?' , width = keyWidth, command = lambda : press('?'))
 q_mark.grid(row = 3 , column = 10, ipadx = keyWidth , ipady = 10)
 
 
-coma = ttk.Button(key,text = ',' , width = keyWidth+2, command = lambda : press(','))
+coma = ttk.Button(key,text = ',' , width = keyWidth, command = lambda : press(','))
 coma.grid(row = 3 , column = 11, ipadx = keyWidth , ipady = 10)
 
 shift = ttk.Button(key,text = 'Shift' , width = keyWidth , command = lambda : press('Shift'))
@@ -239,8 +239,8 @@ ctrl = ttk.Button(key,text = 'Ctrl' , width = keyWidth, command = lambda : press
 ctrl.grid(row = 4 , column = 0, ipadx = keyWidth , ipady = 10)
 
 
-Esc = ttk.Button(key,text = 'Esc' , width = keyWidth, command = lambda : press('Esc'))
-Esc.grid(row = 4 , column = 1, ipadx = keyWidth , ipady = 10)
+Fn = ttk.Button(key,text = 'Fn' , width = keyWidth, command = lambda : press('Fn'))
+Fn.grid(row = 4 , column = 1, ipadx = keyWidth , ipady = 10)
 
 
 window = ttk.Button(key,text = 'Window' , width = keyWidth, command = lambda : press('Window'))
@@ -249,13 +249,13 @@ window.grid(row = 4 , column = 2 , ipadx = keyWidth , ipady = 10)
 Alt = ttk.Button(key,text = 'Alt' , width = keyWidth, command = lambda : press('Alt'))
 Alt.grid(row = 4 , column = 3 , ipadx = keyWidth , ipady = 10)
 
-space = ttk.Button(key,text = 'Space' , width = keyWidth + 24, command = lambda : press(' '))
-space.grid(row = 4 , columnspan = 25, ipadx = 0 , ipady = 10)
+space = ttk.Button(key,text = 'Space' , width = keyWidth + 30, command = lambda : press(' '))
+space.grid(row = 4 , columnspan = 31, ipadx = 10 , ipady = 10)
 
-conn_amper = ttk.Button(key,text = '&' , width = 7, command = lambda : press('&'))
-conn_amper.grid(row = 4 , column = 10, ipadx = 10 , ipady = 10)
+back_slash = ttk.Button(key,text = '\\' , width = 7, command = lambda : press('\\'))
+back_slash.grid(row = 4 , column = 10, ipadx = 10 , ipady = 10)
 
-dot = ttk.Button(key,text = '.' , width = keyWidth +3, command = lambda : press('.'))
+dot = ttk.Button(key,text = '.' , width = keyWidth, command = lambda : press('.'))
 dot.grid(row = 4 , column = 11, ipadx = 0 , ipady = 10)
 
 
