@@ -10,7 +10,6 @@ import PIL.Image as Image
 import tkintermapview
 import settings
 import tkinterweb
-import webview
 import os.path
 import webbrowser
 import threading
@@ -26,12 +25,21 @@ import requests
 import folium
 import pandas as pd
 from geopy.geocoders import Nominatim
-  
+from keyPad import initKey
+
 gpsd = None #Setup global variable 
   
 def get_lat_long_from_address(address):
-    locator = Nominatim(user_agent='myApp')
-    location = locator.geocode(address, timeout=None)
+    try:
+        locator = Nominatim(user_agent='myApp')
+        location = locator.geocode(address, timeout=None)
+        if location.latitude is None:
+            sleep(0.5)
+            locator = Nominatim(user_agent='myApp')
+            location = locator.geocode(address, timeout=None)
+    except Exception as err:
+        print(" Err is :" + str(err))
+        pass
     return location.latitude, location.longitude
 
 
@@ -235,12 +243,24 @@ class RoundedButton(Canvas):
 def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
     if settings.showMap:
         print( " Here ")
-        dest_address = str(settings.destTxt.get("1.0",END)).rstrip()
-        if len(dest_address) > 20:
+        if settings.addComplete is False and settings.Finaladd != "clear":
+            destTxt.delete("1.0", "end") 
+            destTxt.insert(END,settings.Finaladd)
+            print(" dest_address :", settings.Finaladd)
+        elif settings.addComplete is False and settings.Finaladd == "clear":
+            print("Cleaning Up ")
+            destTxt.delete("1.0", "end") 
+            settings.Finaladd = ""
+            settings.entry_gpsText = ""
+        else:
+            print(" Got address as :", settings.Finaladd)
+            settings.addComplete=False
             settings.marker_1 = map_wdg.set_marker(settings.gpsLat, settings.gpsLong)
             #marker_2 = map_wdg.set_address(dest_address, marker=True)
-            lat_lons = [get_lat_long_from_address(addr) for addr in dest_address]
+            lat_lons = [get_lat_long_from_address(addr) for addr in settings.Finaladd]
             print(lat_lons[0], lat_lons[1])
+            settings.Finaladd = ""
+            settings.entry_gpsText = ""
             rsp = get_directions_response(settings.gpsLat,settings.gpsLong, lat_lons[0], lat_lons[1]) 
             
             mls = response.json()['features'][0]['geometry']['coordinates']
@@ -254,18 +274,21 @@ def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
             else:
                 if settings.path_1 is not None:
                     settings.path_1.delete()
+                print(" Got Location points as :", mls[0])
                 settings.path_1 = map_wdg.set_polygon(mls[0],outline_color="blue",border_width=10,command=polygon_click, name="pathFinder")
                 #settings.path_1 = map_wdg.set_path([settings.marker_2.position, settings.marker_1.position,( marker_2.position[0],marker_2.position[1] ) ,(settings.gpsLat, settings.gpsLong)])
                 #settings.path_1.set_position_list(new_position_list)
                 #settings.path_1.add_position(position)
+        '''
         else:
             settings.marker_1 = map_wdg.set_position(settings.gpsLat, settings.gpsLong)
             if settings.marker_2 is not None:
                 settings.marker_2.delete()
                 #settings.path_1.remove_position(position)
                 settings.path_1.delete()
+        '''
 
-        gpsWin.after(5000,lambda: updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT))
+        gpsWin.after(250,lambda: updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT))
     else:
         print( "Performing window operations ")
         gpsWin.destroy()
@@ -290,7 +313,8 @@ def showLocation(mainWin, val_Map):
 
     settings.destTxt = Text(gpsWin, width=40, height= 2, font= settings.myFont, bd=0)
     settings.destTxt.place(x=175, y=50)
-    
+    settings.destTxt.bind('<Button-1>',initKey)  
+
     map_wdg = tkintermapview.TkinterMapView(mylbl,width=WIDTH-200, height=HEIGHT-100, corner_radius=0)
     map_wdg.set_zoom(40)
     map_wdg.pack()

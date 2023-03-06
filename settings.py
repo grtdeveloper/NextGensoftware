@@ -110,14 +110,15 @@ sock_Server=None
 sock_Client=None
 int_Bluetooth="bluetooth"
 int_Wifi="wlan0"
-
+addComplete=False
+Finaladd=""
 gpsStreamer=None
 collision_object=""
 collision_object_color="blue"
 start_stop_back_detection=False
-RAPID_API="15b148a9efmsh9434c399fd51e9ep1ad383jsn88c8ba54cf06",
-MAP_URL="https://route-and-directions.p.rapidapi.com/v1/routing"
-
+RAPID_API="15b148a9efmsh9434c399fd51e9ep1ad383jsn88c8ba54cf06"
+#MAP_URL="https://route-and-directions.p.rapidapi.com/v1/routing"
+MAP_URL="https://car-routes-and-directions-google-maps-alternative.p.rapidapi.com/directions/driving-car/geojson"
 
 LINK_YOUTUBE="https://www.youtube.com/watch?v=Mwrhf7TuUPw"
 LINK_NETFLIX="https://www.netflix.com/in/Login"
