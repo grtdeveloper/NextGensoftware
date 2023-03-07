@@ -117,8 +117,8 @@ collision_object=""
 collision_object_color="blue"
 start_stop_back_detection=False
 RAPID_API="15b148a9efmsh9434c399fd51e9ep1ad383jsn88c8ba54cf06"
-#MAP_URL="https://route-and-directions.p.rapidapi.com/v1/routing"
-MAP_URL="https://car-routes-and-directions-google-maps-alternative.p.rapidapi.com/directions/driving-car/geojson"
+MAP_URL="https://route-and-directions.p.rapidapi.com/v1/routing"
+GEOCODE_URL="https://google-maps-geocoding.p.rapidapi.com/geocode/json"
 
 LINK_YOUTUBE="https://www.youtube.com/watch?v=Mwrhf7TuUPw"
 LINK_NETFLIX="https://www.netflix.com/in/Login"

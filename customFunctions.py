@@ -23,31 +23,34 @@ import fcntl
 import struct
 import requests
 import folium
+import json
 import pandas as pd
 from geopy.geocoders import Nominatim
 from keyPad import initKey
 
 gpsd = None #Setup global variable 
-  
+
 def get_lat_long_from_address(address):
-    try:
-        locator = Nominatim(user_agent='myApp')
-        location = locator.geocode(address, timeout=None)
-        if location.latitude is None:
-            sleep(0.5)
-            locator = Nominatim(user_agent='myApp')
-            location = locator.geocode(address, timeout=None)
-    except Exception as err:
-        print(" Err is :" + str(err))
-        pass
-    return location.latitude, location.longitude
+    url = settings.GEOCODE_URL
+    response={}
+    d={}
+    querystring = {"address":address,"language":"en"}
+
+    headers = {
+        "X-RapidAPI-Key": settings.RAPID_API,
+        "X-RapidAPI-Host": "google-maps-geocoding.p.rapidapi.com"
+    }
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    d = json.loads(response.text)
+    return d['results'][0]['geometry']['location']
 
 
 def get_directions_response(lat1,lng1, lat2,lng2):
     
     url =  settings.MAP_URL 
 
-    querystring = {"waypoints": str(lat1) + "," + str(lng1) + "|" + str(lat2) + "," + str(lng2) ,"mode":"drive"}
+    querystring = {"waypoints": str(lat1) + "," + str(lng1) + "|" + str(lat2) + "," + str(lng2), "mode":"drive"}
+    print(" querystring is :" , querystring )
 
     headers = {
             "X-RapidAPI-Key": settings.RAPID_API,
@@ -55,6 +58,7 @@ def get_directions_response(lat1,lng1, lat2,lng2):
 }
 
     response = requests.request("GET", url, headers=headers, params=querystring)
+    print( " \n Got response as :", response.text)
     return response
 
 def create_map(response):
@@ -103,7 +107,9 @@ def wifiStatus(intfName):
 
 def handler(signum, frame):
     res = input("Ctrl-c was pressed. Exiting!!! ")
-settings.status_GPS=False
+
+#### Enable me to start gps thread
+#settings.status_GPS=False
  
 signal.signal(signal.SIGINT, handler)
 
@@ -257,13 +263,13 @@ def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
             settings.addComplete=False
             settings.marker_1 = map_wdg.set_marker(settings.gpsLat, settings.gpsLong)
             #marker_2 = map_wdg.set_address(dest_address, marker=True)
-            lat_lons = [get_lat_long_from_address(addr) for addr in settings.Finaladd]
-            print(lat_lons[0], lat_lons[1])
+            lat_lons = get_lat_long_from_address(settings.Finaladd) 
+            print(lat_lons['lat'], lat_lons['lng'])
             settings.Finaladd = ""
             settings.entry_gpsText = ""
-            rsp = get_directions_response(settings.gpsLat,settings.gpsLong, lat_lons[0], lat_lons[1]) 
+            rsp = get_directions_response(settings.gpsLat,settings.gpsLong, lat_lons['lat'], lat_lons['lng']) 
             
-            mls = response.json()['features'][0]['geometry']['coordinates']
+            mls = rsp.json()['features'][0]['geometry']['coordinates']
             #settings.marker_2 = map_wdg.set_marker(marker_2.position[0], marker_2.position[1])
             if settings.prev_gpsLat != settings.gpsLat and settings.prev_gpsLong != settings.gpsLong :
                 settings.prev_gpsLat = settings.gpsLat
@@ -586,9 +592,9 @@ def getSpeed():
             settings.gpsLong = round(float(agps_thread.data_stream.lon),4)
             settings.gpsSpeed = int(agps_thread.data_stream.speed)
             streamer.log("Location", "{lat},{lon}".format(lat=settings.gpsLat,lon=settings.gpsLong))
-            #print(" Lattitude : " + str(settings.gpsLat))
-            #print(" Longitude : " + str(settings.gpsLong))
-            #print(" Speed : " + str(settings.gpsSpeed) + " km/h")
+            print(" Lattitude : " + str(settings.gpsLat))
+            print(" Longitude : " + str(settings.gpsLong))
+            print(" Speed : " + str(settings.gpsSpeed) + " km/h")
             sleep(0.15)
         except Exception as err:
             pass

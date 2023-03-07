@@ -28,9 +28,23 @@ def action(win):
 def initKey(event):
     key = tk.Tk()  # key window name
     key.title('--- Keypad  ---')  # title Name
+    # get screen width and height
+    
+    ws = key.winfo_screenwidth() # width of the screen
+    hs = key.winfo_screenheight() # height of the screen
+
+    w = 1350
+    h= 200
+    # calculate x and y coordinates for the Tk root window
+    x = (ws/2) - (w/2)
+    y = (hs/2) - (h/2)
+
+    # set the dimensions of the screen 
+    # and where it is placed
+    key.geometry('%dx%d+%d+%d' % (w, h, x, y))
 
     # Size window size
-    key.geometry('1350x200')         # normal size
+    #key.geometry('1350x200')         # normal size
     key.maxsize(width=1350, height=190)      # maximum size
     key.minsize(width= 1350 , height = 190)     # minimum size
     # end window size
