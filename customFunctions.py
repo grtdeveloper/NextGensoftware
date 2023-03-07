@@ -50,7 +50,6 @@ def get_directions_response(lat1,lng1, lat2,lng2):
     url =  settings.MAP_URL 
 
     querystring = {"waypoints": str(lat1) + "," + str(lng1) + "|" + str(lat2) + "," + str(lng2), "mode":"drive"}
-    print(" querystring is :" , querystring )
 
     headers = {
             "X-RapidAPI-Key": settings.RAPID_API,
@@ -58,7 +57,6 @@ def get_directions_response(lat1,lng1, lat2,lng2):
 }
 
     response = requests.request("GET", url, headers=headers, params=querystring)
-    print( " \n Got response as :", response.text)
     return response
 
 def create_map(response):
@@ -248,11 +246,11 @@ class RoundedButton(Canvas):
 
 def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
     if settings.showMap:
-        print( " Here ")
         if settings.addComplete is False and settings.Finaladd != "clear":
             destTxt.delete("1.0", "end") 
             destTxt.insert(END,settings.Finaladd)
-            print(" dest_address :", settings.Finaladd)
+            if len(settings.Finaladd) > 1:
+                print(" dest_address :", settings.Finaladd)
         elif settings.addComplete is False and settings.Finaladd == "clear":
             print("Cleaning Up ")
             destTxt.delete("1.0", "end") 
@@ -264,13 +262,12 @@ def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
             settings.marker_1 = map_wdg.set_marker(settings.gpsLat, settings.gpsLong)
             #marker_2 = map_wdg.set_address(dest_address, marker=True)
             lat_lons = get_lat_long_from_address(settings.Finaladd) 
-            print(lat_lons['lat'], lat_lons['lng'])
             settings.Finaladd = ""
             settings.entry_gpsText = ""
             rsp = get_directions_response(settings.gpsLat,settings.gpsLong, lat_lons['lat'], lat_lons['lng']) 
             
             mls = rsp.json()['features'][0]['geometry']['coordinates']
-            #settings.marker_2 = map_wdg.set_marker(marker_2.position[0], marker_2.position[1])
+            settings.marker_2 = map_wdg.set_marker(lat_lons['lat'], lat_lons['lng'])
             if settings.prev_gpsLat != settings.gpsLat and settings.prev_gpsLong != settings.gpsLong :
                 settings.prev_gpsLat = settings.gpsLat
                 settings.prev_gpsLong = settings.gpsLong
@@ -280,11 +277,10 @@ def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
             else:
                 if settings.path_1 is not None:
                     settings.path_1.delete()
-                print(" Got Location points as :", mls[0])
-                settings.path_1 = map_wdg.set_polygon(mls[0],outline_color="blue",border_width=10,command=polygon_click, name="pathFinder")
-                #settings.path_1 = map_wdg.set_path([settings.marker_2.position, settings.marker_1.position,( marker_2.position[0],marker_2.position[1] ) ,(settings.gpsLat, settings.gpsLong)])
-                #settings.path_1.set_position_list(new_position_list)
-                #settings.path_1.add_position(position)
+                settings.path_1 = map_wdg.set_polygon(mls[0],name="pathFinder")
+                #settings.path_1 = map_wdg.set_path([settings.marker_2.position, settings.marker_1.position,(lat_lons['lat'], lat_lons['lng'] ) ,(settings.gpsLat, settings.gpsLong)])
+                #settings.path_1.set_position_list(mls[0])
+                #settings.path_1.add_position(lat_lons['lat'], lat_lons['lng'])
         '''
         else:
             settings.marker_1 = map_wdg.set_position(settings.gpsLat, settings.gpsLong)
