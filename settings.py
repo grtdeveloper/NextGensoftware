@@ -95,13 +95,14 @@ play_Options=""
 adas_Choice=""
 enablebackVideo=False
 selected_Option=[]
-
+mls = []
+lat_lons={}
 gpsLat=18.6229
 gpsLong=73.7108
 gpsSpeed=0
 dest_address="" 
-prev_gpsLat=18.6229
-prev_gpsLong=73.7108
+prev_gpsLat=18.229
+prev_gpsLong=73.108
 max_vehicle_speed=80
 marker_1=None
 marker_2=None

@@ -107,7 +107,7 @@ def handler(signum, frame):
     res = input("Ctrl-c was pressed. Exiting!!! ")
 
 #### Enable me to start gps thread
-#settings.status_GPS=False
+settings.status_GPS=False
  
 signal.signal(signal.SIGINT, handler)
 
@@ -247,6 +247,7 @@ class RoundedButton(Canvas):
 def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
     if settings.showMap:
         if settings.addComplete is False and settings.Finaladd != "clear":
+            print( " in first loop ")
             destTxt.delete("1.0", "end") 
             destTxt.insert(END,settings.Finaladd)
             if len(settings.Finaladd) > 1:
@@ -256,41 +257,38 @@ def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
             destTxt.delete("1.0", "end") 
             settings.Finaladd = ""
             settings.entry_gpsText = ""
+            settings.lat_lons={}
         else:
-            print(" Got address as :", settings.Finaladd)
-            settings.addComplete=False
-            settings.marker_1 = map_wdg.set_marker(settings.gpsLat, settings.gpsLong)
             #marker_2 = map_wdg.set_address(dest_address, marker=True)
-            lat_lons = get_lat_long_from_address(settings.Finaladd) 
-            settings.Finaladd = ""
-            settings.entry_gpsText = ""
-            rsp = get_directions_response(settings.gpsLat,settings.gpsLong, lat_lons['lat'], lat_lons['lng']) 
-            
-            mls = rsp.json()['features'][0]['geometry']['coordinates']
-            settings.marker_2 = map_wdg.set_marker(lat_lons['lat'], lat_lons['lng'])
+            if len(settings.lat_lons) == 0 :
+                settings.marker_1 = map_wdg.set_position(settings.gpsLat, settings.gpsLong, marker=True)
+                settings.lat_lons = get_lat_long_from_address(settings.Finaladd) 
+                rsp = get_directions_response(settings.gpsLat,settings.gpsLong, settings.lat_lons['lat'], settings.lat_lons['lng']) 
+             
+                settings.mls = rsp.json()['features'][0]['geometry']['coordinates']
+                settings.marker_2= map_wdg.set_position(settings.lat_lons['lat'],settings.lat_lons['lng'], marker=True)
+                settings.addComplete=True
+                settings.path_1 = map_wdg.set_path([settings.marker_2.position, settings.marker_1.position,(settings.lat_lons['lat'], settings.lat_lons['lng'] ) ,(settings.gpsLat, settings.gpsLong)])
             if settings.prev_gpsLat != settings.gpsLat and settings.prev_gpsLong != settings.gpsLong :
+                if settings.path_1 is not None:
+                    settings.path_1.remove_position(settings.prev_gpsLat, settings.prev_gpsLong)
                 settings.prev_gpsLat = settings.gpsLat
                 settings.prev_gpsLong = settings.gpsLong
+                settings.mls[0].pop(0)
                 if settings.path_1 is not None:
-                    settings.path_1.remove_position(position)
                     settings.path_1.delete()
+                    #settings.path_1 = map_wdg.set_path([settings.marker_2.position, settings.marker_1.position,(settings.lat_lons['lat'], settings.lat_lons['lng'] ) ,(settings.gpsLat, settings.gpsLong)])
+                newPos =[tuple(x) for x in settings.mls[0]]
+                settings.path_1 = map_wdg.set_polygon(newPos, outline_color="blue", border_width=12, name="pathFinder")
+            #newPos =[tuple(x) for x in settings.mls[0]]
+            #settings.path_1 = map_wdg.set_polygon(newPos, outline_color="red", border_width=12, name="pathFinder")
+                gpsWin.update()
+            '''
             else:
-                if settings.path_1 is not None:
-                    settings.path_1.delete()
-                settings.path_1 = map_wdg.set_polygon(mls[0],name="pathFinder")
-                #settings.path_1 = map_wdg.set_path([settings.marker_2.position, settings.marker_1.position,(lat_lons['lat'], lat_lons['lng'] ) ,(settings.gpsLat, settings.gpsLong)])
-                #settings.path_1.set_position_list(mls[0])
-                #settings.path_1.add_position(lat_lons['lat'], lat_lons['lng'])
-        '''
-        else:
-            settings.marker_1 = map_wdg.set_position(settings.gpsLat, settings.gpsLong)
-            if settings.marker_2 is not None:
-                settings.marker_2.delete()
-                #settings.path_1.remove_position(position)
-                settings.path_1.delete()
-        '''
-
-        gpsWin.after(250,lambda: updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT))
+                newPos =[tuple(x) for x in settings.mls[0]]
+                #settings.path_1 = map_wdg.set_path([settings.marker_2.position, settings.marker_1.position,( settings.lat_lons['lat'], settings.lat_lons['lng'] ) ,(settings.gpsLat, settings.gpsLong)])
+            '''
+        gpsWin.after(1500,lambda: updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT))
     else:
         print( "Performing window operations ")
         gpsWin.destroy()
@@ -304,8 +302,6 @@ def showLocation(mainWin, val_Map):
     gpsWin.resizable(0,0)
     gpsWin.title(" ----  Location Finder  ---- ")
     WIDTH, HEIGHT = gpsWin.winfo_screenwidth(),gpsWin.winfo_screenheight()
-    
-   
 
     mylbl = LabelFrame(gpsWin,)
     mylbl.pack(pady=20)
@@ -318,7 +314,7 @@ def showLocation(mainWin, val_Map):
     settings.destTxt.bind('<Button-1>',initKey)  
 
     map_wdg = tkintermapview.TkinterMapView(mylbl,width=WIDTH-200, height=HEIGHT-100, corner_radius=0)
-    map_wdg.set_zoom(40)
+    map_wdg.set_zoom(15)
     map_wdg.pack()
     try:
         updateMap(gpsWin, mainWin, settings.destTxt, mylbl, map_wdg, WIDTH, HEIGHT)
