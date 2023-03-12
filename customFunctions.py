@@ -51,7 +51,6 @@ def get_directions_response(lat1, long1, lat2, long2, mode='drive'):
    headers = {"X-RapidAPI-Key": key, "X-RapidAPI-Host": host}
    querystring = {"waypoints": str(lat1) + "," + str(long1) + "|" + str(lat2) + "," +str(long2),"mode":mode}
    response = requests.request("GET", url, headers=headers, params=querystring)
-   print("Got response as :", response.text)
    return response
 
 
@@ -271,7 +270,6 @@ def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
             settings.entry_gpsText = ""
             settings.lat_lons={}
         else:
-            #marker_2 = map_wdg.set_address(dest_address, marker=True)
             if len(settings.lat_lons) == 0 :
                 settings.marker_1 = map_wdg.set_position(settings.gpsLat, settings.gpsLong, marker=True)
                 settings.lat_lons = get_lat_long_from_address(settings.Finaladd) 
@@ -281,27 +279,16 @@ def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
                 settings.marker_2= map_wdg.set_position(settings.lat_lons['lat'],settings.lat_lons['lng'], marker=True)
                 settings.addComplete=True
                 settings.path_1 = map_wdg.set_path([settings.marker_2.position, settings.marker_1.position,(settings.lat_lons['lat'], settings.lat_lons['lng'] ) ,(settings.gpsLat, settings.gpsLong)])
+                '''
             if settings.prev_gpsLat != settings.gpsLat and settings.prev_gpsLong != settings.gpsLong :
                 if settings.path_1 is not None:
                     settings.path_1.remove_position(settings.prev_gpsLat, settings.prev_gpsLong)
                 settings.prev_gpsLat = settings.gpsLat
                 settings.prev_gpsLong = settings.gpsLong
-                settings.mls[0].pop(0)
-                if settings.path_1 is not None:
-                    settings.path_1.delete()
-                    #settings.path_1 = map_wdg.set_path([settings.marker_2.position, settings.marker_1.position,(settings.lat_lons['lat'], settings.lat_lons['lng'] ) ,(settings.gpsLat, settings.gpsLong)])
-                newPos =[tuple(x) for x in settings.mls[0]]
-                settings.path_1 = map_wdg.set_polygon(newPos, outline_color="blue", border_width=12, name="pathFinder")
-            #newPos =[tuple(x) for x in settings.mls[0]]
-            #settings.path_1 = map_wdg.set_polygon(newPos, outline_color="red", border_width=12, name="pathFinder")
-                '''
-                create_map(gpsWin, rsp)
-                gpsWin.update()
-            '''
-            else:
-                newPos =[tuple(x) for x in settings.mls[0]]
-                #settings.path_1 = map_wdg.set_path([settings.marker_2.position, settings.marker_1.position,( settings.lat_lons['lat'], settings.lat_lons['lng'] ) ,(settings.gpsLat, settings.gpsLong)])
-            '''
+                rsp = get_directions_response(settings.gpsLat,settings.gpsLong, settings.lat_lons['lat'], settings.lat_lons['lng']) 
+                #newPos =[tuple(x) for x in settings.mls[0]]
+            create_map(gpsWin, rsp)
+            gpsWin.update()
         gpsWin.after(1500,lambda: updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT))
     else:
         print( "Performing window operations ")
@@ -373,13 +360,7 @@ def launchPlayer(mainWin,title ,link):
     mainWin.withdraw()
     import webbrowser
     # creating root
-    root = Tk()
-    WIDTH, HEIGHT = root.winfo_screenwidth(),root.winfo_screenheight()
 
-    # setting GUI title
-    root.title(title)
-
-    root.geometry("%dx%d+0+0" % (WIDTH, HEIGHT))
 
     # call webbrowser.open() function.
     webbrowser.open(link)
