@@ -141,9 +141,9 @@ def showInfotain(mainWin):
     img_Youtube = ImageTk.PhotoImage(Image.open(IMAGE_YOUTUBE).resize((300,300), Image.ANTIALIAS))
     img_Spotify = ImageTk.PhotoImage(Image.open(IMAGE_SPOTIFY).resize((300,300), Image.ANTIALIAS))
 
-    settings.btn_Netflix = Button(lblInfotain, image=img_Netflix,bg="black",highlightthickness=0,bd=0,  activeforeground='black', activebackground='black', command= lambda: launchPlayer(newWindow,settings.LINK_NETFLIX))
-    settings.btn_Youtube = Button(lblInfotain, image=img_Youtube,bg="black", highlightthickness=0 ,bd=0,  activeforeground='black', activebackground='black', command=lambda: launchPlayer(newWindow,settings.LINK_YOUTUBE))
-    settings.btn_Spotify = Button(lblInfotain, image=img_Spotify,bg="black", highlightthickness=0 ,bd=0,  activeforeground='black', activebackground='black', command=lambda: launchPlayer(newWindow,settings.LINK_SPOTIFY))
+    settings.btn_Netflix = Button(lblInfotain, image=img_Netflix,bg="black",highlightthickness=0,bd=0,  activeforeground='black', activebackground='black', command= lambda: launchPlayer(newWindow," Netflix " ,settings.LINK_NETFLIX))
+    settings.btn_Youtube = Button(lblInfotain, image=img_Youtube,bg="black", highlightthickness=0 ,bd=0,  activeforeground='black', activebackground='black', command=lambda: launchPlayer(newWindow," Youtube " ,settings.LINK_YOUTUBE))
+    settings.btn_Spotify = Button(lblInfotain, image=img_Spotify,bg="black", highlightthickness=0 ,bd=0,  activeforeground='black', activebackground='black', command=lambda: launchPlayer(newWindow," Spotify " ,settings.LINK_SPOTIFY))
     
     settings.btn_Netflix.grid(row=0, column=0, padx=150)
     settings.btn_Youtube.grid(row=0, column=1, padx=150)

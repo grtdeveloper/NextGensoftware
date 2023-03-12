@@ -44,18 +44,7 @@ def get_lat_long_from_address(address):
     d = json.loads(response.text)
     return d['results'][0]['geometry']['location']
 
-def get_directions_response(lat1, long1, lat2, long2, mode='drive'):
-   url = "https://route-and-directions.p.rapidapi.com/v1/routing"
-   key = settings.RAPID_API
-   host = "route-and-directions.p.rapidapi.com"
-   headers = {"X-RapidAPI-Key": key, "X-RapidAPI-Host": host}
-   querystring = {"waypoints": str(lat1) + "," + str(long1) + "|" + str(lat2) + "," +str(long2),"mode":mode}
-   response = requests.request("GET", url, headers=headers, params=querystring)
-   print("Got response as :", response.text)
-   return response
 
-
-'''
 def get_directions_response(lat1,lng1, lat2,lng2):
     
     url =  settings.MAP_URL 
@@ -69,9 +58,8 @@ def get_directions_response(lat1,lng1, lat2,lng2):
 
     response = requests.request("GET", url, headers=headers, params=querystring)
     return response
-'''
 
-def create_map(gpsWin, response):
+def create_map(response):
    # use the response
    mls = response.json()['features'][0]['geometry']['coordinates']
    points = [(i[1], i[0]) for i in mls[0]]
@@ -84,8 +72,8 @@ def create_map(gpsWin, response):
    ne = df[['Lat', 'Lon']].max().values.tolist()
    m.fit_bounds([sw, ne])
    m.save("map/current_route.html")
-   webObject=launchPlayer(gpsWin, " GPS Route ", "map/current_route.html")
-   return
+   webObject=launchPlayer(gpsWin, "map/current_route.html")
+   return webObject
 
 
 def bluetoothStatus():
@@ -276,7 +264,7 @@ def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
                 settings.marker_1 = map_wdg.set_position(settings.gpsLat, settings.gpsLong, marker=True)
                 settings.lat_lons = get_lat_long_from_address(settings.Finaladd) 
                 rsp = get_directions_response(settings.gpsLat,settings.gpsLong, settings.lat_lons['lat'], settings.lat_lons['lng']) 
-                ''' 
+             
                 settings.mls = rsp.json()['features'][0]['geometry']['coordinates']
                 settings.marker_2= map_wdg.set_position(settings.lat_lons['lat'],settings.lat_lons['lng'], marker=True)
                 settings.addComplete=True
@@ -294,8 +282,6 @@ def updateMap(gpsWin, mainWin, destTxt, mylbl, map_wdg, WIDTH, HEIGHT):
                 settings.path_1 = map_wdg.set_polygon(newPos, outline_color="blue", border_width=12, name="pathFinder")
             #newPos =[tuple(x) for x in settings.mls[0]]
             #settings.path_1 = map_wdg.set_polygon(newPos, outline_color="red", border_width=12, name="pathFinder")
-                '''
-                create_map(gpsWin, rsp)
                 gpsWin.update()
             '''
             else:
@@ -360,7 +346,7 @@ def checkIfProcessRunning(processName):
 
 def checkStatus(mainWin,process):
     if checkIfProcessRunning(process):
-        threading.Timer(2, lambda: checkStatus(mainWin, process)).start()
+        threading.Timer(2, lambda: checkStatus(mainWin)).start()
         print( "Running ")
         return True
     else:
@@ -369,22 +355,20 @@ def checkStatus(mainWin,process):
         return False
 
 
-def launchPlayer(mainWin,title ,link):
+def launchPlayer(mainWin, link):
     mainWin.withdraw()
-    import webbrowser
-    # creating root
-    root = Tk()
-    WIDTH, HEIGHT = root.winfo_screenwidth(),root.winfo_screenheight()
-
-    # setting GUI title
-    root.title(title)
-
-    root.geometry("%dx%d+0+0" % (WIDTH, HEIGHT))
-
-    # call webbrowser.open() function.
-    webbrowser.open(link)
+    #playWin = Toplevel()
+    from selenium import webdriver
+    
+    driver = webdriver.Chrome (executable_path="/usr/lib/chromium-browser/chromium-browser")
+    # maximize with maximize_window()
+    driver.maximize_window()
+    driver.get(link)
+    driver.quit()
+    #webbrowser.open_new(link,fullscreen=True)
     checkStatus(mainWin, 'chrome')
-    return 
+    #playWin.mainloop()
+    return driver
 
 def open_file(videoplayer, window ,dirName):
     if settings.play_Options.lower() == "recorded" :
