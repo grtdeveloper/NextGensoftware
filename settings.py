@@ -113,7 +113,6 @@ int_Bluetooth="bluetooth"
 int_Wifi="wlan0"
 addComplete=False
 Finaladd=""
-gpsStreamer=None
 collision_object=""
 collision_object_color="blue"
 start_stop_back_detection=False

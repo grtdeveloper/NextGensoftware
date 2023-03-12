@@ -31,9 +31,12 @@ def closePgm():
 def updateIcons(mainScreen, btn_Animal,btn_Bike,btn_Car,btn_Pedestrian,btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon):
     imgFile = ""
     print( " checked.. :" , (settings.collision_object.lower()) )
-    if settings.enablebackVideo is True and len(settings.selected_Option) > 0:
+    if settings.speed_Limit <= settings.gpsSpeed :
+        print(" Not Updating Screen As speed is under Threhold ") 
+        
+    elif settings.enablebackVideo is True and len(settings.selected_Option) > 0:
         print( " Update Icons ")
-        if "Animal" in settings.selected_Option:
+        if "Animal" in settings.selected_Option :
             if "animal" in settings.collision_object.lower() and settings.collision_object_color.lower() == "red":
                 imgFile = os.path.join(red_dirIcon, settings.FILE_ANIMAL)
             elif "animal" in settings.collision_object.lower() and settings.collision_object_color.lower() == "yellow":
