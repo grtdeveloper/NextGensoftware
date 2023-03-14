@@ -120,9 +120,11 @@ RAPID_API="15b148a9efmsh9434c399fd51e9ep1ad383jsn88c8ba54cf06"
 MAP_URL="https://route-and-directions.p.rapidapi.com/v1/routing"
 GEOCODE_URL="https://google-maps-geocoding.p.rapidapi.com/geocode/json"
 
-LINK_YOUTUBE="https://www.youtube.com/watch?v=Mwrhf7TuUPw"
-LINK_NETFLIX="https://www.netflix.com/in/Login"
-LINK_SPOTIFY="https://accounts.spotify.com/en/login"
+screen_Scalar=1.0
+
+LINK_YOUTUBE="https://www.youtube.com/"
+LINK_NETFLIX="https://www.netflix.com/in"
+LINK_SPOTIFY="https://accounts.spotify.com"
 
 myFont= ('Helvetica 15 bold')
 optionFont= ('Helvetica 25 bold')

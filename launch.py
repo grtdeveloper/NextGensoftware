@@ -131,8 +131,25 @@ def showInfotain(mainWin):
     newWindow.geometry("%dx%d+0+0" % (WIDTH, HEIGHT))
     newWindow.configure(bg="black")
 
-    lblInfotain = tk.Label(newWindow,height = 400, width = WIDTH, bg="black")
-    lblInfotain.place(x=0,y=HEIGHT/2 - 200)  # Place label in center of parent.
+    height_Win = 0
+    pos_lblInfo_Y = 0
+    imgSize = 0
+    pad_X = 0
+    if settings.screen_Scalar == 1.0:
+        height_Win = 400
+        pos_lblInfo_Y = 200
+        imgSize = 300
+        pad_X = 150
+    
+    else:
+        height_Win = int(400 / settings.screen_Scalar)
+        pos_lblInfo_Y = int(200 / settings.screen_Scalar)
+        imgSize = int(300 / settings.screen_Scalar)
+        pad_X = int(150 / settings.screen_Scalar)
+
+
+    lblInfotain = tk.Label(newWindow,height = height_Win, width = WIDTH, bg="black")
+    lblInfotain.place(x=0,y=HEIGHT/2 - pos_lblInfo_Y)  # Place label in center of parent.
    
     dirInfotainment = os.path.join(settings.BASE_DIR,settings.INFOTAINMENT_DIR)
 
@@ -140,17 +157,17 @@ def showInfotain(mainWin):
     IMAGE_YOUTUBE = os.path.join(dirInfotainment, settings.FILE_YOUTUBE)
     IMAGE_SPOTIFY = os.path.join(dirInfotainment, settings.FILE_SPOTIFY)
 
-    img_Netflix = ImageTk.PhotoImage(Image.open(IMAGE_NETFLIX).resize((300,300), Image.ANTIALIAS))
-    img_Youtube = ImageTk.PhotoImage(Image.open(IMAGE_YOUTUBE).resize((300,300), Image.ANTIALIAS))
-    img_Spotify = ImageTk.PhotoImage(Image.open(IMAGE_SPOTIFY).resize((300,300), Image.ANTIALIAS))
+    img_Netflix = ImageTk.PhotoImage(Image.open(IMAGE_NETFLIX).resize((imgSize , imgSize), Image.ANTIALIAS))
+    img_Youtube = ImageTk.PhotoImage(Image.open(IMAGE_YOUTUBE).resize((imgSize , imgSize), Image.ANTIALIAS))
+    img_Spotify = ImageTk.PhotoImage(Image.open(IMAGE_SPOTIFY).resize((imgSize , imgSize), Image.ANTIALIAS))
 
     settings.btn_Netflix = Button(lblInfotain, image=img_Netflix,bg="black",highlightthickness=0,bd=0,  activeforeground='black', activebackground='black', command= lambda: launchPlayer(newWindow," Netflix " ,settings.LINK_NETFLIX))
     settings.btn_Youtube = Button(lblInfotain, image=img_Youtube,bg="black", highlightthickness=0 ,bd=0,  activeforeground='black', activebackground='black', command=lambda: launchPlayer(newWindow," Youtube " ,settings.LINK_YOUTUBE))
     settings.btn_Spotify = Button(lblInfotain, image=img_Spotify,bg="black", highlightthickness=0 ,bd=0,  activeforeground='black', activebackground='black', command=lambda: launchPlayer(newWindow," Spotify " ,settings.LINK_SPOTIFY))
     
-    settings.btn_Netflix.grid(row=0, column=0, padx=150)
-    settings.btn_Youtube.grid(row=0, column=1, padx=150)
-    settings.btn_Spotify.grid(row=0, column=2, padx=150)
+    settings.btn_Netflix.grid(row=0, column=0, padx=pad_X)
+    settings.btn_Youtube.grid(row=0, column=1, padx=pad_X)
+    settings.btn_Spotify.grid(row=0, column=2, padx=pad_X)
 
     newWindow.protocol("WM_DELETE_WINDOW", lambda: on_closing(newWindow, mainWin))
     newWindow.mainloop()
@@ -170,6 +187,7 @@ def create_gui():
         IMAGE_PATH = os.path.join(settings.BASE_DIR, settings.THEME_DIR, settings.FILE_THEME_LIGHT)
 
     root = tk.Tk()
+    
     WIDTH, HEIGHT = root.winfo_screenwidth(),root.winfo_screenheight()
         
     print("Width and height :", (WIDTH, HEIGHT))
@@ -194,9 +212,47 @@ def create_gui():
     btn_Bluetoth = tk.Button(root, image=bluetoothImg, bg="black",highlightthickness=0,bd=0,activeforeground='black', activebackground='black')
     btn_Bluetoth.place(x=120,y=10)
     
+    settings.screen_Scalar = float(1920 / WIDTH)
     
-    lblPlaceholder = tk.Label(root, background="#0C3744",activeforeground='#0C3744', activebackground='#0C3744', bd=0, highlightthickness=0, height = 400, width = WIDTH-250)
-    lblPlaceholder.place(x=WIDTH/2 -500,y=125)  # Place label in center of parent.
+    iconSize = 0
+    icons_ht_wd=0
+    pd_X=0
+    pd_Y=0
+    btnSpeed_X=0
+    btnSpeed_Y=0
+    placeH_width=0
+    placeH_heigth=0
+    placeH_posX=0
+    placeH_posY=0
+    
+    print( "Got settings.screen_Scalar :", settings.screen_Scalar)
+    if settings.screen_Scalar == 1.0:
+        print( "In First loop ")
+        iconSize = 100
+        icons_ht_wd= 300
+        pd_X=80
+        pd_Y=400
+        btnSpeed_X=310
+        btnSpeed_Y=180
+        placeH_posX=500
+        placeH_posY=125
+        placeH_heigth=400
+        placeH_width=250
+    else:
+        print( "I am here ")
+        iconSize = int(100 / settings.screen_Scalar)
+        icons_ht_wd = int(300 / settings.screen_Scalar)
+        pd_X = int(80 / settings.screen_Scalar)
+        pd_Y = int(400 / settings.screen_Scalar)
+        btnSpeed_X = int(310 / settings.screen_Scalar)
+        btnSpeed_Y = int(180 / settings.screen_Scalar)
+        placeH_posX = int(500 / settings.screen_Scalar)
+        placeH_posY= int(125 / settings.screen_Scalar)
+        placeH_width=int(400 / settings.screen_Scalar)
+        placeH_heigth= int(250 / settings.screen_Scalar)
+
+    lblPlaceholder = tk.Label(root, background="#0C3744",activeforeground='#0C3744', activebackground='#0C3744', bd=0, highlightthickness=0, height = placeH_heigth , width = WIDTH- placeH_width)
+    lblPlaceholder.place(x=WIDTH/2 - placeH_posX ,y=  placeH_posY)  # Place label in center of parent.
     
     blue_dirIcon = os.path.join(settings.BASE_DIR, settings.BLUE_ICON_DIR)
     red_dirIcon = os.path.join(settings.BASE_DIR, settings.RED_ICON_DIR)
@@ -208,13 +264,11 @@ def create_gui():
     IMG_PEDESTRIAN =os.path.join(blue_dirIcon,settings.FILE_PEDESTRIAN)
     IMG_SPEED = os.path.join(blue_dirIcon,settings.FILE_SPEED)
 
-    settings.imgAnimal = ImageTk.PhotoImage(Image.open(IMG_ANIMAL).resize((100,100), Image.ANTIALIAS))
-
-    settings.imgBike = ImageTk.PhotoImage(Image.open(IMG_BIKE).resize((100,100), Image.ANTIALIAS))
-
-    settings.imgCar = ImageTk.PhotoImage(Image.open(IMG_CAR).resize((100,100), Image.ANTIALIAS))
-    settings.imgPedestrian = ImageTk.PhotoImage(Image.open(IMG_PEDESTRIAN).resize((100,100), Image.ANTIALIAS))
-    settings.imgSpeed = ImageTk.PhotoImage(Image.open(IMG_SPEED).resize((100,100), Image.ANTIALIAS))
+    settings.imgAnimal = ImageTk.PhotoImage(Image.open(IMG_ANIMAL).resize((iconSize,iconSize), Image.ANTIALIAS))
+    settings.imgBike = ImageTk.PhotoImage(Image.open(IMG_BIKE).resize((iconSize,iconSize), Image.ANTIALIAS))
+    settings.imgCar = ImageTk.PhotoImage(Image.open(IMG_CAR).resize((iconSize,iconSize), Image.ANTIALIAS))
+    settings.imgPedestrian = ImageTk.PhotoImage(Image.open(IMG_PEDESTRIAN).resize((iconSize,iconSize), Image.ANTIALIAS))
+    settings.imgSpeed = ImageTk.PhotoImage(Image.open(IMG_SPEED).resize((iconSize,iconSize), Image.ANTIALIAS))
 
     settings.btn_Animal = Button(lblPlaceholder,image=settings.imgAnimal, bg="#0C3744",highlightthickness=0,bd=0,activeforeground='#0C3744', activebackground='#0C3744', compound=CENTER)
     settings.btn_Bike = Button(lblPlaceholder, image=settings.imgBike, bg="#0C3744",highlightthickness=0,bd=0,activeforeground='#0C3744', activebackground='#0C3744')
@@ -241,10 +295,10 @@ def create_gui():
     IMG_GPS = os.path.join(dirMain,settings.FILE_GPS)
     IMG_INFOTAINMENT = os.path.join(dirMain,settings.FILE_INFOTAINMENT)
     
-    settings.imgAdas = ImageTk.PhotoImage(Image.open(IMG_ADAS).resize((100,100), Image.ANTIALIAS))
-    settings.imgVideo = ImageTk.PhotoImage(Image.open(IMG_VIDEO).resize((100,100), Image.ANTIALIAS))
-    settings.imgGps = ImageTk.PhotoImage(Image.open(IMG_GPS).resize((100,100), Image.ANTIALIAS))
-    settings.imgEnt = ImageTk.PhotoImage(Image.open(IMG_INFOTAINMENT).resize((100,100), Image.ANTIALIAS))
+    settings.imgAdas = ImageTk.PhotoImage(Image.open(IMG_ADAS).resize((iconSize,iconSize), Image.ANTIALIAS))
+    settings.imgVideo = ImageTk.PhotoImage(Image.open(IMG_VIDEO).resize((iconSize,iconSize), Image.ANTIALIAS))
+    settings.imgGps = ImageTk.PhotoImage(Image.open(IMG_GPS).resize((iconSize,iconSize), Image.ANTIALIAS))
+    settings.imgEnt = ImageTk.PhotoImage(Image.open(IMG_INFOTAINMENT).resize((iconSize,iconSize), Image.ANTIALIAS))
 
     '''
     lblHolder = tk.Label(root,height = 150, width = WIDTH, bg='#545F71', borderwidth=0)
@@ -252,21 +306,21 @@ def create_gui():
     lblHolder.place(x=0,y=int(HEIGHT/2))  # Place label in center of parent.
     '''
 
-    settings.btn_Adas = Button(root,image=settings.imgAdas, border="0", bg="#0C3744",height=300, width=300, highlightthickness=0,borderwidth=0,bd=0,activeforeground='white', activebackground='#0C3744', text="ADAS" ,fg="white", compound=TOP,font= settings.myFont, command = lambda: adasGui(root,))
-    settings.btn_Video = Button(root,image=settings.imgVideo,border="0" ,bg="#0C3744",height=300, width=300, highlightthickness=0,bd=0, activeforeground='white', activebackground='#0C3744', text= "VIDEO REC",fg="white",compound=TOP, font= settings.myFont, command= lambda :showVideo(os.path.join(settings.BASE_DIR,settings.DIR_VIDEO_FILES), root))
-    settings.btn_Gps = Button(root,image=settings.imgGps,border="0", bg="#0C3744", height=300, width=300,highlightthickness=0 ,bd=0, activeforeground='white', activebackground= '#0C3744',text = "GPS", fg="white", compound=TOP, font=settings.myFont, command=lambda: gpsFunc(root,))
+    settings.btn_Adas = Button(root,image=settings.imgAdas, border="0", bg="#0C3744",height=icons_ht_wd, width=icons_ht_wd, highlightthickness=0,borderwidth=0,bd=0,activeforeground='white', activebackground='#0C3744', text="ADAS" ,fg="white", compound=TOP,font= settings.myFont, command = lambda: adasGui(root,))
+    settings.btn_Video = Button(root,image=settings.imgVideo,border="0" ,bg="#0C3744",height=icons_ht_wd, width=icons_ht_wd, highlightthickness=0,bd=0, activeforeground='white', activebackground='#0C3744', text= "VIDEO REC",fg="white",compound=TOP, font= settings.myFont, command= lambda :showVideo(os.path.join(settings.BASE_DIR,settings.DIR_VIDEO_FILES), root))
+    settings.btn_Gps = Button(root,image=settings.imgGps,border="0", bg="#0C3744", height=icons_ht_wd, width=icons_ht_wd,highlightthickness=0 ,bd=0, activeforeground='white', activebackground= '#0C3744',text = "GPS", fg="white", compound=TOP, font=settings.myFont, command=lambda: gpsFunc(root,))
 
-    settings.btn_Infotainment = Button(root,image=settings.imgEnt,border="0", bg="#0C3744", height=300, width=300, highlightthickness=0 ,bd=0,activeforeground='white',activebackground='#0C3744', text= "INFOTAINMENT", fg="white", compound=TOP, font=settings.myFont, command=lambda: showInfotain(root))
+    settings.btn_Infotainment = Button(root,image=settings.imgEnt,border="0", bg="#0C3744", height=icons_ht_wd, width=icons_ht_wd, highlightthickness=0 ,bd=0,activeforeground='white',activebackground='#0C3744', text= "INFOTAINMENT", fg="white", compound=TOP, font=settings.myFont, command=lambda: showInfotain(root))
 
-    settings.btn_Adas.grid(row=3, column=0, padx=80, pady=400)
-    settings.btn_Video.grid(row=3, column=1, padx=80, pady=400)
-    settings.btn_Gps.grid(row=3, column=2, padx=80, pady=400)
-    settings.btn_Infotainment.grid(row=3, column=3, padx=80, pady=400)
+    settings.btn_Adas.grid(row=3, column=0, padx=pd_X, pady=pd_Y)
+    settings.btn_Video.grid(row=3, column=1, padx=pd_X, pady=pd_Y)
+    settings.btn_Gps.grid(row=3, column=2, padx=pd_X, pady=pd_Y)
+    settings.btn_Infotainment.grid(row=3, column=3, padx=pd_X, pady=pd_Y)
     
     btn_text =str(settings.gpsSpeed) + "Km/hr"
     btnSpeed = RoundedButton(root, text= btn_text, radius=20, btnbackground="white", btnforeground="black")
 
-    btnSpeed.place(x=WIDTH-310, y=HEIGHT-180)
+    btnSpeed.place(x=WIDTH-btnSpeed_X , y=HEIGHT-btnSpeed_Y)
 
     root.after(250, lambda: updateIcons(root, settings.btn_Animal, settings.btn_Bike, settings.btn_Car, settings.btn_Pedestrian, settings.btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon))
     

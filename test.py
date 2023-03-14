@@ -1,14 +1,15 @@
-import webbrowser
-from tkinter import *
-  
-# creating root
-root = Tk()
-  
-# setting GUI title
-root.title("WebBrowsers")
-  
-# setting GUI geometry
-root.geometry("660x660")
-  
-# call webbrowser.open() function.
-webbrowser.open("www.instagram.com")
+# import webdriver
+from selenium import webdriver
+
+# create webdriver object
+driver = webdriver.Firefox()
+
+# get geeksforgeeks.org
+driver.get("https://www.geeksforgeeks.org/")
+
+# get geeksforgeeks.org
+driver.get("https://www.practice.geeksforgeeks.org/")
+
+# full screen window
+driver.fullscreen_window()
+
