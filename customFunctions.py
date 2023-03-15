@@ -576,7 +576,7 @@ def adasGui(mainWin):
             #cbox_video.pack(anchor=N, padx=100, pady=100)
             cbox_video.grid(row=2, column=1, padx= lbl_X , pady= lbl_Y)
 
-            cbox_video['values'] = [ '20', '40', '60' ]
+            cbox_video['values'] = ['0', '20', '40', '60' ]
             cbox_video['state'] = 'readonly'
             cbox_video.bind('<<ComboboxSelected>>', getVal)
             
