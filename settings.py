@@ -2,9 +2,15 @@
 import os
 from tkinter import *
 #### Folders ####
+import getpass
 
 
-OBJECT_DETECT_BIN_PATH="/home/pi/NextGenDriving/NextGensoftware/"
+OBJECT_DETECT_BIN_PATH=os.getcwd()
+
+FILE_PATH = os.path.join("/home/" ,getpass.getuser())
+FILE_GPS_SPEED = os.path.join(FILE_PATH, "tflite1/GPS_speed.txt")
+
+FILE_PATH_OPTION = os.path.join(FILE_PATH, "Option.txt")
 
 BASE_DIR=os.getcwd() + "/gui"
 THEME_DIR="background/"

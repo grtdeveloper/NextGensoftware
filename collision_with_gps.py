@@ -190,6 +190,7 @@ while True:
 
     # Grab frame from video stream
     frame1 = videostream.read()
+    
     f = open("/home/pi/tflite1/GPS_speed.txt", "r")
     Speed = float(f.read())
     if Speed < 0.0:

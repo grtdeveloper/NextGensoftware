@@ -27,6 +27,7 @@ import json
 import pandas as pd
 from geopy.geocoders import Nominatim
 from keyPad import initKey
+import getpass
 
 gpsd = None #Setup global variable 
 
@@ -466,14 +467,17 @@ def optionVideo(value):
 
 def playbackVid():
     print(" Came heree .... ")
+    username = str(getpass.getuser()) 
     ### Put here path of the file / script to be launched
-    command_list = "source /home/pi/tflite1/tflite1-env/bin/activate ;"
-    command_list = "/usr/bin/python3 " 
+    command_list = "source /home/" 
+    command_list += username
+    command_list += "/tflite1/tflite1-env/bin/activate ;"
+    command_list += "/usr/bin/python3 " 
     command_list += settings.OBJECT_DETECT_BIN_PATH
-    if settings.enablebackVideo is False:
-        command_list +="collison_warning.py "
+    if settings.enablebackVideo is False :
+        command_list +="/collison_warning.py "
     else:
-        command_list +="collison_warning.py &"
+        command_list +="/collison_warning.py &"
 
     print( " Command ", command_list)
     try:
@@ -488,7 +492,7 @@ def checkOptions(newWindow, mainWin):
         playbackVid()
         checkStatus(mainWin, 'python3 /home/pi/NextGenDriving/NextGensoftware/collison_warning.py')
     except Exception as err:
-        print( " Got Exception while playing ")
+        print( " Got Exception while playing ", str(err))
         pass
 
 
@@ -534,7 +538,7 @@ def adasGui(mainWin):
         chkBox_X = int(100 / settings.screen_Scalar)
         diffX_Pad = int(320 / settings.screen_Scalar)
         btnSubmit_Wd = int(100 / settings.screen_Scalar)
-        btnSubmit_Ht = int(250 / settings.screen_Scalar)
+        btnSubmit_Ht = int(290 / settings.screen_Scalar)
         iconSize = int(300 / settings.screen_Scalar)
         btnLive_X = int(450 / settings.screen_Scalar)
 
@@ -542,6 +546,10 @@ def adasGui(mainWin):
         settings.adas_Choice = choice.lower()
         print(" Selected Option for Adas : ", settings.adas_Choice)
         
+        file1 = open(settings.FILE_PATH_OPTION , "w")
+        file1.writelines(settings.adas_Choice)
+        file1.close()
+
         if "live" == settings.adas_Choice :
             checkOptions(window,mainWin)
 

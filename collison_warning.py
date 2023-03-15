@@ -28,35 +28,20 @@ import settings
 from time import sleep
 import socket
 
-# # Define and parse input arguments
-# parser = argparse.ArgumentParser()
-# parser.add_argument('--modeldir', help='Folder the .tflite file is located in',
-#                     required=True)
-# parser.add_argument('--graph', help='Name of the .tflite file, if different than detect.tflite',
-#                     default='detect.tflite')
-# parser.add_argument('--labels', help='Name of the labelmap file, if different than labelmap.txt',
-#                     default='labelmap.txt')
-# parser.add_argument('--threshold', help='Minimum confidence threshold for displaying detected objects',
-#                     default=0.5)
-# parser.add_argument('--video', help='Name of the video file',
-#                     default='test.mp4')
-# parser.add_argument('--edgetpu', help='Use Coral Edge TPU Accelerator to speed up detection',
-#                     action='store_true')
-
-#args = parser.parse_args()
-
 MODEL_NAME = './Sample_TFLite_model/'
 GRAPH_NAME = 'detect.tflite'
 LABELMAP_NAME = 'labelmap.txt'
 VIDEO_NAME = './00380017.AVI'
 min_conf_threshold = float(0.5)
 use_TPU = False
-
+plyOption=""
 clicked = False
-
 col_Video=""
 host = socket.gethostname()  # as both code is running on same pc
 port = 5000  # socket server port number
+
+with open(settings.FILE_PATH_OPTION, 'r') as f:
+    plyOption = [line.strip() for line in f.readlines()]
 
 settings.sock_Client = socket.socket()  # instantiate
 settings.sock_Client.connect((host, port))  # connect to the server
@@ -68,8 +53,8 @@ def client_program(cliSock, message):
         data = cliSock.recv(100).decode()  # receive response
         print('Received from server: ' + data)  # show in terminal
     except Exception as err:
+        print(" Got error in cliSock:", str(err))
         pass
-
 
 def onMouse(event, x, y, flags, param):
     global clicked
@@ -152,11 +137,22 @@ else: # This is a TF1 model
     boxes_idx, classes_idx, scores_idx = 0, 1, 2
 
 # Open video file
-video = cv2.VideoCapture(VIDEO_PATH)
+video=None
+
+if plyOption.lower() == "live":
+    video = cv2.VideoCapture(0) 
+    print(" video is :", video)
+else:
+    video = cv2.VideoCapture(VIDEO_PATH)
+
 imW = video.get(cv2.CAP_PROP_FRAME_WIDTH)
 imH = video.get(cv2.CAP_PROP_FRAME_HEIGHT)
+
+
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 result = cv2.VideoWriter("Collision_warning_demo.avi", fourcc, 5, (1920, 1080))
+
+print("I came here ", plyOption)
 
 while(video.isOpened()):
     # tic = time.time() 
