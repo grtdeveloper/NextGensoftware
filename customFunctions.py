@@ -174,7 +174,7 @@ class RoundedButton(Canvas):
         self.radius = radius        
         
         self.rect = self.round_rectangle(0, 0, 0, 0, tags="button", radius=radius, fill=btnbackground)
-        self.text = self.create_text(0, 0, text=str(settings.gpsSpeed) + " km/hr", tags="button", fill=btnforeground, font=("Times", 40, "bold" ), justify="center")
+        self.text = self.create_text(0, 0, text=str(settings.gpsSpeed) + " km/hr", tags="button", fill=btnforeground, font=("Times", 35, "bold" ), justify="center")
 
         self.bind("<Configure>", self.resize)
         

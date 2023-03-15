@@ -208,9 +208,9 @@ def create_gui():
 
     # Add other tkinter widgets.
     btn_Wifi = tk.Button(root, image=wifiImg, bg="black",highlightthickness=0,bd=0,activeforeground='black', activebackground='black')
-    btn_Wifi.place(x=50, y=10)
+    btn_Wifi.place(x=25, y=10)
     btn_Bluetoth = tk.Button(root, image=bluetoothImg, bg="black",highlightthickness=0,bd=0,activeforeground='black', activebackground='black')
-    btn_Bluetoth.place(x=120,y=10)
+    btn_Bluetoth.place(x=90,y=10)
     
     settings.screen_Scalar = float(1920 / WIDTH)
     
@@ -227,7 +227,6 @@ def create_gui():
     
     print( "Got settings.screen_Scalar :", settings.screen_Scalar)
     if settings.screen_Scalar == 1.0:
-        print( "In First loop ")
         iconSize = 100
         icons_ht_wd= 300
         pd_X=80
@@ -239,14 +238,13 @@ def create_gui():
         placeH_heigth=400
         placeH_width=250
     else:
-        print( "I am here ")
         iconSize = int(100 / settings.screen_Scalar)
         icons_ht_wd = int(300 / settings.screen_Scalar)
-        pd_X = int(80 / settings.screen_Scalar)
+        pd_X = int(65 / settings.screen_Scalar)
         pd_Y = int(400 / settings.screen_Scalar)
-        btnSpeed_X = int(310 / settings.screen_Scalar)
-        btnSpeed_Y = int(180 / settings.screen_Scalar)
-        placeH_posX = int(500 / settings.screen_Scalar)
+        btnSpeed_X = int(475 / settings.screen_Scalar)
+        btnSpeed_Y = int(315 / settings.screen_Scalar)
+        placeH_posX = int(700 / settings.screen_Scalar)
         placeH_posY= int(125 / settings.screen_Scalar)
         placeH_width=int(400 / settings.screen_Scalar)
         placeH_heigth= int(250 / settings.screen_Scalar)
@@ -299,12 +297,6 @@ def create_gui():
     settings.imgVideo = ImageTk.PhotoImage(Image.open(IMG_VIDEO).resize((iconSize,iconSize), Image.ANTIALIAS))
     settings.imgGps = ImageTk.PhotoImage(Image.open(IMG_GPS).resize((iconSize,iconSize), Image.ANTIALIAS))
     settings.imgEnt = ImageTk.PhotoImage(Image.open(IMG_INFOTAINMENT).resize((iconSize,iconSize), Image.ANTIALIAS))
-
-    '''
-    lblHolder = tk.Label(root,height = 150, width = WIDTH, bg='#545F71', borderwidth=0)
-    lblHolder.corner_radius = 8
-    lblHolder.place(x=0,y=int(HEIGHT/2))  # Place label in center of parent.
-    '''
 
     settings.btn_Adas = Button(root,image=settings.imgAdas, border="0", bg="#0C3744",height=icons_ht_wd, width=icons_ht_wd, highlightthickness=0,borderwidth=0,bd=0,activeforeground='white', activebackground='#0C3744', text="ADAS" ,fg="white", compound=TOP,font= settings.myFont, command = lambda: adasGui(root,))
     settings.btn_Video = Button(root,image=settings.imgVideo,border="0" ,bg="#0C3744",height=icons_ht_wd, width=icons_ht_wd, highlightthickness=0,bd=0, activeforeground='white', activebackground='#0C3744', text= "VIDEO REC",fg="white",compound=TOP, font= settings.myFont, command= lambda :showVideo(os.path.join(settings.BASE_DIR,settings.DIR_VIDEO_FILES), root))
