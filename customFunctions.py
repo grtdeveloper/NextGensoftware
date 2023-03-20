@@ -465,32 +465,35 @@ def optionVideo(value):
     settings.enablebackVideo=value
     return
 
-def playbackVid():
+def playbackVid(width , height):
     print(" Came heree .... ")
     username = str(getpass.getuser()) 
     ### Put here path of the file / script to be launched
-    command_list = "source /home/" 
-    command_list += username
-    command_list += "/tflite1/tflite1-env/bin/activate ;"
-    command_list += "/usr/bin/python3 " 
+    #command_list = "source /home/" 
+    #command_list += username
+    #command_list += "/tflite1/tflite1-env/bin/activate ;"
+    command_list = "/usr/bin/python3 " 
     command_list += settings.OBJECT_DETECT_BIN_PATH
-    if settings.enablebackVideo is False :
-        command_list +="/collison_warning.py "
-    else:
-        command_list +="/collison_warning.py &"
+    command_list +="/playLive.py --modeldir Sample_TFLite_model/ --width "
+    command_list += str(width)
+    command_list += " --height "
+    command_list += str(height)
+    if settings.enablebackVideo is True:
+        command_list += " &"
 
     print( " Command ", command_list)
     try:
         p = subprocess.Popen(command_list ,shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except Exception as e:
-        print(e)
+        print( "Got Exception as :" , str(e))
         pass
 
 def checkOptions(newWindow, mainWin):
+    WIDTH, HEIGHT = newWindow.winfo_screenwidth(), newWindow.winfo_screenheight()
     on_closing(newWindow, mainWin)
     try:
-        playbackVid()
-        checkStatus(mainWin, 'python3 /home/pi/NextGenDriving/NextGensoftware/collison_warning.py')
+        playbackVid(WIDTH, HEIGHT)
+        checkStatus(mainWin, 'python3 /home/pi/NextGenDriving/NextGensoftware/playLive.py')
     except Exception as err:
         print( " Got Exception while playing ", str(err))
         pass
@@ -610,7 +613,7 @@ def adasGui(mainWin):
     imgLive = ImageTk.PhotoImage(Image.open(file_Live).resize((iconSize,iconSize), Image.ANTIALIAS))
     imgSettings = ImageTk.PhotoImage(Image.open(file_Settings).resize((iconSize,iconSize), Image.ANTIALIAS))
     
-    btnLive = Button(window, image=imgLive, bg="black",highlightthickness=0,bd=0,activeforeground='white', activebackground='black', compound=CENTER, command= lambda: selection("live", window, mainWin))
+    btnLive = Button(window, image=imgLive, bg="black",highlightthickness=0,bd=0,activeforeground='white', activebackground='black', compound=CENTER, command= lambda: selection("live", window, mainWin,))
     
     btnSettings = Button(window, image=imgSettings, bg="black",highlightthickness=0,bd=0,activeforeground='white', activebackground='black', compound=CENTER, command= lambda: selection("settings", window, mainWin))
     

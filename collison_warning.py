@@ -28,7 +28,7 @@ import settings
 from time import sleep
 import socket
 
-MODEL_NAME = './Sample_TFLite_model/'
+MODEL_NAME = 'Sample_TFLite_model'
 GRAPH_NAME = 'detect.tflite'
 LABELMAP_NAME = 'labelmap.txt'
 VIDEO_NAME = './00380017.AVI'
@@ -41,10 +41,51 @@ host = socket.gethostname()  # as both code is running on same pc
 port = 5000  # socket server port number
 
 with open(settings.FILE_PATH_OPTION, 'r') as f:
-    plyOption = [line.strip() for line in f.readlines()]
-
+    plyOption = f.readline()
+'''
 settings.sock_Client = socket.socket()  # instantiate
 settings.sock_Client.connect((host, port))  # connect to the server
+'''
+
+class VideoStream:
+    """Camera object that controls video streaming from the Picamera"""
+    def __init__(self,resolution=(640,480),framerate=30):
+        # Initialize the PiCamera and the camera image stream
+        self.stream = cv2.VideoCapture(0)
+        ret = self.stream.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
+        ret = self.stream.set(3,resolution[0])
+        ret = self.stream.set(4,resolution[1])
+            
+        # Read first frame from the stream
+        (self.grabbed, self.frame) = self.stream.read()
+
+	# Variable to control when the camera is stopped
+        self.stopped = False
+
+    def start(self):
+	# Start the thread that reads frames from the video stream
+        Thread(target=self.update,args=()).start()
+        return self
+
+    def update(self):
+        # Keep looping indefinitely until the thread is stopped
+        while True:
+            # If the camera is stopped, stop the thread
+            if self.stopped:
+                # Close camera resources
+                self.stream.release()
+                return
+
+            # Otherwise, grab the next frame from the stream
+            (self.grabbed, self.frame) = self.stream.read()
+
+    def read(self):
+	# Return the most recent frame
+        return self.frame
+
+    def stop(self):
+	# Indicate that the camera and thread should be stopped
+        self.stopped = True
 
 
 def client_program(cliSock, message):
@@ -140,29 +181,36 @@ else: # This is a TF1 model
 video=None
 
 if plyOption.lower() == "live":
-    video = cv2.VideoCapture(0) 
+    video = VideoStream(resolution=(640,480),framerate=30)
+    #video = cv2.VideoCapture(0)
     print(" video is :", video)
 else:
     video = cv2.VideoCapture(VIDEO_PATH)
 
-imW = video.get(cv2.CAP_PROP_FRAME_WIDTH)
-imH = video.get(cv2.CAP_PROP_FRAME_HEIGHT)
+imW, imH = 1920, 1080 #int(resW), int(resH)
+#imW = video.get(cv2.CAP_PROP_FRAME_WIDTH)
+#imH = video.get(cv2.CAP_PROP_FRAME_HEIGHT)
 
 
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 result = cv2.VideoWriter("Collision_warning_demo.avi", fourcc, 5, (1920, 1080))
 
-print("I came here ", plyOption)
-
-while(video.isOpened()):
+ret=True
+frame_num=0
+#while(video.isOpened()):
+while(True):
     # tic = time.time() 
     # Acquire frame and resize to expected shape [1xHxWx3]
-    ret, frame = video.read()
-    frame_num = video.get(cv2.CAP_PROP_POS_FRAMES)
-    print(video.get(cv2.CAP_PROP_POS_FRAMES))
-    if not ret:
-      print('Reached the end of the video!')
-      break
+    if plyOption == "live":
+        frame = video.read()
+        frame_num=5
+    else:
+        ret, frame = video.read()
+        frame_num = video.get(cv2.CAP_PROP_POS_FRAMES)
+        print(video.get(cv2.CAP_PROP_POS_FRAMES))
+        if not ret:
+            print('Reached the end of the video!')
+            break
     if int(frame_num)%5 == 1:
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame_resized = cv2.resize(frame_rgb, (width, height))
@@ -267,7 +315,7 @@ while(video.isOpened()):
 
 # Clean up
 video.release()
-settings.sock_Client.close()  # close the connection
+#settings.sock_Client.close()  # close the connection
 result.release()
 
 cv2.destroyAllWindows()
