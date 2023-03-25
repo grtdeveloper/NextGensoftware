@@ -19,3 +19,7 @@ sudo apt install -y libgl1-mesa-glx
 sudo pip3 install picamera
 
 sudo apt-get install -y matchbox-keyboard
+
+echo "Installing correct keyboard layout"
+
+sudo cp keyboard.xml /usr/share/matchbox-keyboard

@@ -1,6 +1,7 @@
 gps3==0.33.3
 netifaces==0.11.0
 shapely==2.0.1
+keyboard==0.13.5
 idna==3.3
 googlemaps==4.10.0
 pandas==1.5.3

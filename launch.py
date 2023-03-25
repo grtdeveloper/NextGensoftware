@@ -313,6 +313,14 @@ def create_gui():
     btnSpeed = RoundedButton(root, text= btn_text, radius=20, btnbackground="white", btnforeground="black")
 
     btnSpeed.place(x=WIDTH-btnSpeed_X , y=HEIGHT-btnSpeed_Y)
+   
+    try:
+        with open(settings.FILE_PATH_OPTION,'r+') as file:
+            file.truncate(0)
+    except Exception as e:
+        print(" Got Excepion  as :" , str(e))
+        pass
+
 
     root.after(250, lambda: updateIcons(root, settings.btn_Animal, settings.btn_Bike, settings.btn_Car, settings.btn_Pedestrian, settings.btn_Speed, red_dirIcon, yellow_dirIcon, blue_dirIcon))
     

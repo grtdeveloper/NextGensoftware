@@ -361,8 +361,14 @@ def launchPlayer(mainWin,title ,link):
     mainWin.withdraw()
     import webbrowser
     # creating root
-
-
+     
+    command_list = "/usr/bin/matchbox-keyboard --fontfamily times --fontptsize 8"
+    try:
+        p = subprocess.Popen(command_list ,shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    except Exception as e:
+        print( "Got Exception as :" , str(e))
+        pass
+    print( " Command ", command_list)
     # call webbrowser.open() function.
     webbrowser.open(link)
     checkStatus(mainWin, 'chrome')

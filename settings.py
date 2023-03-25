@@ -129,7 +129,7 @@ GEOCODE_URL="https://google-maps-geocoding.p.rapidapi.com/geocode/json"
 screen_Scalar=1.0
 
 LINK_YOUTUBE="https://www.youtube.com/"
-LINK_NETFLIX="https://www.netflix.com/in"
+LINK_NETFLIX="https://www.netflix.com/"
 LINK_SPOTIFY="https://accounts.spotify.com"
 
 myFont= ('Helvetica 15 bold')

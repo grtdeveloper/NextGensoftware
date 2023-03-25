@@ -25,7 +25,7 @@ def action(win):
 
 # end function coding
 
-def initKey(event):
+def initKey(event=None):
     key = tk.Tk()  # key window name
     key.title('--- Keypad  ---')  # title Name
     # get screen width and height
