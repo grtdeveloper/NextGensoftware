@@ -6,7 +6,7 @@ import os
 import os.path
 import PIL.Image as Image
 from ui import *
-from customFunctions import showLocation, on_closing, launchPlayer, showVideo, adasGui, getSpeed, RoundedButton, server_program, wifiStatus, bluetoothStatus
+from customFunctions import showLocation, on_closing, launchPlayer, showVideo, adasGui, getSpeed, RoundedButton, server_program, wifiStatus, bluetoothStatus, display_splash
 import threading
 import signal
 import time
@@ -196,7 +196,7 @@ def create_gui():
 
     # Display image on a Label widget.
     img = ImageTk.PhotoImage(Image.open(IMAGE_PATH).resize((WIDTH, HEIGHT), Image.ANTIALIAS))
-    lbl = tk.Label(root, image=img )
+    lbl = Label(root, image=img )
     lbl.img = img  # Keep a reference in case this code put is in a function.
     lbl.place(relx=0.5, rely=0.5, anchor='center')  # Place label in center of parent.
     
@@ -334,7 +334,7 @@ def create_gui():
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, handler)
-
+    display_splash()
     sockThr = threading.Thread(target=server_program)
     speedThr = threading.Thread(target=getSpeed)
     sockThr.daemon = True 

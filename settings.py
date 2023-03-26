@@ -28,6 +28,7 @@ ADAS_DIR="adas/"
 
 
 ### Files ###
+FILE_LOGO="logo.png"
 FILE_THEME_DARK="dark.png"
 FILE_THEME_LIGHT="light.png"
 FILE_ANIMAL="animal.png"

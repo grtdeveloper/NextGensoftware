@@ -31,6 +31,26 @@ import getpass
 
 gpsd = None #Setup global variable 
 
+def display_splash():
+    root = Tk()
+    root.overrideredirect(True)
+    WIDTH = root.winfo_screenwidth()
+    HEIGHT = root.winfo_screenheight()
+
+    image_file = os.path.join(os.getcwd(), settings.FILE_LOGO)
+    print("image file is :", image_file)
+    geometry = '{}x{}'.format(WIDTH, HEIGHT)
+    
+    imgLogo = ImageTk.PhotoImage(Image.open(image_file).resize((WIDTH, HEIGHT), Image.ANTIALIAS))
+    lbl = Label(root, image=imgLogo )
+    lbl.img = imgLogo  # Keep a reference in case this code put is in a function.
+    lbl.place(relx=0.5, rely=0.5, anchor='center')  # Place label in center of parent.
+
+    root.geometry(geometry)
+    root.after(3000, root.destroy)
+    root.mainloop()
+
+
 def get_lat_long_from_address(address):
     url = settings.GEOCODE_URL
     response={}
