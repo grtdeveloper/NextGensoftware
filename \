@@ -458,14 +458,10 @@ def showVideo(dir_Video,mainWin):
     imgStop = ImageTk.PhotoImage(Image.open(IMG_STOP).resize((size_Plr_Icon , size_Plr_Icon), Image.ANTIALIAS))
     
 
-    def get_value(event, window):
+    def get_value(event):
         settings.play_Options = ply_choice.get()
         print(" You have choosen to play " + settings.play_Options + " video")
         if settings.play_Options == "live":
-            file1 = open(settings.FILE_PATH_OPTION , "w")
-            file1.writelines(settings.play_Options)
-            file1.close()
-            window.withdraw()
             playbackVid(WIDTH , HEIGHT-100)
 
 
@@ -475,7 +471,7 @@ def showVideo(dir_Video,mainWin):
 
     cbox_video['values'] = [ 'live', 'recorded' ]
     cbox_video['state'] = 'readonly'
-    cbox_video.bind('<<ComboboxSelected>>',lambda event: get_value(event,window))
+    cbox_video.bind('<<ComboboxSelected>>', lambda: get_value(window))
 
     openbtn = Button(window, text='Open', image=imgOpen, command=lambda: open_file(videoplayer, window, dir_Video))
     openbtn.pack(side=LEFT, padx=cbox_Padx)

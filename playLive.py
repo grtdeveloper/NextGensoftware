@@ -23,6 +23,7 @@ port = 5000  # socket server port number
 with open(settings.FILE_PATH_OPTION, 'r') as f:
     plyOption = f.readline()
 
+
 settings.sock_Client = socket.socket()  # instantiate
 settings.sock_Client.connect((host, port))  # connect to the server
 
@@ -35,10 +36,7 @@ def client_program(cliSock, message):
         print(" Got error in cliSock:", str(err))
         pass
 
-def onMouse(event, x, y, flags, param):
-    global clicked
-    if event == cv2.EVENT_LBUTTONUP:
-        clicked = True
+
 
 class VideoStream:
     """Camera object that controls video streaming from the Picamera"""
@@ -104,7 +102,7 @@ GRAPH_NAME = args.graph
 LABELMAP_NAME = args.labels
 min_conf_threshold = float(args.threshold)
 resW, resH = args.resolution.split('x')
-imW, imH = args.width, args.height #int(resW), int(resH)
+imW, imH = int(args.width), int(args.height) #int(resW), int(resH)
 use_TPU = args.edgetpu
 
 # Import TensorFlow libraries
